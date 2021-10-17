@@ -1,0 +1,13 @@
+{
+  "name": "crawl_system",
+  "version": "0.1.0",
+  "description": "static crawl with cheerio",
+  "main": "index.js",
+  "repository": "git@github.com:phuc1012000/crawl_system.git",
+  "author": "SunFoxY2K <phuc1012000@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10"
+  }
+}
