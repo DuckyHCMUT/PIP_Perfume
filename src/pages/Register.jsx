@@ -154,7 +154,7 @@ const Register = () => {
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
-						<Logo>BKPERFUME.</Logo>
+						<Logo>BKPERFUME</Logo>
 					</Link>
 				</LogoContainer>
 				<Title>CREATE AN ACCOUNT</Title>

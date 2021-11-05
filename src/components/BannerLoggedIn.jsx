@@ -78,7 +78,7 @@ const SignInLink = styled.a`
 	margin-top: 20px;
 `;
 
-const Banner = () => {
+const BannerLoggedIn = (userName) => {
     return (
         <Container>
             <Wrapper>
@@ -100,16 +100,14 @@ const Banner = () => {
                     <MenuItem>HOME</MenuItem>
                     <MenuItem>FAQ</MenuItem>
                     <MenuItem>CONTACT</MenuItem>
-                    <Link to="/user/login">
-                        <MenuItem>
-                            Sign In
-                        </MenuItem>
-                    </Link>
+                    <MenuItem>
+                        Welcome, {userName}!
+                    </MenuItem>
 
                     {/* Cart */}
                     <Link to="/user/cart">
                     <MenuItem>
-                        <Badge badgeContent={0} color="primary">
+                        <Badge badgeContent={4} color="primary">
                             <ShoppingCartOutlined />
                         </Badge>
                     </MenuItem>
@@ -120,4 +118,4 @@ const Banner = () => {
     );
 };
 
-export default Banner;
+export default BannerLoggedIn;

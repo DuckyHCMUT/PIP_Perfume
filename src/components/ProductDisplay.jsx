@@ -55,9 +55,7 @@ const Content = styled.div`
 `;
 
 const showItem = () =>{
-    return (
-        alert("Co cai lon ay dit me may")
-    );
+    
 }
 
 const ProductDisplay = () => {
@@ -118,7 +116,7 @@ const ProductDisplay = () => {
                 </Title>
             </FilterPanel>
             <Display>    
-            <Products></Products>
+                <Products/>
             </Display>
         </Container>
     );

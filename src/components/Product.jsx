@@ -4,6 +4,7 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -66,15 +67,23 @@ const Icon = styled.div`
   }
 `;
 
+const Hr = styled.hr`
+  background-color: #eee;
+  border: none;
+  height: 1px;
+`;
+
 const Product = ({ item }) => {
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
+      <Link to="/user/cart">
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
+      </Link>
         <Icon>
           <SearchOutlined />
         </Icon>
