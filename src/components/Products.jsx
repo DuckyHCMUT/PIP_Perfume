@@ -15,7 +15,6 @@ const Products = () => {
       {forMale.map((item) => (
         <Product item={item} key={item.id} />
       ))}
-      
       {forFemale.map((item) => (
       <Product item={item} key={item.id} />
     ))}

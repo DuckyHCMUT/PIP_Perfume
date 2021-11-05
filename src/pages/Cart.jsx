@@ -47,7 +47,6 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
-
 `;
 
 const Info = styled.div`

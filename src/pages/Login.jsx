@@ -134,7 +134,7 @@ const Login = () => {
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
-						<Logo>BKPERFUME.</Logo>
+						<Logo>BKPERFUME</Logo>
 					</Link>
 				</LogoContainer>
 				<Title>SIGN IN</Title>
@@ -152,7 +152,11 @@ const Login = () => {
 						<Input type="password" placeholder="Enter password" />
 						<ForgotPassword>Forgot password?</ForgotPassword>
 					</InputContainer>
-					<Button>Sign in</Button>
+
+					
+					<Button>
+						<Link to="/">Sign in</Link>
+					</Button>
 					<SignUpForm>
 						<NormalText>Not a member? &nbsp; </NormalText>
 						<Link to="/user/register">

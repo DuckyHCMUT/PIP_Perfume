@@ -9,6 +9,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #ebb29b;
 `;
 const Center = styled.div`
     flex: 1;
@@ -23,6 +24,7 @@ const NavItem = styled.div`
   cursor: pointer;
   margin-top: 5px;
   margin-left: 80px;
+  color: black;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
@@ -30,7 +32,6 @@ const Navbar = () => {
     return (
         <Container>
             <Center>
-                <Link to="../pages/Cart" className="btn btn-primary">Sign up</Link>
                 <NavItem>ALL</NavItem>
                 <NavItem>FOR MEN</NavItem>
                 <NavItem>FOR WOMEN</NavItem>
