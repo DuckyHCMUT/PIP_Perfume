@@ -4,11 +4,10 @@ import React from "react";
 import styled from "styled-components";
 import img from "../resource/banner.png";
 import { mobile } from "../responsive";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    height: 180px;
-    background-image: url(${img});
+    height: 100%;
     ${mobile({ height: "50px" })}
 `;
 const Wrapper = styled.div`
@@ -69,13 +68,12 @@ const MenuItem = styled.div`
 `;
 
 const SignInLink = styled.a`
-	font-size: 14px;
-	text-decoration: none;
-	cursor: pointer;
-	color: rgba(255, 255, 255, 1);
-	font-weight: bold;
-	display: inline-block;
-	margin-top: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
 `;
 
 const BannerLoggedIn = (userName) => {
@@ -83,9 +81,9 @@ const BannerLoggedIn = (userName) => {
         <Container>
             <Wrapper>
                 <Left>
-                <Link to="/">
-                    <Logo>BKPERFUME</Logo>
-                </Link>
+                    <Link to="/">
+                        <Logo>BKP.</Logo>
+                    </Link>
                 </Left>
                 <Center>
                     <SearchContainer>
@@ -97,20 +95,26 @@ const BannerLoggedIn = (userName) => {
                 </Center>
 
                 <Right>
-                    <MenuItem>HOME</MenuItem>
+                    <Link
+                        to="/"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <MenuItem>HOME</MenuItem>
+                    </Link>
                     <MenuItem>FAQ</MenuItem>
                     <MenuItem>CONTACT</MenuItem>
-                    <MenuItem>
-                        Welcome, {userName}!
-                    </MenuItem>
+                    <MenuItem>Welcome, {userName}!</MenuItem>
 
                     {/* Cart */}
-                    <Link to="/user/cart">
-                    <MenuItem>
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlined />
-                        </Badge>
-                    </MenuItem>
+                    <Link
+                        to="/user/cart"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <MenuItem>
+                            <Badge badgeContent={4} color="primary">
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </MenuItem>
                     </Link>
                 </Right>
             </Wrapper>

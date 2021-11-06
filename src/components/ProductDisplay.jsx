@@ -33,6 +33,7 @@ const FilterPanel = styled.div`
     border: 0.5px solid lightgrey;
     padding: 10px;
     width: 300px;
+    height: 420px;
 `;
 const Display = styled.div`
     flex: 3;
@@ -54,9 +55,7 @@ const Content = styled.div`
     margin-left: 10px;
 `;
 
-const showItem = () =>{
-    
-}
+const showItem = () => {};
 
 const ProductDisplay = () => {
     return (
@@ -115,8 +114,8 @@ const ProductDisplay = () => {
                     </FormControl>
                 </Title>
             </FilterPanel>
-            <Display>    
-                <Products/>
+            <Display>
+                <Products />
             </Display>
         </Container>
     );

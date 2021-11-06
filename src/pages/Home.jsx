@@ -12,26 +12,28 @@ import Navbar from "../components/Navbar";
 import ProductDisplay from "../components/ProductDisplay";
 
 function HomeLoggedIn(flag) {
-  return(
-    <div>
-      <Announcement />
-      <BannerLoggedIn />
-      <Navbar />
-      <ProductDisplay/>
-      <Footer/>
-    </div>
-  )
+    return (
+        <div>
+            <Announcement />
+            <BannerLoggedIn />
+            <Slider />
+            <Navbar />
+            <ProductDisplay />
+            <Footer />
+        </div>
+    );
 }
 
 const Home = () => {
     return (
-      <div>
-        <Announcement />
-        <Banner />
-        <Navbar />
-        <ProductDisplay/>
-        <Footer/>
-      </div>
+        <div>
+            <Announcement />
+            <Banner />
+            <Slider />
+            <Navbar />
+            <ProductDisplay />
+            <Footer />
+        </div>
     );
 };
 
