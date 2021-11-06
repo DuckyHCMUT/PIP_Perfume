@@ -2,13 +2,11 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
-import img from "../resource/banner.png";
 import { mobile } from "../responsive";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    height: 180px;
-    background-image: url(${img});
+    height: 100%;
     ${mobile({ height: "50px" })}
 `;
 const Wrapper = styled.div`
@@ -16,6 +14,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: white;
     ${mobile({ padding: "10px 0px" })}
 `;
 
@@ -26,9 +25,8 @@ const Left = styled.div`
 `;
 
 const SearchContainer = styled.div`
-    border: 0.5px solid lightgray;
     display: flex;
-    background-color: #d4a08a;
+    background-color: #ffc890;
     align-items: center;
     margin-left: 30px;
     padding: 2px;
@@ -49,7 +47,6 @@ const Logo = styled.h1`
     font-weight: bold;
     cursor: pointer;
     color: black;
-    border: 5px solid pink;
     ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -61,21 +58,19 @@ const Right = styled.div`
 `;
 
 const MenuItem = styled.div`
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
     cursor: pointer;
     margin-left: 25px;
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
 const SignInLink = styled.a`
-	font-size: 14px;
-	text-decoration: none;
-	cursor: pointer;
-	color: rgba(255, 255, 255, 1);
-	font-weight: bold;
-	display: inline-block;
-	margin-top: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
 `;
 
 const Banner = () => {
@@ -83,9 +78,10 @@ const Banner = () => {
         <Container>
             <Wrapper>
                 <Left>
-                <Link to="/">
-                    <Logo>BKPERFUME</Logo>
-                </Link>
+                    <Link style={{textDecoration: 'none'}}
+                        to="/">
+                        <Logo>BKP.</Logo>
+                    </Link>
                 </Left>
                 <Center>
                     <SearchContainer>
@@ -97,22 +93,31 @@ const Banner = () => {
                 </Center>
 
                 <Right>
-                    <MenuItem>HOME</MenuItem>
+                    <Link style={{textDecoration: 'none'}}
+                        to="/"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <MenuItem>HOME</MenuItem>
+                    </Link>
                     <MenuItem>FAQ</MenuItem>
                     <MenuItem>CONTACT</MenuItem>
-                    <Link to="/user/login">
-                        <MenuItem>
-                            Sign In
-                        </MenuItem>
+                    <Link style={{textDecoration: 'none'}}
+                        to="/user/login"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <MenuItem>LOGIN</MenuItem>
                     </Link>
 
                     {/* Cart */}
-                    <Link to="/user/cart">
-                    <MenuItem>
-                        <Badge badgeContent={0} color="primary">
-                            <ShoppingCartOutlined />
-                        </Badge>
-                    </MenuItem>
+                    <Link
+                        to="/user/cart"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                        <MenuItem>
+                            <Badge badgeContent={0} color="primary">
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </MenuItem>
                     </Link>
                 </Right>
             </Wrapper>

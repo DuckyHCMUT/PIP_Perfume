@@ -72,7 +72,6 @@ const Right = styled.div`
   padding: 20px;
   margin-left: 10px;
   ${mobile({ backgroundColor: "#fff8f8" })}
-
 `;
 
 const ContactItem = styled.div`
@@ -82,48 +81,49 @@ const ContactItem = styled.div`
 `;
 
 const Payment = styled.img`
-    width: 50%;
+  width: 50%;
 `;
 
 const Footer = () => {
   return (
-    <Container>
-      <Left>
-        <Logo>LAMA.</Logo>
-        <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
-        </Desc>
-        <SocialContainer>
-          <SocialIcon color="3B5999">
-            <Facebook />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
-            <Instagram />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
-            <Twitter />
-          </SocialIcon>
-          <SocialIcon color="E60023">
-            <Pinterest />
-          </SocialIcon>
-        </SocialContainer>
-      </Left>
-      <Right>
-        <Title>Contact</Title>
-        <ContactItem>
-          <Room style={{marginRight:"10px"}}/> 622 Dixie Path , South Tobinchester 98336
-        </ContactItem>
-        <ContactItem>
-          <Phone style={{marginRight:"10px"}}/> +1 234 56 78
-        </ContactItem>
-        <ContactItem>
-          <MailOutline style={{marginRight:"10px"}} /> contact@lama.dev
-        </ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-      </Right>
-    </Container>
+      <Container>
+          <Left>
+              <Logo>BKP.</Logo>
+              <Desc>
+                  The only perfume shop you need. Startup started in 2021 and
+                  growing strong
+              </Desc>
+              <SocialContainer>
+                  <SocialIcon color="3B5999">
+                      <Facebook />
+                  </SocialIcon>
+                  <SocialIcon color="E4405F">
+                      <Instagram />
+                  </SocialIcon>
+                  <SocialIcon color="55ACEE">
+                      <Twitter />
+                  </SocialIcon>
+                  <SocialIcon color="E60023">
+                      <Pinterest />
+                  </SocialIcon>
+              </SocialContainer>
+          </Left>
+          <Right>
+              <Title>Contact</Title>
+              <ContactItem>
+                  <Room style={{ marginRight: "10px" }} /> 268 Ly Thuong Kiet,
+                  District 10, Ho Chi Minh City
+              </ContactItem>
+              <ContactItem>
+                  <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
+              </ContactItem>
+              <ContactItem>
+                  <MailOutline style={{ marginRight: "10px" }} />{" "}
+                  shopowner@hcmut.edu.vn
+              </ContactItem>
+              <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+          </Right>
+      </Container>
   );
 };
 
