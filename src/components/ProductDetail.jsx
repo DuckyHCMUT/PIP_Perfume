@@ -30,13 +30,19 @@ const InfoContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-weight: 200;
+  font-weight: bold;
+
 `;
 
 const Price = styled.span`
-  font-weight: 100;
+  font-weight: 200;
   font-size: 20px;
 `;
+
+const Brand = styled.div`
+  font-weight: 500;
+  font-size: 40
+`
 
 const AddContainer = styled.div`
   width: 50%;
@@ -88,6 +94,7 @@ const ProductDetail = ({item}) => {
             <Image src= {item.Image} />
             </ImgContainer>
             <InfoContainer>
+            <Brand>{item.Brand}</Brand>
             <Title>{item.Name}</Title>
             <Price>{precisePrice}</Price>
             <Option options = {item.Option} onChange = {handlePricebyVolume}/>
