@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
+import { useParams } from "react-router";
+import { universal } from "../data";
 
 const Container = styled.div``;
 
@@ -115,14 +117,16 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = ({item}) => {
+  const {productID} = useParams()
+  const thisProduct = universal.find(item => item.ID === productID)
   return (
     <Container>
       <Banner />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src = {item.Image}/>
         </ImgContainer>
         <InfoContainer>
           <Title>Denim Jumpsuit</Title>
@@ -134,6 +138,7 @@ const Product = () => {
             condimentum ac, volutpat ornare.
           </Desc>
           <Price>$ 20</Price>
+
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -141,6 +146,7 @@ const Product = () => {
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
             </Filter>
+
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
@@ -152,6 +158,7 @@ const Product = () => {
               </FilterSize>
             </Filter>
           </FilterContainer>
+
           <AddContainer>
             <AmountContainer>
               <Remove />

@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { forMale, forFemale } from "../data";
-import Product from "./Product";
+import { universal } from "../data";
+import data from "../item/male.json"
+import ProductCard from "./ProductCard";
 
 const Container = styled.div`
     padding: 20px;
@@ -12,12 +13,9 @@ const Container = styled.div`
 const Products = () => {
   return (
     <Container>
-      {forMale.map((item) => (
-        <Product item={item} key={item.id} />
+      {universal.map((item) => (
+        <ProductCard item={item} key={item.ID}/>
       ))}
-      {forFemale.map((item) => (
-      <Product item={item} key={item.id} />
-    ))}
     </Container>
   );
 };

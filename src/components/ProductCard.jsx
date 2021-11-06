@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Info = styled.div`
+  flex: 3;
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -14,7 +15,7 @@ const Info = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index: 3;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,9 +23,20 @@ const Info = styled.div`
   cursor: pointer;
 `;
 
+const ItemInfo = styled.div`
+  opacity: 100;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 4;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
 const Container = styled.div`
-  flex: 1;
-  margin: 5px;
+  flex: 3;
+  margin: 15px;
   min-width: 280px;
   height: 350px;
   display: flex;
@@ -59,7 +71,7 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: 15px;
   transition: all 0.5s ease;
   &:hover {
     background-color: #e9f5f5;
@@ -73,26 +85,52 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
-const Product = ({ item }) => {
+const Name = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+`
+
+const Price = styled.div`
+  font-size: 15px;
+`
+
+const ProductCard = ({ item }) => {
   return (
     <Container>
       <Circle />
-      <Image src={item.img} />
+      <Image src={item.Image} />
+      <ItemInfo>
+        <Name>
+          {item.Name}
+        </Name> 
+        <Price>
+          {item['Price range']}
+        </Price>
+      </ItemInfo> 
       <Info>
-      <Link to="/user/cart">
+        <Link to="/user/cart" item={item}>
+          <Icon>
+            <ShoppingCartOutlined/>
+          </Icon>
+        </Link>
+      
+      
+        {/* <Link to = {`/product/${item.ID}` }>
+          <Icon>
+            <SearchOutlined />
+          </Icon>
+        </Link> */}
+
         <Icon>
-          <ShoppingCartOutlined />
+            <SearchOutlined />
         </Icon>
-      </Link>
+          
         <Icon>
-          <SearchOutlined />
+          <FavoriteBorderOutlined/>
         </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
-        </Icon>
-      </Info>
+      </Info>     
     </Container>
   );
 };
 
-export default Product;
+export default ProductCard;

@@ -4,7 +4,7 @@
         "ID": 1,
         "Brand": "Versace",
         "Name": "Versace Bright Crystal",
-        "Image": "https://product.hstatic.net/1000340570/product/versace-bright-crystal_2bfe89a837d84aab98fb209b3a7f11f2_grande.jpg",
+        "Image": "//product.hstatic.net/1000340570/product/versace-bright-crystal_2bfe89a837d84aab98fb209b3a7f11f2_grande.jpg",
         "Price range": "1.180.000? - 2.680.000?",
         "Option": [
             {
@@ -39,7 +39,7 @@
         "Gender": "Male",
         "Brand": "Narciso Rodriguez",
         "Name": "Narciso Rodriguez for Her Eau de Parfum",
-        "Image": "https://product.hstatic.net/1000340570/product/narciso-rodriguez-for-her-eau-de-parfum_e67c5a87c3de4f15a3a3e1fea1f71ffd_grande.jpg",
+        "Image": "//product.hstatic.net/1000340570/product/narciso-rodriguez-for-her-eau-de-parfum_e67c5a87c3de4f15a3a3e1fea1f71ffd_grande.jpg",
         "Price range": "1.650.000? - 2.850.000?",
         "Option": [
             {
@@ -64,7 +64,7 @@
         "Gender": "Male",
         "Brand": "Yves Saint Laurent",
         "Name": "Yves Saint Laurent Mon Paris",
-        "Image": "ttps://product.hstatic.net/1000340570/product/yves-saint-laurent-mon-paris-90ml_c236c9e065504b7da18ff96ed6ac6c9c_grande.jpg",
+        "Image": "//product.hstatic.net/1000340570/product/yves-saint-laurent-mon-paris-90ml_c236c9e065504b7da18ff96ed6ac6c9c_grande.jpg",
         "Price range": "1.880.000? - 2.650.000?",
         "Option": [
             {
