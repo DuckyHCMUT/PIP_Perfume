@@ -6,7 +6,7 @@ import Banner from "../components/Banner";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
 import { useParams } from "react-router";
-import { universal } from "../data";
+import { all } from "../data";
 
 const Container = styled.div``;
 
@@ -119,7 +119,7 @@ const Button = styled.button`
 
 const Product = ({item}) => {
   const {productID} = useParams()
-  const thisProduct = universal.find(item => item.ID === productID)
+  const thisProduct = all.find(item => item.ID === productID)
   return (
     <Container>
       <Banner />
