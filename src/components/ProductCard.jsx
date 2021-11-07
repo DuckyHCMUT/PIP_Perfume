@@ -117,7 +117,6 @@ const ProductCard = ({ item, onChange }) => {
             <ShoppingCartOutlined/>
           </Icon>
         </Link>
-    
         <Icon onClick = {() => onChange(item)}>
             <SearchOutlined />
         </Icon>

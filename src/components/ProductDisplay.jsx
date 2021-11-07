@@ -49,7 +49,6 @@ const Content = styled.div`
     margin-left: 10px;
 `;
 
-
 const ProductDisplay = ({option}) => {
     const [productPicked, setProductPicked] = useState('');
 
