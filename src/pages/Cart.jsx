@@ -186,7 +186,7 @@ const Cart = (item) => {
             <SummaryItemPrice>{quantity*24}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
+              <SummaryItemText>Total:</SummaryItemText>
               <SummaryItemPrice>48.200.000VND </SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/checkout">
