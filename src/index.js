@@ -19,6 +19,7 @@ ReactDOM.render(
 			<Route path="/user/register" component={Register} />
 			<Route path="/user/cart" component={Cart} />
 			<Route path="/product/:id" component={Product} />
+			<Route path="/user/checkout" component={Checkout} />
 		</Switch>
 	</BrowserRouter>,
 	rootElement
