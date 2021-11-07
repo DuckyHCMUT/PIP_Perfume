@@ -17,13 +17,6 @@ const Wrapper = styled.div`
 `;
 
 
-const Top = styled.span`
-flex: 1;
-border: 0.5px solid lightgray;
-border-radius: 10px;
-padding: 20px;
-height: 40vh;
-`;
 
 const TopTexts = styled.span`
   cursor: pointer;
@@ -45,6 +38,11 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
+  border: 0.5px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom:20px;
+  margin-right: 20px;
 `;
 
 const ProductDetail = styled.div`
@@ -53,7 +51,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 100px;
 `;
 
 const Details = styled.div`
@@ -109,12 +107,12 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
-const Summary = styled.div`
+const Summary = styled.span`
   flex: 1;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid black;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
+  height: 80vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -140,6 +138,7 @@ const Button = styled.button`
   background-color: pink;
   color: black;
   font-weight: 900;
+  margin-bottom: 10px;
 `;
 
 const Checkout = (item) => {
@@ -183,8 +182,8 @@ const Checkout = (item) => {
             ))}
             <Hr />
           </Info>
-          <Top>
-            <SummaryTitle>SUMMARY</SummaryTitle>
+          <Summary>
+            <SummaryTitle>SHIPPING INFORMATION</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Name:</SummaryItemText>
             <SummaryItemPrice>Duyen</SummaryItemPrice>
@@ -200,9 +199,6 @@ const Checkout = (item) => {
             <Link to="/user/login">
             <Button>CHANGE</Button>
             </Link>
-          </Top>
-
-          <Summary>
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>

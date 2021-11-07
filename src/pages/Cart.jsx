@@ -41,6 +41,11 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
+  border: 0.5px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom:20px;
+  margin-right: 20px;
 `;
 
 const ProductDetail = styled.div`
@@ -49,7 +54,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 100px;
 `;
 
 const Details = styled.div`
@@ -107,10 +112,10 @@ const Hr = styled.hr`
 
 const Summary = styled.div`
   flex: 1;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid black;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
+  height: 30vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -186,7 +191,7 @@ const Cart = (item) => {
             <SummaryItemPrice>{quantity*24}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText>Total:</SummaryItemText>
+              <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>48.200.000VND </SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/checkout">
