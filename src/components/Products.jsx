@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { universal } from "../data";
-import data from "../item/male.json"
-import ProductCard from "./ProductCard";
+import Product from "./ProductCard";
+import {all} from "../data";
+import { useState,useEffect } from "react";
 
 const Container = styled.div`
     padding: 20px;
@@ -10,13 +10,28 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = () => {
+const Products = ({option, itemDetail}) => {
+  const [filter, setFilter] = useState([]);
+  console.log(option);
+  useEffect(() => { 
+      setFilter(option !=='all' ? all.filter((item)=>item.Gender === 'Male') : all);
+  }, []);
+
+  
+  const List = (
+    filter?(
+      <Container>
+        {filter.map((item) => (
+          <Product item={item} onChange = {itemDetail} />
+        ))}
+      </Container>
+    )  : 'Products loading...'
+  )
+
   return (
-    <Container>
-      {universal.map((item) => (
-        <ProductCard item={item} key={item.ID}/>
-      ))}
-    </Container>
+    <div>
+      {List}
+    </div>
   );
 };
 

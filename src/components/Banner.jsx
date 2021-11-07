@@ -25,9 +25,8 @@ const Left = styled.div`
 `;
 
 const SearchContainer = styled.div`
-    border: 0.5px solid lightgray;
     display: flex;
-    background-color: #d4a08a;
+    background-color: #ffc890;
     align-items: center;
     margin-left: 30px;
     padding: 2px;
@@ -79,7 +78,8 @@ const Banner = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <Link to="/">
+                    <Link style={{textDecoration: 'none'}}
+                        to="/">
                         <Logo>BKP.</Logo>
                     </Link>
                 </Left>
@@ -93,7 +93,7 @@ const Banner = () => {
                 </Center>
 
                 <Right>
-                    <Link
+                    <Link style={{textDecoration: 'none'}}
                         to="/"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
@@ -101,7 +101,7 @@ const Banner = () => {
                     </Link>
                     <MenuItem>FAQ</MenuItem>
                     <MenuItem>CONTACT</MenuItem>
-                    <Link
+                    <Link style={{textDecoration: 'none'}}
                         to="/user/login"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >

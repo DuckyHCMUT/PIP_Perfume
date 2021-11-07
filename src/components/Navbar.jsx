@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     height: 50px;
-    border: 0.2px solid lightgray;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ebb29b;
+    background-color: #ffc890;
 `;
 const Center = styled.div`
     flex: 1;
@@ -26,15 +25,19 @@ const NavItem = styled.div`
   margin-left: 80px;
   color: black;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  &:hover {
+    background-color: #ffffff;
+  }
+  
 `;
 
-const Navbar = () => {
+const Navbar = ({onChange}) => {
     return (
         <Container>
             <Center>
-                <NavItem>ALL</NavItem>
-                <NavItem>FOR MEN</NavItem>
-                <NavItem>FOR WOMEN</NavItem>
+                <NavItem onClick = {() => onChange('all')}>ALL</NavItem>
+                <NavItem onClick = {() => onChange('Male')}>FOR MEN</NavItem>
+                <NavItem onClick = {() => onChange('Female')}>FOR WOMEN</NavItem>
                 <NavItem>BEST SELLER</NavItem>
             </Center>
         </Container>

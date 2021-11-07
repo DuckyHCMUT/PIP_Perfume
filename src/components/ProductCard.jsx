@@ -42,9 +42,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5fbfd;
   position: relative;
-
   &:hover ${Info}{
     opacity: 1;
   }
@@ -86,20 +84,26 @@ const Hr = styled.hr`
 `;
 
 const Name = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
 `
 
 const Price = styled.div`
-  font-size: 15px;
+  font-size: 12px;
+`
+const Brand = styled.div`
+  font-size: 14px;
 `
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, onChange }) => {
   return (
     <Container>
       <Circle />
       <Image src={item.Image} />
       <ItemInfo>
+        <Brand>
+          {item.Brand}
+        </Brand>
         <Name>
           {item.Name}
         </Name> 
@@ -113,15 +117,7 @@ const ProductCard = ({ item }) => {
             <ShoppingCartOutlined/>
           </Icon>
         </Link>
-      
-      
-        {/* <Link to = {`/product/${item.ID}` }>
-          <Icon>
-            <SearchOutlined />
-          </Icon>
-        </Link> */}
-
-        <Icon>
+        <Icon onClick = {() => onChange(item)}>
             <SearchOutlined />
         </Icon>
           

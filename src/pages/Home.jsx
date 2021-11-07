@@ -10,6 +10,7 @@ import Slider from "../components/Slider";
 import Blankspace from "../components/Blankspace";
 import Navbar from "../components/Navbar";
 import ProductDisplay from "../components/ProductDisplay";
+import { useState, useEffect } from 'react';
 
 function HomeLoggedIn(flag) {
     return (
@@ -25,13 +26,19 @@ function HomeLoggedIn(flag) {
 }
 
 const Home = () => {
+  const [gender, setGender] = useState('all');
+
+  const handleGender = (gen) => {
+      setGender(gen);
+      console.log(gen)
+  };
     return (
         <div>
             <Announcement />
             <Banner />
             <Slider />
-            <Navbar />
-            <ProductDisplay />
+            <Navbar onChange = {handleGender} />
+            <ProductDisplay option={gender} />
             <Footer />
         </div>
     );
