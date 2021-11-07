@@ -12,7 +12,6 @@ const Container = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	padding-left: 10%;
 `;
 
 const Wrapper = styled.div`
@@ -24,6 +23,7 @@ const Wrapper = styled.div`
 	border: 3px solid rgba(255, 255, 255, 0.1);
 	box-shadow: 0 0 150px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
+	margin-left: 10%;
 `;
 
 const Title = styled.h2`
@@ -154,7 +154,7 @@ const Register = () => {
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
-						<Logo>BKPERFUME</Logo>
+						<Logo>BKP.</Logo>
 					</Link>
 				</LogoContainer>
 				<Title>CREATE AN ACCOUNT</Title>
