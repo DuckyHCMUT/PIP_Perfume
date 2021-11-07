@@ -7,13 +7,13 @@ const Container = styled.div`
 	width: 100vw;
 	height: 100vh;
 	background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)),
-		url('https://images.unsplash.com/photo-1629881604792-7313167e39f9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2069&q=80')
+		url('https://images.unsplash.com/photo-1611066527948-893f0aecdb79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80')
 			center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	overflow: hidden;
 `;
 
@@ -35,10 +35,11 @@ const Wrapper = styled.div`
 	padding: 3%;
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0);
-	backdrop-filter: blur(30px);
-	border: 3px solid rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(35px);
+	border: 3px solid rgba(255, 255, 255, 0.05);
 	box-shadow: 0 0 150px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
+	margin-left: 15%;
 `;
 
 const Title = styled.h2`
@@ -97,6 +98,7 @@ const Button = styled.button`
 	margin-top: 20px;
 	font-weight: bold;
 	backdrop-filter: blur(35px);
+	width: 100%;
 `;
 
 const RegisterLink = styled.a`
@@ -116,6 +118,7 @@ const ForgotPassword = styled.a`
 	font-weight: bold;
 	display: block;
 	float: right;
+	margin-top: 5px;
 `;
 const SignUpForm = styled.div`
 	width: 100%;
@@ -134,7 +137,7 @@ const Login = () => {
 			<Wrapper>
 				<LogoContainer>
 					<Link to="/">
-						<Logo>BKPERFUME</Logo>
+						<Logo>BKP.</Logo>
 					</Link>
 				</LogoContainer>
 				<Title>SIGN IN</Title>
@@ -153,10 +156,9 @@ const Login = () => {
 						<ForgotPassword>Forgot password?</ForgotPassword>
 					</InputContainer>
 
-					
-					<Button>
-						<Link style={{textDecoration: 'none'}} to="/">Sign in</Link>
-					</Button>
+					<Link to="/">
+						<Button>Sign in</Button>
+					</Link>
 					<SignUpForm>
 						<NormalText>Not a member? &nbsp; </NormalText>
 						<Link to="/user/register">

@@ -23,6 +23,7 @@ ReactDOM.render(
 			<Route path="/product/:id" component={Product} />
 			<Route path="/product" component={ProductDetail} />
 			<Route path="/BlankPage" component={BlankPage} />
+			<Route path="/user/checkout" component={Checkout} />
 		</Switch>
 	</BrowserRouter>,
 	rootElement
