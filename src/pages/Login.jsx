@@ -155,7 +155,7 @@ const Login = () => {
 
 					
 					<Button>
-						<Link to="/">Sign in</Link>
+						<Link style={{textDecoration: 'none'}} to="/">Sign in</Link>
 					</Button>
 					<SignUpForm>
 						<NormalText>Not a member? &nbsp; </NormalText>

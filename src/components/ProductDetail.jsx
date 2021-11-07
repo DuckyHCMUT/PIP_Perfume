@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -104,7 +105,14 @@ const ProductDetail = ({item}) => {
                 <Amount>1</Amount>
                 <Add />
                 </AmountContainer>
-                <Button>ADD TO CART</Button>
+                <Button>Add to cart</Button>
+
+                
+                  <Button>
+                    <Link style={{textDecoration: 'none'}} to ="/BlankPage">
+                        Continue shopping
+                    </Link>
+                  </Button>
             </AddContainer>
             </InfoContainer>
         </Wrapper>

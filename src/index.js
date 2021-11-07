@@ -8,6 +8,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Product from './pages/Product'
+import ProductDetail from './components/ProductDetail';
+import BlankPage from './pages/BlankPage';
 
 const rootElement = document.getElementById('root');
 
@@ -19,6 +21,8 @@ ReactDOM.render(
 			<Route path="/user/register" component={Register} />
 			<Route path="/user/cart" component={Cart} />
 			<Route path="/product/:id" component={Product} />
+			<Route path="/product" component={ProductDetail} />
+			<Route path="/BlankPage" component={BlankPage} />
 		</Switch>
 	</BrowserRouter>,
 	rootElement

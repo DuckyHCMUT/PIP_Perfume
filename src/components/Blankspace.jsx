@@ -9,4 +9,5 @@ const Container = styled.div`
 const Blankspace = () => {
     return <Container></Container>;
   };
+
 export default Blankspace;
