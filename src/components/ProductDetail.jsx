@@ -71,18 +71,45 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid ;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 15px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
 
   &:hover{
-      background-color: #f8f4f4;
-  }
+       background-color: #f8f4f4;
+   }
+`;
+
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
 `;
 
 const ProductDetail = ({item}) => {
+    let count = 1;
     const [precisePrice,setprecisePrice] = useState(item.Option[0].Price);
     const handlePricebyVolume = (option) => {
         setprecisePrice(option.Price);
@@ -101,18 +128,22 @@ const ProductDetail = ({item}) => {
             <Option options = {item.Option} onChange = {handlePricebyVolume}/>
             <AddContainer>
                 <AmountContainer>
-                <Remove />
-                <Amount>1</Amount>
-                <Add />
-                </AmountContainer>
-                <Button>Add to cart</Button>
 
-                
+                <AmountButton>-</AmountButton>
+                <Amount>{count}</Amount>
+                <AmountButton>+</AmountButton>
+
+                </AmountContainer>
+                <Link to ="/user/cart">
+                <Button>Add to cart</Button>
+                </Link>
+                  
+                <Link to ="/BlankPage" style={{textDecoration: 'none'}}>
                   <Button>
-                    <Link style={{textDecoration: 'none'}} to ="/BlankPage">
-                        Continue shopping
-                    </Link>
-                  </Button>
+                    Continue shopping
+                    </Button>
+                </Link>
+                  
             </AddContainer>
             </InfoContainer>
         </Wrapper>

@@ -20,7 +20,6 @@ const Wrapper = styled.div`
 
 
 
-
 const TopTexts = styled.span`
   cursor: pointer;
   margin: 0px 0px;
@@ -82,7 +81,7 @@ const ProductAmountContainer = styled.div`
   margin-right: 250px;
 `;
 
-const ProductAmount = styled.span`
+const Amount = styled.span`
   width: 30px;
   height: 30px;
   border-radius: 10px;
@@ -138,6 +137,25 @@ const Button = styled.button`
   font-weight: 900;
 `;
 
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
+`;
+
 const Cart = (item) => {
   let quantity = 1;
   return (
@@ -168,9 +186,9 @@ const Cart = (item) => {
               <PriceDetail>
               <SummaryItemText>
                 <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>{quantity}</ProductAmount>
-                  <Add />
+                <AmountButton>-</AmountButton>
+                <Amount>{quantity}</Amount>
+                <AmountButton>+</AmountButton>
                   </ProductAmountContainer>
               </SummaryItemText>
                   <ProductPrice>{item.Option[0].Price}</ProductPrice>

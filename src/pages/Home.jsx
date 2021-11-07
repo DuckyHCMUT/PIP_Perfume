@@ -32,6 +32,7 @@ const Home = () => {
       setGender(gen);
       console.log(gen)
   };
+  
     return (
         <div>
             <Announcement />

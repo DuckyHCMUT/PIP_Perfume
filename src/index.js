@@ -10,6 +10,7 @@ import Cart from './pages/Cart';
 import Product from './pages/Product'
 import ProductDetail from './components/ProductDetail';
 import BlankPage from './pages/BlankPage';
+import Checkout from './pages/Checkout';
 
 const rootElement = document.getElementById('root');
 
