@@ -5,6 +5,8 @@ import {
 } from "@material-ui/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { cartArr } from "../pages/Home";
+
 
 const Info = styled.div`
   flex: 3;
@@ -57,7 +59,7 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
-  height: 75%;
+  height: 65%;
   z-index: 2;
 `;
 
@@ -96,6 +98,13 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
+  let subtitle;
+
+  function addtoCart(thisItem){
+    alert("Added " + thisItem['Name'] + " to cart")
+    cartArr.push(thisItem['ID'])
+  }
+
   return (
     <Container>
       <Circle />
@@ -112,20 +121,17 @@ const ProductCard = ({ item, onChange }) => {
         </Price>
       </ItemInfo> 
       <Info>
-        <Link to="/user/cart" item={item}>
-          <Icon>
-            <ShoppingCartOutlined/>
-          </Icon>
-        </Link>
-
-        
-          <Icon onClick = {() => onChange(item)}>
-              <SearchOutlined />
-          </Icon>
-        
-        <Icon>
-          <FavoriteBorderOutlined/>
+        <Icon onClick = {() => addtoCart(item)}>
+          <ShoppingCartOutlined/>
         </Icon>
+
+        <Icon onClick = {() => onChange(item)}>
+            <SearchOutlined />
+        </Icon>
+        
+        <Icon onClick = {() => alert("Added to favorite")}>
+          <FavoriteBorderOutlined/>
+        </Icon> 
       </Info>     
     </Container>
   );

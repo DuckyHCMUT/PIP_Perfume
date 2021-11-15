@@ -12,27 +12,15 @@ import Navbar from "../components/Navbar";
 import ProductDisplay from "../components/ProductDisplay";
 import { useState, useEffect } from 'react';
 
-function HomeLoggedIn(flag) {
-    return (
-        <div>
-            <Announcement />
-            <BannerLoggedIn />
-            <Slider />
-            <Navbar />
-            <ProductDisplay />
-            <Footer />
-        </div>
-    );
-}
-
 const Home = () => {
-  const [gender, setGender] = useState('all');
 
-  const handleGender = (gen) => {
-      setGender(gen);
-      console.log(gen)
-  };
-  
+    const [gender, setGender] = useState('all');
+
+    const handleGender = (gen) => {
+        setGender(gen);
+        console.log(gen);
+    };
+
     return (
         <div>
             <Announcement />
@@ -44,5 +32,7 @@ const Home = () => {
         </div>
     );
 };
+
+export let cartArr = [];
 
 export default Home;

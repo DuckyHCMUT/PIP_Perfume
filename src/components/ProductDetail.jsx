@@ -137,13 +137,6 @@ const ProductDetail = ({item}) => {
                 <Link to ="/user/cart">
                 <Button>Add to cart</Button>
                 </Link>
-                  
-                <Link to ="/BlankPage" style={{textDecoration: 'none'}}>
-                  <Button>
-                    Continue shopping
-                    </Button>
-                </Link>
-                  
             </AddContainer>
             </InfoContainer>
         </Wrapper>

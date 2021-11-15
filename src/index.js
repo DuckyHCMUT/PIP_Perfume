@@ -27,5 +27,5 @@ ReactDOM.render(
 			<Route path="/user/checkout" component={Checkout} />
 		</Switch>
 	</BrowserRouter>,
-	rootElement
+	rootElement,
 );

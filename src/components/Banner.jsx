@@ -79,7 +79,7 @@ const Banner = () => {
             <Wrapper>
                 <Left>
                     <Link style={{textDecoration: 'none'}}
-                        to="/">
+                        to="/BlankPage">
                         <Logo>BKP.</Logo>
                     </Link>
                 </Left>
