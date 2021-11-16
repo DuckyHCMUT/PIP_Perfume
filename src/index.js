@@ -1,6 +1,4 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -27,5 +25,5 @@ ReactDOM.render(
 			<Route path="/user/checkout" component={Checkout} />
 		</Switch>
 	</BrowserRouter>,
-	rootElement
+	rootElement,
 );

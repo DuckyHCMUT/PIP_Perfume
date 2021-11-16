@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
 import { Link } from "react-router-dom";
+import { cartArr } from "../pages/Home";
 
 const Container = styled.div``;
 
@@ -107,6 +108,11 @@ const AmountButton = styled.button`
     }
 `;
 
+function addtoCart(thisItem) {
+    alert("Added " + thisItem["Name"] + " to cart");
+    cartArr.push(thisItem["ID"]);
+}
+
 const ProductDetail = ({ item }) => {
     let count = 1;
     const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
@@ -134,16 +140,9 @@ const ProductDetail = ({ item }) => {
                             <Amount>{count}</Amount>
                             <AmountButton>+</AmountButton>
                         </AmountContainer>
-                        <Link to="/user/cart">
-                            <Button>Add to cart</Button>
-                        </Link>
-
-                        <Link
-                            to="/BlankPage"
-                            style={{ textDecoration: "none" }}
-                        >
-                            <Button>Continue shopping</Button>
-                        </Link>
+                        <Button onClick={() => addtoCart(item)}>
+                            Add to cart
+                        </Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
