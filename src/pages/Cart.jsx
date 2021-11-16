@@ -1,11 +1,10 @@
-import { Add, Remove } from "@material-ui/icons";
+
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import React from "react";
 import { all } from "../data";
 import { Link } from "react-router-dom";
 

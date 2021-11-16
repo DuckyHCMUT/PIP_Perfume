@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
-import React from 'react';
 import { Link } from 'react-router-dom';
+
 const Container = styled.div`
 	width: 100vw;
 	height: 100vh;

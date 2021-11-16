@@ -1,12 +1,8 @@
 import {
-    Button,
-    ButtonGroup,
     Checkbox,
     FormControl,
     InputLabel,
-    MenuItem,
     NativeSelect,
-    Select,
     Slider,
 } from "@material-ui/core";
 import * as React from "react";
