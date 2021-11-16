@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Product from "./ProductCard";
-import {all} from "../data";
+import { all } from "../data";
 import { useState, useEffect } from "react";
 
 const Container = styled.div`

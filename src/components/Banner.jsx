@@ -3,6 +3,7 @@ import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div`
     height: 100%;
@@ -63,23 +64,22 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-{
-    /*const SignInLink = styled.a`
+const SignInLink = styled.a`
     font-size: 14px;
     text-decoration: none;
     cursor: pointer;
     font-weight: bold;
     display: inline-block;
     margin-top: 20px;
-`;*/
-}
+`;
 
 const Banner = () => {
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <Link style={{ textDecoration: "none" }} to="/">
+                    <Link style={{textDecoration: 'none'} }
+                        to="/BlankPage">
                         <Logo>BKP.</Logo>
                     </Link>
                 </Left>
@@ -93,8 +93,7 @@ const Banner = () => {
                 </Center>
 
                 <Right>
-                    <Link
-                        style={{ textDecoration: "none" }}
+                    <Link style={{textDecoration: 'none'}}
                         to="/"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
@@ -102,8 +101,7 @@ const Banner = () => {
                     </Link>
                     <MenuItem>FAQ</MenuItem>
                     <MenuItem>CONTACT</MenuItem>
-                    <Link
-                        style={{ textDecoration: "none" }}
+                    <Link style={{textDecoration: 'none'}}
                         to="/user/login"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >

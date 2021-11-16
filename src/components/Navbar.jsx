@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -18,28 +17,29 @@ const Center = styled.div`
 `;
 
 const NavItem = styled.div`
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 5px;
-    margin-left: 80px;
-    color: black;
-    ${mobile({ fontSize: "12px", marginLeft: "10px" })}
-    &:hover {
-        background-color: #ffffff;
-    }
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 80px;
+  color: black;
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  &:hover {
+    background-color: #ffffff;
+  }
+  
 `;
 
-const Navbar = ({ onChange }) => {
+const Navbar = ({onChange}) => {
     return (
         <Container>
             <Center>
-                <NavItem onClick={() => onChange("all")}>ALL</NavItem>
-                <NavItem onClick={() => onChange("Male")}>FOR MEN</NavItem>
-                <NavItem onClick={() => onChange("Female")}>FOR WOMEN</NavItem>
+                <NavItem onClick = {() => onChange('all')}>ALL</NavItem>
+                <NavItem onClick = {() => onChange('Male')}>FOR MEN</NavItem>
+                <NavItem onClick = {() => onChange('Female')}>FOR WOMEN</NavItem>
                 <NavItem>BEST SELLER</NavItem>
             </Center>
         </Container>
-    );
-};
+    )
+}
 
-export default Navbar;
+export default Navbar
