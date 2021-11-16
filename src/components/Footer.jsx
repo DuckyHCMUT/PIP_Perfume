@@ -43,15 +43,14 @@ const SocialIcon = styled.div`
     justify-content: center;
     margin-right: 20px;
 `;
+const Title = styled.h3`
+    margin-bottom: 30px;
+`;
 
-const Center = styled.div`
+/*const Center = styled.div`
     flex: 1;
     padding: 20px;
     ${mobile({ display: "none" })}
-`;
-
-const Title = styled.h3`
-    margin-bottom: 30px;
 `;
 
 const List = styled.ul`
@@ -65,13 +64,13 @@ const List = styled.ul`
 const ListItem = styled.li`
     width: 50%;
     margin-bottom: 10px;
-`;
+`;*/
 
 const Right = styled.div`
-  flex: 1;
-  padding: 20px;
-  margin-left: 10px;
-  ${mobile({ backgroundColor: "#fff8f8" })}
+    flex: 1;
+    padding: 20px;
+    margin-left: 10px;
+    ${mobile({ backgroundColor: "#fff8f8" })}
 `;
 
 const ContactItem = styled.div`
@@ -81,50 +80,50 @@ const ContactItem = styled.div`
 `;
 
 const Payment = styled.img`
-  width: 50%;
+    width: 50%;
 `;
 
 const Footer = () => {
-  return (
-      <Container>
-          <Left>
-              <Logo>BKP.</Logo>
-              <Desc>
-                  The only perfume shop you need. Startup started in 2021 and
-                  growing strong
-              </Desc>
-              <SocialContainer>
-                  <SocialIcon color="3B5999">
-                      <Facebook />
-                  </SocialIcon>
-                  <SocialIcon color="E4405F">
-                      <Instagram />
-                  </SocialIcon>
-                  <SocialIcon color="55ACEE">
-                      <Twitter />
-                  </SocialIcon>
-                  <SocialIcon color="E60023">
-                      <Pinterest />
-                  </SocialIcon>
-              </SocialContainer>
-          </Left>
-          <Right>
-              <Title>Contact</Title>
-              <ContactItem>
-                  <Room style={{ marginRight: "10px" }} /> 268 Ly Thuong Kiet,
-                  District 10, Ho Chi Minh City
-              </ContactItem>
-              <ContactItem>
-                  <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
-              </ContactItem>
-              <ContactItem>
-                  <MailOutline style={{ marginRight: "10px" }} />{" "}
-                  shopowner@hcmut.edu.vn
-              </ContactItem>
-              <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-          </Right>
-      </Container>
-  );
+    return (
+        <Container>
+            <Left>
+                <Logo>BKP.</Logo>
+                <Desc>
+                    The only perfume shop you need. Startup started in 2021 and
+                    growing strong
+                </Desc>
+                <SocialContainer>
+                    <SocialIcon color="3B5999">
+                        <Facebook />
+                    </SocialIcon>
+                    <SocialIcon color="E4405F">
+                        <Instagram />
+                    </SocialIcon>
+                    <SocialIcon color="55ACEE">
+                        <Twitter />
+                    </SocialIcon>
+                    <SocialIcon color="E60023">
+                        <Pinterest />
+                    </SocialIcon>
+                </SocialContainer>
+            </Left>
+            <Right>
+                <Title>Contact</Title>
+                <ContactItem>
+                    <Room style={{ marginRight: "10px" }} /> 268 Ly Thuong Kiet,
+                    District 10, Ho Chi Minh City
+                </ContactItem>
+                <ContactItem>
+                    <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
+                </ContactItem>
+                <ContactItem>
+                    <MailOutline style={{ marginRight: "10px" }} />{" "}
+                    shopowner@hcmut.edu.vn
+                </ContactItem>
+                <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+            </Right>
+        </Container>
+    );
 };
 
 export default Footer;

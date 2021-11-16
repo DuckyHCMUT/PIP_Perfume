@@ -67,14 +67,16 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const SignInLink = styled.a`
+{
+    /*const SignInLink = styled.a`
     font-size: 14px;
     text-decoration: none;
     cursor: pointer;
     font-weight: bold;
     display: inline-block;
     margin-top: 20px;
-`;
+`;*/
+}
 
 const BannerLoggedIn = (userName) => {
     return (
