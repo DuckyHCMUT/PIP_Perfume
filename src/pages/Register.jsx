@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
-import React from 'react';
 import { Link } from 'react-router-dom';
+
 const Container = styled.div`
 	width: 100vw;
 	height: 100vh;
@@ -69,7 +69,7 @@ const Select = styled.select`
 	font-size: 16px;
 	background: 0;
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	color: white;
+	color: #2aad84;
 `;
 
 const InputContainer = styled.div`
@@ -83,6 +83,7 @@ const SelectContainer = styled.div`
 	width: 100%;
 `;
 const Button = styled.button`
+	border: 0;
 	text-decoration: none;
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 0.2);
@@ -97,6 +98,7 @@ const Button = styled.button`
 	margin-top: 20px;
 	font-weight: bold;
 	backdrop-filter: blur(35px);
+	width: 100%;
 `;
 
 const SignInLink = styled.a`
@@ -215,12 +217,15 @@ const Register = () => {
 						my personal data in accordance with the{' '}
 						<b>PRIVACY POLICY</b>
 					</Agreement>
-					<Button>Create</Button>
+					
+					<Link to="/user/login">
+						<Button>CREATE</Button>
+					</Link>
 
 					<LoginForm>
 						<NormalText>Already have an account? &nbsp;</NormalText>
 						<Link to="/user/login">
-							<SignInLink> Sign in</SignInLink>
+							<SignInLink> Sign in </SignInLink>
 						</Link>
 					</LoginForm>
 				</Form>

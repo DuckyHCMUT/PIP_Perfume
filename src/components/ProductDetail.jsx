@@ -1,8 +1,8 @@
-import { Add, Remove } from "@material-ui/icons";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
+import { cartArr } from "../pages/Home";
 
 const Container = styled.div``;
 
@@ -70,22 +70,64 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid ;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 15px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
 
   &:hover{
-      background-color: #f8f4f4;
-  }
+       background-color: #f8f4f4;
+   }
 `;
 
-const ProductDetail = ({item}) => {
-    const [precisePrice,setprecisePrice] = useState(item.Option[0].Price);
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
+`;
+
+const ProductDetail = ({item, onUpdateCount}) => {
+    const [count, setCount] = useState(1);
+    const handleCount = (count) => {
+      if (count < 1){
+        alert("Must greater than 0");
+        setCount(1);
+      }
+      else
+        setCount(count);
+    };
+
+    const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
     const handlePricebyVolume = (option) => {
         setprecisePrice(option.Price);
     };
+
+    function addtoCart(thisItem){
+      alert("Added " + count + " of " + thisItem['Name'] + " to cart")
+      cartArr.push(thisItem)
+    };
+    
 
     return (
         <Container>
@@ -100,11 +142,15 @@ const ProductDetail = ({item}) => {
             <Option options = {item.Option} onChange = {handlePricebyVolume}/>
             <AddContainer>
                 <AmountContainer>
-                <Remove />
-                <Amount>1</Amount>
-                <Add />
+
+                <AmountButton onClick = {() => handleCount(count - 1)}>-</AmountButton>
+                  <Amount>&nbsp;{count}&nbsp;</Amount>
+                <AmountButton onClick = {() => handleCount(count + 1)}>+</AmountButton>
+
                 </AmountContainer>
-                <Button>ADD TO CART</Button>
+                <Button onClick = {() => addtoCart(item)}>
+                  Add to cart
+                </Button>
             </AddContainer>
             </InfoContainer>
         </Wrapper>

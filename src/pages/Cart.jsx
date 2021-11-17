@@ -1,15 +1,11 @@
-import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import React from "react";
-import { all } from "../data";
 import { Link } from "react-router-dom";
-
-
+import { cartArr } from "./Home";
 
 const Container = styled.div``;
 
@@ -17,9 +13,6 @@ const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
-
-
-
 
 const TopTexts = styled.span`
   cursor: pointer;
@@ -68,8 +61,6 @@ const ProductName = styled.span``;
 
 const ProductId = styled.span``;
 
-
-
 const PriceDetail = styled.div`
   flex: 1;
   display: flex;
@@ -87,16 +78,21 @@ const ProductAmountContainer = styled.div`
   margin-right: 250px;
 `;
 
-const ProductAmount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
+const Amount = styled.span`
+	border: 0;
+	text-decoration: none;
+	border-radius: 10px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px
 `;
+
 
 const ProductPrice = styled.div`
   font-size: 30px;
@@ -136,25 +132,46 @@ const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
   width: 100%;
+  border-radius: 10px;
   font-size: 20px;
   padding: 10px;
   background-color: pink;
   color: black;
   font-weight: 900;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 10px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
 `;
 
 const Cart = (item) => {
-  let quantity = 1;
   return (
     <Container>
+      <Announcement />
       <Banner />
       <Navbar />
-      <Announcement />
       <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> </TopTexts>
       <Wrapper>
         <Bottom>
           <Info>
-            {all.map((item) => (
+            {cartArr.map((item) => (
             <Product>
               <ProductDetail>
                 <Image src={item.Image} />
@@ -173,9 +190,9 @@ const Cart = (item) => {
               <PriceDetail>
               <SummaryItemText>
                 <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>{quantity}</ProductAmount>
-                  <Add />
+                <AmountButton>-</AmountButton>
+                <Amount>{1}</Amount>
+                <AmountButton>+</AmountButton>
                   </ProductAmountContainer>
               </SummaryItemText>
                   <ProductPrice>{item.Option[0].Price}</ProductPrice>
@@ -188,11 +205,11 @@ const Cart = (item) => {
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{quantity*24}</SummaryItemPrice>
+            <SummaryItemPrice>{cartArr.length}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>48.200.000VND </SummaryItemPrice>
+              <SummaryItemText> Total</SummaryItemText>
+              <SummaryItemPrice> {0} </SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/checkout">
             <Button>PROCEED</Button>

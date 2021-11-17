@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -155,6 +154,7 @@ const Login = () => {
 						<Input type="password" placeholder="Enter password" />
 						<ForgotPassword>Forgot password?</ForgotPassword>
 					</InputContainer>
+
 					<Link to="/">
 						<Button>Sign in</Button>
 					</Link>

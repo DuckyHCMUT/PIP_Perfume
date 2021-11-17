@@ -1,11 +1,9 @@
-import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import React from "react";
 import { all } from "../data";
 import { Link } from "react-router-dom";
 
@@ -84,15 +82,19 @@ const ProductAmountContainer = styled.div`
   margin-right: 250px;
 `;
 
-const ProductAmount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
+const Amount = styled.span`
+	border: 0;
+	text-decoration: none;
+	border-radius: 10px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px
 `;
 
 const ProductPrice = styled.div`
@@ -127,27 +129,51 @@ const SummaryItem = styled.div`
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
-const SummaryItemText = styled.span``;
+const SummaryItemText = styled.span`
+  margin: 0px 5px 0px 0px;
+`;
 
-const SummaryItemPrice = styled.span``;
+const SummaryItemPrice = styled.span`
+`;
 
 const Button = styled.button`
   width: 100%;
+  border-radius: 10px;
   font-size: 20px;
   padding: 10px;
   background-color: pink;
   color: black;
   font-weight: 900;
   margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 10px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
 `;
 
 const Checkout = (item) => {
   let quantity = 1;
   return (
     <Container>
+      <Announcement />
       <Banner />
       <Navbar />
-      <Announcement />
       <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> {'>'} <Link to="/user/checkout">Place Order</Link> </TopTexts>
       <Wrapper>
         <Bottom>
@@ -171,10 +197,10 @@ const Checkout = (item) => {
               <PriceDetail>
               <SummaryItemText>
                 <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>{quantity}</ProductAmount>
-                  <Add />
-                  </ProductAmountContainer>
+                  <AmountButton>-</AmountButton>
+                  <Amount>{quantity}</Amount>
+                  <AmountButton>+</AmountButton>
+                </ProductAmountContainer>
               </SummaryItemText>
                   <ProductPrice>{item.Option[0].Price}</ProductPrice>
               </PriceDetail>
@@ -186,15 +212,15 @@ const Checkout = (item) => {
             <SummaryTitle>SHIPPING INFORMATION</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Name:</SummaryItemText>
-            <SummaryItemPrice>Duyen</SummaryItemPrice>
+            <SummaryItemPrice>Hanh Duyen</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Address:</SummaryItemText>
-            <SummaryItemPrice>268 ltk p14 q10</SummaryItemPrice>
+            <SummaryItemPrice>268 Ly Thuong Kiet street, ward 14, district 10, Ho Chi Minh city</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Phone:</SummaryItemText>
-              <SummaryItemPrice>0123456</SummaryItemPrice>
+              <SummaryItemPrice>0911233211</SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/login">
             <Button>CHANGE</Button>
@@ -216,7 +242,7 @@ const Checkout = (item) => {
               <SummaryItemText>Total:</SummaryItemText>
               <SummaryItemPrice>48.215.000VND</SummaryItemPrice>
             </SummaryItem>
-            <Link>
+            <Link to = "/" onClick={() => alert('Thank you for ordering!')}>
             <Button>PLACE ORDER</Button>
             </Link>
           </Summary>

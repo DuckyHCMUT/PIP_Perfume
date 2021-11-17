@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Product from "./ProductCard";
-import {all} from "../data";
-import { useState,useEffect } from "react";
+import { all } from "../data";
+import { useState, useEffect } from "react";
 
 const Container = styled.div`
     padding: 20px;
@@ -12,21 +12,25 @@ const Container = styled.div`
 
 const Products = ({option, itemDetail}) => {
   const [filter, setFilter] = useState([]);
-  console.log(option);
+
   useEffect(() => { 
-      setFilter(option !=='all' ? all.filter((item)=>item.Gender === 'Male') : all);
-  }, []);
+    setFilter(option !== 'all' ? 
+             (option !== 'Male' ? all.filter((item) => item["Gender"] === 'Female') : 
+             all.filter((item) => item["Gender"] === 'Male')):
+             all);
+  }, [option]);
 
   
   const List = (
-    filter?(
-      <Container>
-        {filter.map((item) => (
-          <Product item={item} onChange = {itemDetail} />
-        ))}
-      </Container>
-    )  : 'Products loading...'
-  )
+    filter? (<Container>
+      {filter.map((item) => (
+          <Product item = {item} onChange = {itemDetail}/>
+      ))}
+    </Container>)
+    : 'Product is loading'
+  );
+
+  //console.log(filter);
 
   return (
     <div>
