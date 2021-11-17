@@ -78,12 +78,6 @@ const Icon = styled.div`
   }
 `;
 
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
-
 const Name = styled.div`
   font-size: 14px;
   font-weight: bold;
@@ -97,8 +91,6 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
-  let subtitle;
-
   function addtoCart(thisItem){
     alert("Added " + thisItem['Name'] + " to cart")
     cartArr.push(thisItem)

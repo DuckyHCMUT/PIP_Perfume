@@ -33,10 +33,10 @@ const Navbar = ({onChange}) => {
     return (
         <Container>
             <Center>
-                <NavItem onClick = {() => onChange('all')}>ALL</NavItem>
-                <NavItem onClick = {() => onChange('Male')}>FOR MEN</NavItem>
-                <NavItem onClick = {() => onChange('Female')}>FOR WOMEN</NavItem>
-                <NavItem>BEST SELLER</NavItem>
+                <NavItem onClick = {() => onChange('all')}>   ALL          </NavItem>
+                <NavItem onClick = {() => onChange('Male')}>  FOR MEN      </NavItem>
+                <NavItem onClick = {() => onChange('Female')}>FOR WOMEN    </NavItem>
+                <NavItem onClick = {() => onChange('all')}>   BEST SELLER  </NavItem>
             </Center>
         </Container>
     )

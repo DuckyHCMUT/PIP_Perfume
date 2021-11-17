@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import {
     Facebook,
     Instagram,
@@ -5,7 +6,7 @@ import {
     Phone,
     Pinterest,
     Room,
-    Twitter,
+    Twitter
 } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
@@ -44,28 +45,28 @@ const SocialIcon = styled.div`
     margin-right: 20px;
 `;
 
-const Center = styled.div`
-    flex: 1;
-    padding: 20px;
-    ${mobile({ display: "none" })}
-`;
+// const Center = styled.div`
+//     flex: 1;
+//     padding: 20px;
+//     ${mobile({ display: "none" })}
+// `;
 
 const Title = styled.h3`
     margin-bottom: 30px;
 `;
 
-const List = styled.ul`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-`;
+// const List = styled.ul`
+//     margin: 0;
+//     padding: 0;
+//     list-style: none;
+//     display: flex;
+//     flex-wrap: wrap;
+// `;
 
-const ListItem = styled.li`
-    width: 50%;
-    margin-bottom: 10px;
-`;
+// const ListItem = styled.li`
+//     width: 50%;
+//     margin-bottom: 10px;
+// `;
 
 const Right = styled.div`
   flex: 1;
@@ -106,7 +107,10 @@ const Footer = () => {
                   <SocialIcon color="E60023">
                       <Pinterest />
                   </SocialIcon>
-              </SocialContainer>
+                  <Button onClick = {() => {window.scrollTo(0, 0);}}>
+                      Back to Top page
+                  </Button>
+              </SocialContainer>  
           </Left>
           <Right>
               <Title>Contact</Title>

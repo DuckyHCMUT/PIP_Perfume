@@ -12,7 +12,7 @@ const Home = () => {
 
     const handleGender = (gen) => {
         setGender(gen);
-        console.log(gen);
+        // console.log("From home:" + gen);
     };
 
     return (
@@ -21,7 +21,7 @@ const Home = () => {
             <Banner />
             <Slider />
             <Navbar onChange = {handleGender} />
-            <ProductDisplay option={gender} /> {/* onChange success */}
+            <ProductDisplay option = {gender} /> {/* onChange success */}
             <Footer />
         </div>
     );

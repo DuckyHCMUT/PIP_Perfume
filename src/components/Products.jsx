@@ -12,23 +12,25 @@ const Container = styled.div`
 
 const Products = ({option, itemDetail}) => {
   const [filter, setFilter] = useState([]);
+
   useEffect(() => { 
-      setFilter(option != 'all' ? (option != 'Male' ? 
-                    all.filter( (item) => item["Gender"] === 'Female') : 
-                    all.filter( (item) => item["Gender"] === 'Male') ) :
-                    all);
-  }, []);
+    setFilter(option !== 'all' ? 
+             (option !== 'Male' ? all.filter((item) => item["Gender"] === 'Female') : 
+             all.filter((item) => item["Gender"] === 'Male')):
+             all);
+  }, [option]);
 
   
   const List = (
-    filter?(
-      <Container>
-        {filter.map((item) => (
-          <Product item = {item} onChange = {itemDetail} />
-        ))}
-      </Container>
-    )  : 'Products loading...'
-  )
+    filter? (<Container>
+      {filter.map((item) => (
+          <Product item = {item} onChange = {itemDetail}/>
+      ))}
+    </Container>)
+    : 'Product is loading'
+  );
+
+  //console.log(filter);
 
   return (
     <div>

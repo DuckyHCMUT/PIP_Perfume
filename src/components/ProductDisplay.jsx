@@ -3,7 +3,6 @@ import {
     FormControl,
     InputLabel,
     NativeSelect,
-    Slider,
 } from "@material-ui/core";
 import * as React from "react";
 import { useState} from 'react';
@@ -59,18 +58,6 @@ const ProductDisplay = ({option, onUpdateCount}) => {
     const showProductList = (
         <Container>
             <FilterPanel>
-                <Title>SORT BY</Title>
-                <Title>Price Range</Title>
-                <Slider
-                    size="small"
-                    defaultValue={1000}
-                    aria-label="Small"
-                    valueLabelDisplay="auto"
-                    min={100}
-                    max={10000}
-                    color="secondary"
-                />
-
                 <Title>Brand</Title>
                 <Content>
                     <Checkbox></Checkbox>
@@ -92,6 +79,7 @@ const ProductDisplay = ({option, onUpdateCount}) => {
                     <Checkbox></Checkbox>
                     Versace{" "}
                 </Content>
+                
                 <Title>
                     Release Year:
                     <FormControl fullWidth>

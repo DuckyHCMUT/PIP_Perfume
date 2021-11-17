@@ -14,8 +14,6 @@ const Wrapper = styled.div`
   ${mobile({ padding: "10px" })}
 `;
 
-
-
 const TopTexts = styled.span`
   cursor: pointer;
   margin: 0px 0px;
@@ -62,8 +60,6 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
-
-
 
 const PriceDetail = styled.div`
   flex: 1;
