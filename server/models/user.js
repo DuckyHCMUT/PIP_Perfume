@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-import { isEmail } from "validator";
+const { isEmail } = require("validator");
 
 const UserSchema = new Schema({
     name: {

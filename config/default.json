@@ -1,0 +1,4 @@
+{
+    "dbURI": "mongodb+srv://new-user1:hcmut.edu@unicluster.wis5k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtsecret": "0fOMeEgzRghqTroQhyV-Y9GPNgKQWVJmiE69FlS8s44"
+}
