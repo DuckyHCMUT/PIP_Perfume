@@ -3,10 +3,9 @@ import {
     FormControl,
     InputLabel,
     NativeSelect,
-    Slider,
 } from "@material-ui/core";
 import * as React from "react";
-import { useState } from "react";
+import { useState} from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Products from "./Products";
@@ -45,30 +44,20 @@ const Content = styled.div`
     margin-left: 10px;
 `;
 
-const ProductDisplay = ({ option }) => {
-    const [productPicked, setProductPicked] = useState("");
+const ProductDisplay = ({option, onUpdateCount}) => {
+    const [productPicked, setProductPicked] = useState('');
 
     const handleProductPicked = (item) => {
         setProductPicked(item);
     };
 
-    const showProductDetail = <ProductDetail item={productPicked} />;
+    const showProductDetail = (
+        <ProductDetail item = {productPicked} onUpdateCount = {onUpdateCount}/>
+    );
 
     const showProductList = (
         <Container>
             <FilterPanel>
-                <Title>SORT BY</Title>
-                <Title>Price Range</Title>
-                <Slider
-                    size="small"
-                    defaultValue={1000}
-                    aria-label="Small"
-                    valueLabelDisplay="auto"
-                    min={100}
-                    max={10000}
-                    color="secondary"
-                />
-
                 <Title>Brand</Title>
                 <Content>
                     <Checkbox></Checkbox>
@@ -90,6 +79,7 @@ const ProductDisplay = ({ option }) => {
                     <Checkbox></Checkbox>
                     Versace{" "}
                 </Content>
+                
                 <Title>
                     Release Year:
                     <FormControl fullWidth>
@@ -111,12 +101,17 @@ const ProductDisplay = ({ option }) => {
                     </FormControl>
                 </Title>
             </FilterPanel>
-            <Display>
-                <Products option={option} itemDetail={handleProductPicked} />
+            <Display>    
+                <Products option = {option} itemDetail = {handleProductPicked}/>
             </Display>
         </Container>
     );
-    return <div>{productPicked ? showProductDetail : showProductList}</div>;
+
+    return (
+        <div>
+        {productPicked ? showProductDetail : showProductList}
+        </div>
+    );
 };
 
 export default ProductDisplay;

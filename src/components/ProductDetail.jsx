@@ -1,151 +1,159 @@
-//import { Add, Remove } from "@material-ui/icons";
-import { useState, useEffect } from "react";
+import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
-import { Link } from "react-router-dom";
 import { cartArr } from "../pages/Home";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-    padding: 50px;
-    display: flex;
-    ${mobile({ padding: "10px", flexDirection: "column" })}
+  padding: 50px;
+  display: flex;
+  ${mobile({ padding: "10px", flexDirection:"column" })}
 `;
 
 const ImgContainer = styled.div`
-    flex: 1;
+  flex: 1;
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: 90vh;
-    object-fit: cover;
-    ${mobile({ height: "40vh" })}
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+  ${mobile({ height: "40vh" })}
 `;
 
 const InfoContainer = styled.div`
-    flex: 1;
-    padding: 0px 50px;
-    ${mobile({ padding: "10px" })}
+  flex: 1;
+  padding: 0px 50px;
+  ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
-    font-weight: bold;
+  font-weight: bold;
+
 `;
 
 const Price = styled.span`
-    font-weight: 200;
-    font-size: 20px;
+  font-weight: 200;
+  font-size: 20px;
 `;
 
 const Brand = styled.div`
-    font-weight: 500;
-    font-size: 40;
-`;
+  font-weight: 500;
+  font-size: 40
+`
 
 const AddContainer = styled.div`
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    ${mobile({ width: "100%" })}
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${mobile({ width: "100%" })}
 `;
 
 const AmountContainer = styled.div`
-    display: flex;
-    align-items: center;
-    font-weight: 700;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
 `;
 
 const Amount = styled.span`
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
-    border: 1px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0px 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
 `;
 
 const Button = styled.button`
-    border: 0;
-    text-decoration: none;
-    border-radius: 5px;
-    background-color: white;
-    border: 2px solid;
-    font-size: 12px;
-    cursor: pointer;
-    text-transform: uppercase;
-    padding: 15px;
-    font-weight: bold;
-    display: inline-block;
-    margin: 5px;
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 15px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
 
-    &:hover {
-        background-color: #f8f4f4;
-    }
+  &:hover{
+       background-color: #f8f4f4;
+   }
 `;
 
 const AmountButton = styled.button`
-    border: 0;
-    text-decoration: none;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid;
-    font-size: 12px;
-    cursor: pointer;
-    text-transform: uppercase;
-    padding: 10px;
-    font-weight: bold;
-    display: inline-block;
-    margin: 5px;
+	border: 0;
+	text-decoration: none;
+	border-radius: 5px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
 
-    &:hover {
-        background-color: #f8f4f4;
-    }
+  &:hover{
+       background-color: #f8f4f4;
+   }
 `;
 
-function addtoCart(thisItem) {
-    alert("Added " + thisItem["Name"] + " to cart");
-    cartArr.push(thisItem["ID"]);
-}
+const ProductDetail = ({item, onUpdateCount}) => {
+    const [count, setCount] = useState(1);
+    const handleCount = (count) => {
+      if (count < 1){
+        alert("Must greater than 0");
+        setCount(1);
+      }
+      else
+        setCount(count);
+    };
 
-const ProductDetail = ({ item }) => {
-    let count = 1;
     const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
     const handlePricebyVolume = (option) => {
         setprecisePrice(option.Price);
     };
 
+    function addtoCart(thisItem){
+      alert("Added " + count + " of " + thisItem['Name'] + " to cart")
+      cartArr.push(thisItem)
+    };
+    
+
     return (
         <Container>
-            <Wrapper>
-                <ImgContainer>
-                    <Image src={item.Image} />
-                </ImgContainer>
-                <InfoContainer>
-                    <Brand>{item.Brand}</Brand>
-                    <Title>{item.Name}</Title>
-                    <Price>{precisePrice}</Price>
-                    <Option
-                        options={item.Option}
-                        onChange={handlePricebyVolume}
-                    />
-                    <AddContainer>
-                        <AmountContainer>
-                            <AmountButton>-</AmountButton>
-                            <Amount>{count}</Amount>
-                            <AmountButton>+</AmountButton>
-                        </AmountContainer>
-                        <Button onClick={() => addtoCart(item)}>
-                            Add to cart
-                        </Button>
-                    </AddContainer>
-                </InfoContainer>
-            </Wrapper>
+        <Wrapper>
+            <ImgContainer>
+            <Image src= {item.Image} />
+            </ImgContainer>
+            <InfoContainer>
+            <Brand>{item.Brand}</Brand>
+            <Title>{item.Name}</Title>
+            <Price>{precisePrice}</Price>
+            <Option options = {item.Option} onChange = {handlePricebyVolume}/>
+            <AddContainer>
+                <AmountContainer>
+
+                <AmountButton onClick = {() => handleCount(count - 1)}>-</AmountButton>
+                  <Amount>&nbsp;{count}&nbsp;</Amount>
+                <AmountButton onClick = {() => handleCount(count + 1)}>+</AmountButton>
+
+                </AmountContainer>
+                <Button onClick = {() => addtoCart(item)}>
+                  Add to cart
+                </Button>
+            </AddContainer>
+            </InfoContainer>
+        </Wrapper>
         </Container>
     );
 };
