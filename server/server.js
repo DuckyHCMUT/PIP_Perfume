@@ -1,6 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const config = require("config");
+
+const authRoutes = require("./routes/auth.js");
+const itemRoutes = require("./routes/item.js");
+const cartRoutes = require("./routes/cart.js");
+const orderRoutes = require("./routes/order.js");
 require("dotenv").config();
 
 const app = express();
@@ -13,15 +19,22 @@ app.use(express.json());
         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     });
 }*/
+app.use("/api", authRoutes);
+app.use("/api", itemRoutes);
+app.use("/api", cartRoutes);
+app.use("/api", orderRoutes);
 
 // connecting to mongoDB and then running server on port 4000
-const dbURI = `mongodb+srv://${process.env.MONGO_ATLAS_USRN}:${process.env.MONGO_ATLAS_PW}@unicluster.wis5k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-const port = process.env.PORT || 3000;
+const dbURI = config.get("dbURI");
+const port = process.env.PORT || 4000;
 mongoose
     .connect(dbURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then((result) => app.listen(port))
-    .then(console.log("DB Connected, Listening to port " + port))
+    .then((result) =>
+        app.listen(port, () =>
+            console.log("DB Connected, Listening to port " + port)
+        )
+    )
     .catch((err) => console.log(err));
