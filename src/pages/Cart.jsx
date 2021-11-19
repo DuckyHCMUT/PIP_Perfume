@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
-import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { cartArr } from "./Home";
+import Banner_Cart from "../components/Banner_Cart";
 
 const Container = styled.div``;
 
@@ -161,13 +161,11 @@ const AmountButton = styled.button`
    }
 `;
 
-const Cart = (item) => {
+const Cart = () => {
   return (
     <Container>
       <Announcement />
-      <Banner />
-      <Navbar />
-      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> </TopTexts>
+      <Banner_Cart />
       <Wrapper>
         <Bottom>
           <Info>
@@ -221,6 +219,5 @@ const Cart = (item) => {
     </Container>
   );
 };
-
 
 export default Cart;
