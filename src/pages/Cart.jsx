@@ -1,22 +1,16 @@
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { cartArr } from "./Home";
-import Banner_Cart from "../components/Banner_Cart";
+import BannerCart from "../components/BannerCart";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
-`;
-
-const TopTexts = styled.span`
-  cursor: pointer;
-  margin: 0px 0px;
 `;
 
 const Bottom = styled.div`
@@ -165,7 +159,7 @@ const Cart = () => {
   return (
     <Container>
       <Announcement />
-      <Banner_Cart />
+      <BannerCart />
       <Wrapper>
         <Bottom>
           <Info>

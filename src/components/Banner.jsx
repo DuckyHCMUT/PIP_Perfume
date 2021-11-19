@@ -107,15 +107,13 @@ const Banner = ({onChange}) => {
                 <Right>
                     <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                     
-                    <Link style={{textDecoration: 'none'}}
-                        to="/user/login"
+                    <Link to="/user/login"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                         <MenuItem>LOGIN</MenuItem>
                     </Link>
 
-                    <Link
-                        to="/user/cart"
+                    <Link to="/user/cart"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                         <MenuItem>

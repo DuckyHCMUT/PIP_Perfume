@@ -44,7 +44,7 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const Banner_Cart = () => {
+const BannerCart = () => {
     return (
         <Container>
             <Wrapper>
@@ -58,9 +58,8 @@ const Banner_Cart = () => {
                 <Right>
                     <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                     
-                    <Link style={{textDecoration: 'none'}}
-                        to="/user/login"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    <Link to ="/user/login"
+                        style={{ color: "inherit", textDecoration: "inherit"}}
                     >
                         <MenuItem>LOGIN</MenuItem>
                     </Link>
@@ -81,4 +80,4 @@ const Banner_Cart = () => {
     );
 };
 
-export default Banner_Cart;
+export default BannerCart;
