@@ -1,5 +1,5 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { ShoppingCartOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
@@ -28,14 +28,14 @@ const SearchContainer = styled.div`
     background-color: #ffc890;
     align-items: center;
     margin-left: 30px;
-    padding: 2px;
+    padding: 4px;
 `;
 
-const Input = styled.input`
-    border: 0.5px solid white;
-    width: 90%;
-    ${mobile({ width: "50px" })}
-`;
+const Input = {
+    border: '0.5px solid white',
+    width: '90%'
+};
+   
 
 const Center = styled.div`
     flex: 1;
@@ -63,7 +63,18 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const Banner = () => {
+const SearchButton = styled.button`
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+`;
+
+const Banner = ({onChange}) => {
+    const { search } = window.location;
+    const query = new URLSearchParams(search).get('perfume'); // Fetched the searched item successfully
+
     return (
         <Container>
             <Wrapper>
@@ -73,13 +84,25 @@ const Banner = () => {
                         <Logo>BKP.</Logo>
                     </Link>
                 </Left>
-                <Center>
-                    <SearchContainer>
-                        <Input placeholder="Search" />
-                        <Right>
-                            <Search style={{ color: "gray", fontSize: 18 }} />
-                        </Right>
-                    </SearchContainer>
+                <Center> 
+                    <form action="/" method="get">
+                        <SearchContainer>
+                            <label htmlFor="header-search"/>
+                            <input
+                                type="text"
+                                id="header-search"
+                                placeholder="Search perfume"
+                                name="perfume" 
+                                style = {Input}
+                            />
+                            <Right>
+                                <SearchButton type = "submit" > {/* After pressing this button, the query will already hold the searched value*/}
+                                    Search 
+                                </SearchButton>
+                            </Right>
+                        </SearchContainer>
+                    </form>
+                    {onChange(!query ? '' : query)}
                 </Center>
 
                 <Right>

@@ -26,7 +26,6 @@ const NavItem = styled.div`
   &:hover {
     background-color: #ffffff;
   }
-  
 `;
 
 const Navbar = ({onChange}) => {
