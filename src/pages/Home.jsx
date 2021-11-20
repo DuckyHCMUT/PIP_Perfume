@@ -7,21 +7,24 @@ import ProductDisplay from "../components/ProductDisplay";
 import { useState } from 'react';
 
 const Home = () => {
-
     const [gender, setGender] = useState('all');
+    const [searchValue, setSearchValue] = useState('');
 
     const handleGender = (gen) => {
         setGender(gen);
-        // console.log("From home:" + gen);
+    };
+
+    const handleSearch = (val) => {
+        setSearchValue(val);
     };
 
     return (
         <div>
             <Announcement />
-            <Banner />
+            <Banner onChange = {handleSearch}/>
             <Slider />
             <Navbar onChange = {handleGender} />
-            <ProductDisplay option = {gender} /> {/* onChange success */}
+            <ProductDisplay option = {gender} value = {searchValue} /> {/* onChange success */}
             <Footer />
         </div>
     );

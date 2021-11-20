@@ -23,25 +23,6 @@ const Left = styled.div`
     align-items: center;
 `;
 
-const SearchContainer = styled.div`
-    display: flex;
-    background-color: #ffc890;
-    align-items: center;
-    margin-left: 30px;
-    padding: 4px;
-`;
-
-const Input = {
-    border: '0.5px solid white',
-    width: '90%'
-};
-   
-
-const Center = styled.div`
-    flex: 1;
-    text-align: center;
-`;
-
 const Logo = styled.h1`
     font-weight: bold;
     cursor: pointer;
@@ -63,18 +44,7 @@ const MenuItem = styled.div`
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const SearchButton = styled.button`
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 0.5px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-`;
-
-const Banner = ({onChange}) => {
-    const { search } = window.location;
-    const query = new URLSearchParams(search).get('perfume'); // Fetched the searched item successfully
-
+const BannerCart = () => {
     return (
         <Container>
             <Wrapper>
@@ -84,36 +54,18 @@ const Banner = ({onChange}) => {
                         <Logo>BKP.</Logo>
                     </Link>
                 </Left>
-                <Center> 
-                    <form action="/" method="get">
-                        <SearchContainer>
-                            <label htmlFor="header-search"/>
-                            <input
-                                type="text"
-                                id="header-search"
-                                placeholder="Search perfume"
-                                name="perfume" 
-                                style = {Input}
-                            />
-                            <Right>
-                                <SearchButton type = "submit" onClick = {onChange(!query ? '' : query)}> {/* After pressing this button, the query will already hold the searched value*/}
-                                    Search 
-                                </SearchButton>
-                            </Right>
-                        </SearchContainer>
-                    </form>
-                </Center>
 
                 <Right>
                     <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                     
-                    <Link to="/user/login"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
+                    <Link to ="/user/login"
+                        style={{ color: "inherit", textDecoration: "inherit"}}
                     >
                         <MenuItem>LOGIN</MenuItem>
                     </Link>
 
-                    <Link to="/user/cart"
+                    <Link
+                        to="/user/cart"
                         style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                         <MenuItem>
@@ -128,4 +80,4 @@ const Banner = ({onChange}) => {
     );
 };
 
-export default Banner;
+export default BannerCart;
