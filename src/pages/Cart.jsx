@@ -44,6 +44,11 @@ const Image = styled.img`
   width: 100px;
 `;
 
+const TopTexts = styled.span`
+  cursor: pointer;
+  margin: 0px 0px;
+`;
+
 const Details = styled.div`
   padding: 20px;
   display: flex;
@@ -160,6 +165,7 @@ const Cart = () => {
     <Container>
       <Announcement />
       <BannerCart />
+      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link></TopTexts>
       <Wrapper>
         <Bottom>
           <Info>

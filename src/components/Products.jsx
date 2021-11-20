@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Product from "./ProductCard";
 import { all } from "../data";
 import { useState, useEffect } from "react";
+// import axios from "axios";
 
 const Container = styled.div`
     padding: 20px;
@@ -12,6 +13,9 @@ const Container = styled.div`
 
 const Products = ({value, option, itemDetail}) => {
   const [filter, setFilter] = useState([]);
+
+  // axios.get('http://localhost:4000/api/items', all)
+  //   .then(res => alert(res.data));
 
   const checkFilter = (value, option) => {
     // No need to check for searched value
