@@ -5,8 +5,6 @@ import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { cartArr } from "./Home";
 import BannerCart from "../components/BannerCart";
-import CartItem from "../components/CartItem";
-import { all } from "../data";
 
 const Container = styled.div``;
 
@@ -26,6 +24,25 @@ const Info = styled.div`
   flex: 3;
 `;
 
+const Product = styled.div`
+  display: flex;
+  justify-content: space-between;
+  ${mobile({ flexDirection: "column" })}
+  border: 0.5px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom:20px;
+  margin-right: 20px;
+`;
+
+const ProductDetail = styled.div`
+  flex: 2;
+  display: flex;
+`;
+
+const Image = styled.img`
+  width: 100px;
+`;
 
 const TopTexts = styled.span`
   cursor: pointer;
@@ -75,6 +92,13 @@ const Amount = styled.span`
   margin:5px
 `;
 
+
+const ProductPrice = styled.div`
+  font-size: 30px;
+  font-weight: 200;
+  margin-left: 50px;
+`;
+
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -117,6 +141,25 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const AmountButton = styled.button`
+	border: 0;
+	text-decoration: none;
+	border-radius: 10px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	font-weight: bold;
+  display: inline-block;
+  margin:5px;
+
+  &:hover{
+       background-color: #f8f4f4;
+   }
+`;
+
 const Cart = () => {
   return (
     <Container>
@@ -126,8 +169,33 @@ const Cart = () => {
       <Wrapper>
         <Bottom>
           <Info>
-            {all.map((item) => (
-            <CartItem item = {item}/>
+            {cartArr.map((item) => (
+            <Product>
+              <ProductDetail>
+                <Image src={item.Image} />
+                <Details>
+                  <ProductName>
+                    <b>Name:</b> {item.Name}
+                  </ProductName>
+                  <ProductId>
+                    <b>Size:</b> {item.Option[0].Volume}
+                  </ProductId>
+                  <ProductId>
+                    {item.Option[0].Price}
+                  </ProductId>
+                </Details>
+              </ProductDetail>
+              <PriceDetail>
+              <SummaryItemText>
+                <ProductAmountContainer>
+                <AmountButton>-</AmountButton>
+                <Amount>{1}</Amount>
+                <AmountButton>+</AmountButton>
+                  </ProductAmountContainer>
+              </SummaryItemText>
+                  <ProductPrice>{item.Option[0].Price}</ProductPrice>
+              </PriceDetail>
+            </Product>
             ))}
             <Hr />
           </Info>
@@ -135,7 +203,7 @@ const Cart = () => {
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{all.length}</SummaryItemPrice>
+            <SummaryItemPrice>{cartArr.length}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText> Total</SummaryItemText>
