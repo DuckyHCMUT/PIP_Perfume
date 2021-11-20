@@ -19,6 +19,7 @@ app.use(express.json());
         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     });
 }*/
+
 app.use("/api", authRoutes);
 app.use("/api", itemRoutes);
 app.use("/api", cartRoutes);
