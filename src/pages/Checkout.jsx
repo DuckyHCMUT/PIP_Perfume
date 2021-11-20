@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
-import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { all } from "../data";
 import { Link } from "react-router-dom";
