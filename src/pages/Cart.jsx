@@ -1,22 +1,18 @@
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
-import Banner from "../components/Banner";
-import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { cartArr } from "./Home";
+import BannerCart from "../components/BannerCart";
+import CartItem from "../components/CartItem";
+import { all } from "../data";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
-`;
-
-const TopTexts = styled.span`
-  cursor: pointer;
-  margin: 0px 0px;
 `;
 
 const Bottom = styled.div`
@@ -30,24 +26,10 @@ const Info = styled.div`
   flex: 3;
 `;
 
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-  border: 0.5px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom:20px;
-  margin-right: 20px;
-`;
 
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 100px;
+const TopTexts = styled.span`
+  cursor: pointer;
+  margin: 0px 0px;
 `;
 
 const Details = styled.div`
@@ -93,13 +75,6 @@ const Amount = styled.span`
   margin:5px
 `;
 
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-  margin-left: 50px;
-`;
-
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -142,62 +117,17 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const AmountButton = styled.button`
-	border: 0;
-	text-decoration: none;
-	border-radius: 10px;
-	background-color: white;
-	border: 1px solid;
-	font-size: 12px;
-	cursor: pointer;
-	text-transform: uppercase;
-	padding: 10px;
-	font-weight: bold;
-  display: inline-block;
-  margin:5px;
-
-  &:hover{
-       background-color: #f8f4f4;
-   }
-`;
-
-const Cart = (item) => {
+const Cart = () => {
   return (
     <Container>
       <Announcement />
-      <Banner />
-      <Navbar />
-      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> </TopTexts>
+      <BannerCart />
+      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link></TopTexts>
       <Wrapper>
         <Bottom>
           <Info>
-            {cartArr.map((item) => (
-            <Product>
-              <ProductDetail>
-                <Image src={item.Image} />
-                <Details>
-                  <ProductName>
-                    <b>Name:</b> {item.Name}
-                  </ProductName>
-                  <ProductId>
-                    <b>Size:</b> {item.Option[0].Volume}
-                  </ProductId>
-                  <ProductId>
-                    {item.Option[0].Price}
-                  </ProductId>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-              <SummaryItemText>
-                <ProductAmountContainer>
-                <AmountButton>-</AmountButton>
-                <Amount>{1}</Amount>
-                <AmountButton>+</AmountButton>
-                  </ProductAmountContainer>
-              </SummaryItemText>
-                  <ProductPrice>{item.Option[0].Price}</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {all.map((item) => (
+            <CartItem item = {item}/>
             ))}
             <Hr />
           </Info>
@@ -205,7 +135,7 @@ const Cart = (item) => {
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{cartArr.length}</SummaryItemPrice>
+            <SummaryItemPrice>{all.length}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText> Total</SummaryItemText>
@@ -221,6 +151,5 @@ const Cart = (item) => {
     </Container>
   );
 };
-
 
 export default Cart;

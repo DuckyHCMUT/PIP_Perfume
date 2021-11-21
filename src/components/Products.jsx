@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Product from "./ProductCard";
-import { all } from "../data";
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const Container = styled.div`
     padding: 20px;
@@ -10,18 +10,46 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = ({option, itemDetail}) => {
+const Products = ({value, option, itemDetail}) => {
   const [filter, setFilter] = useState([]);
+  const [data, setData] = useState([]);
+
+  const checkFilter = (value, option) => {
+    // No need to check for searched value
+    if (value === ''){
+      if (option === 'all')
+        return data;
+      else if (option === 'Male')
+        return data.filter((item) => item["Gender"] === 'Male');
+      else
+        return data.filter((item) => item["Gender"] === 'Female');
+    }
+    // Need to check for searched value
+    else{
+      if (option === 'all')
+        return data.filter((item) => item["Name"].toLowerCase().includes(value.toLowerCase()));
+      else if (option === 'Male')
+        return data.filter((item) => item["Name"].toLowerCase().includes(value.toLowerCase()) && item["Gender"] === 'Male');
+      else
+        return data.filter((item) => item["Name"].toLowerCase().includes(value.toLowerCase()) && item["Gender"] === 'Female');
+    }
+  }
 
   useEffect(() => { 
-    setFilter(option !== 'all' ? 
-             (option !== 'Male' ? all.filter((item) => item["Gender"] === 'Female') : 
-             all.filter((item) => item["Gender"] === 'Male')):
-             all);
-  }, [option]);
+    // Get items from database
+    axios.get('/api/items')
+    .then(response => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-  
-  const List = (
+    setFilter(checkFilter(value, option));
+  // eslint-disable-next-line
+  }, [value, option, data]);
+
+  const valueList = (
     filter? (<Container>
       {filter.map((item) => (
           <Product item = {item} onChange = {itemDetail}/>
@@ -30,11 +58,9 @@ const Products = ({option, itemDetail}) => {
     : 'Product is loading'
   );
 
-  //console.log(filter);
-
   return (
     <div>
-      {List}
+      {valueList}
     </div>
   );
 };

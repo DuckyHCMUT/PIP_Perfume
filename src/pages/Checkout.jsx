@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
-import Banner from "../components/Banner";
-import Navbar from "../components/Navbar";
+import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
 import { all } from "../data";
 import { Link } from "react-router-dom";
@@ -13,8 +12,6 @@ const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
-
-
 
 const TopTexts = styled.span`
   cursor: pointer;
@@ -62,8 +59,6 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
-
-
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -172,8 +167,7 @@ const Checkout = (item) => {
   return (
     <Container>
       <Announcement />
-      <Banner />
-      <Navbar />
+      <BannerCart />
       <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> {'>'} <Link to="/user/checkout">Place Order</Link> </TopTexts>
       <Wrapper>
         <Bottom>

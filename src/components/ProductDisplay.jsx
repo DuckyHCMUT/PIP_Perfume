@@ -1,9 +1,3 @@
-import {
-    Checkbox,
-    FormControl,
-    InputLabel,
-    NativeSelect,
-} from "@material-ui/core";
 import * as React from "react";
 import { useState} from 'react';
 import styled from "styled-components";
@@ -18,12 +12,6 @@ const Container = styled.div`
     flex-direction: row;
     padding: 40px;
 `;
-const FilterPanel = styled.div`
-    border: 0.5px solid lightgrey;
-    padding: 10px;
-    width: 300px;
-    height: 420px;
-`;
 const Display = styled.div`
     flex: 3;
     margin-left: 30px;
@@ -34,17 +22,8 @@ const Display = styled.div`
     justify-content: center;
     ${mobile({ flex: 2, justifyContent: "center" })}
 `;
-const Title = styled.div`
-    font: 22px bold;
-`;
-const Content = styled.div`
-    font: 18px;
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-`;
 
-const ProductDisplay = ({option, onUpdateCount}) => {
+const ProductDisplay = ({option, onUpdateCount, value}) => {
     const [productPicked, setProductPicked] = useState('');
 
     const handleProductPicked = (item) => {
@@ -57,59 +36,15 @@ const ProductDisplay = ({option, onUpdateCount}) => {
 
     const showProductList = (
         <Container>
-            <FilterPanel>
-                <Title>Brand</Title>
-                <Content>
-                    <Checkbox></Checkbox>
-                    Gucci{" "}
-                </Content>
-                <Content>
-                    <Checkbox></Checkbox>
-                    Dior{" "}
-                </Content>
-                <Content>
-                    <Checkbox></Checkbox>
-                    CK{" "}
-                </Content>
-                <Content>
-                    <Checkbox></Checkbox>
-                    Burberry{" "}
-                </Content>
-                <Content>
-                    <Checkbox></Checkbox>
-                    Versace{" "}
-                </Content>
-                
-                <Title>
-                    Release Year:
-                    <FormControl fullWidth>
-                        <InputLabel
-                            variant="standard"
-                            htmlFor="uncontrolled-native"
-                        ></InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            inputProps={{
-                                id: "uncontrolled-native",
-                            }}
-                        >
-                            <option value={2021}>2021</option>
-                            <option value={2020}>2020</option>
-                            <option value={2019}>2019</option>
-                            <option value={2018}>2018</option>
-                        </NativeSelect>
-                    </FormControl>
-                </Title>
-            </FilterPanel>
             <Display>    
-                <Products option = {option} itemDetail = {handleProductPicked}/>
+                <Products option = {option} value = {value} itemDetail = {handleProductPicked}/>
             </Display>
         </Container>
     );
 
     return (
         <div>
-        {productPicked ? showProductDetail : showProductList}
+            {productPicked ? showProductDetail : showProductList}
         </div>
     );
 };
