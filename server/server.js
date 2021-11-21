@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
+const cors = require("cors");
 
 const authRoutes = require("./routes/auth.js");
 const itemRoutes = require("./routes/item.js");
@@ -11,6 +12,7 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // used in production to serve client files
 /*if (process.env.NODE_ENV === "production") {
