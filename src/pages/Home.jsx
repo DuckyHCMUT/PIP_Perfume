@@ -31,5 +31,6 @@ const Home = () => {
 };
 
 export let cartArr = [];
+export let quanArr = [];
 
 export default Home;
