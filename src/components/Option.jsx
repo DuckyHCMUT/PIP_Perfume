@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { NativeSelect, FormControl } from '@material-ui/core';
 
 const Filter = styled.div`
   display: flex;
@@ -26,19 +27,13 @@ const FilterContainer = styled.div`
   ${mobile({ width: "100%" })}
 `;
 
-const Option = ({options, onChange}) => {
+const Option = ({options, handleOptionChange}) => {
     return (
     <FilterContainer>
-        <Filter>
-            <FilterTitle>Option</FilterTitle>
-            <FilterSize>
-            {options.map((option) => (
-                <FilterSizeOption>
-                    {option.Volume}
-                </FilterSizeOption>
-            ))}   
-            </FilterSize>
-        </Filter>
+        <NativeSelect defaultValue="" onChange={(e) => handleOptionChange(e.target.value)}>
+        <option value="">{options[0].Volume}</option>
+        {options.map((c) =>{return <option value={c.Price}>{c.Volume}</option>})};
+      </NativeSelect>
     </FilterContainer>
     )
     };

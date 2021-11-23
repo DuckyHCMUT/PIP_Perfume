@@ -119,8 +119,8 @@ const ProductDetail = ({item, onUpdateCount}) => {
     };
 
     const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
-    const handlePricebyVolume = (option) => {
-        setprecisePrice(option.Price);
+    const handlePricebyVolume = (price) => {
+        setprecisePrice(price);
     };
 
     function addtoCart(thisItem){
@@ -138,8 +138,8 @@ const ProductDetail = ({item, onUpdateCount}) => {
             <InfoContainer>
             <Brand>{item.Brand}</Brand>
             <Title>{item.Name}</Title>
+            <Option options = {item.Option} handleOptionChange = {handlePricebyVolume}/>
             <Price>{precisePrice}</Price>
-            <Option options = {item.Option} onChange = {handlePricebyVolume}/>
             <AddContainer>
                 <AmountContainer>
 
