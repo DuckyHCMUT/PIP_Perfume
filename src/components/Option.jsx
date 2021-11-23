@@ -14,8 +14,7 @@ const Option = ({options, handleOptionChange}) => {
     return (
     <FilterContainer>
         <NativeSelect defaultValue="" onChange={(e) => handleOptionChange(e.target.value)}>
-        <option value="">{options[0].Volume}</option>
-        {options.map((c) =>{return <option value={c.Price}>{c.Volume}</option>})};
+        {options.map((c) =>{return <option value={c.OptionID}>{c.Volume}</option>})};
       </NativeSelect>
     </FilterContainer>
     )

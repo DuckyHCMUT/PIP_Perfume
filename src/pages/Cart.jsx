@@ -98,7 +98,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cartArr.map((item) => (
-              <CartItem item = {item} />
+              <CartItem item = {item[0]} option = {item[1]} />
             ))}
             <Hr />
           </Info>

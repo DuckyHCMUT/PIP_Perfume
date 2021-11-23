@@ -93,23 +93,23 @@ const ProductPrice = styled.div`
 `;
 const SummaryItemText = styled.span``;
 
-const CartItem = ({item}) => {
+const CartItem = ({item, option}) => {
     const [count, setCount] = useState(0);
 
     // eslint-disable-next-line
-    const [total, setTotal] = useState(item.Option[0].Price ? item.Option[0].Price : 0);
-    const [cart, updateCart] = useState(cartArr);
-    const [itemCount, setItemCount] = useState(quanArr);
+    const [total, setTotal] = useState(option.Price ? option.Price : 0);
+    const [cart, setCart] = useState(cartArr);
+    const [optionCount, setOptionCount] = useState(quanArr);
 
-    const handleCount = (count, price, itemID) => {
+    const handleCount = (count, optionID) => {
       if (count < 1)
-        removeItem(itemID);
+        removeItem(optionID);
       else{
         setCount(count);
         
         // Modify the (itemID, quantity) array
         for (var i = 0; i < cartArr.length; i++){
-          if (quanArr[i][0] === itemID){
+          if (quanArr[i][0] === optionID){
             quanArr[i][1] = count;
             break;
           }
@@ -118,25 +118,25 @@ const CartItem = ({item}) => {
     };
 
     useEffect(() => {
-      findCount(item['ID']);
-    }, [item])
+      findCount(option.OptionID);
+    }, [option])
 
-    const findCount = (itemID) => {
+    const findCount = (optionID) => {
       for (let i = 0; i < quanArr.length; i++){
-        if (quanArr[i][0] === itemID){
+        if (quanArr[i][0] === optionID){
           setCount(quanArr[i][1]);
           break;
         }
       }
     }
 
-    const removeItem = (itemID) => {
+    const removeItem = (optionID) => {
       let innerCartArr = cart;
-      let innerQuanArr = itemCount;
+      let innerQuanArr = optionCount;
       let index = -1;
 
       for (var i = 0; i < cartArr.length; i++){
-        if (cartArr[i]['ID'] === itemID){
+        if (cartArr[i][1]['OptionID'] === optionID){
           index = i;
           break;
         }
@@ -145,8 +145,8 @@ const CartItem = ({item}) => {
       if (index !== -1){
         innerCartArr.splice(index, 1);
         innerQuanArr.splice(index, 1);
-        updateCart(innerCartArr)
-        setItemCount(innerQuanArr);
+        setCart(innerCartArr)
+        setOptionCount(innerQuanArr);
       }
     };
 
@@ -163,10 +163,10 @@ const CartItem = ({item}) => {
                     <b>Name:</b> {item.Name}
                   </ProductName>
                   <ProductId>
-                    <b>Size:</b> {item.Option[0].Volume}
+                    <b>Size:</b> {option.Volume}
                   </ProductId>
                   <ProductId>
-                    {item.Option[0].Price}
+                    {option.Price}
                   </ProductId>
                 </Details>
             </ProductDetail>
@@ -174,22 +174,22 @@ const CartItem = ({item}) => {
               <SummaryItemText>
                 <ProductAmountContainer>
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => removeItem(item["ID"])}>Remove</AmountButton>
+                  <AmountButton onClick = {() => removeItem(option.OptionID)}>Remove</AmountButton>
                 </Link>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count - 1, item.Option[0].price, item["ID"])}>-</AmountButton>
+                  <AmountButton onClick = {() => handleCount(count - 1, option.Price, option.OptionID)}>-</AmountButton>
                 </Link>
                   
                   <Amount>&nbsp;{count}&nbsp;</Amount>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count + 1, item.Option[0].price, item["ID"])}>+</AmountButton>
+                  <AmountButton onClick = {() => handleCount(count + 1, option.Price, option.OptionID)}>+</AmountButton>
                 </Link>
 
                 </ProductAmountContainer>
               </SummaryItemText>
-                  <ProductPrice>{numberWithDot(item.Option[0].Price.split('.').join('').split('VND').join('')*count) + " VND"}</ProductPrice>
+                  <ProductPrice>{numberWithDot(option.Price.split('.').join('').split('VND').join('')*count) + " VND"}</ProductPrice>
             </PriceDetail>
         </Product>
     )
