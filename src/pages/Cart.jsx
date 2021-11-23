@@ -3,10 +3,10 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr } from "./Home";
+import { cartArr, quanArr } from "./Home";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
-import { all } from "../data";
+import { useState, useEffect } from "react";
 
 const Container = styled.div``;
 
@@ -30,49 +30,6 @@ const Info = styled.div`
 const TopTexts = styled.span`
   cursor: pointer;
   margin: 0px 0px;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: -55px;
-  position: relative;
-  margin-left: -50px;
-  margin-right: 250px;
-`;
-
-const Amount = styled.span`
-	border: 0;
-	text-decoration: none;
-	border-radius: 10px;
-	background-color: white;
-	border: 1px solid;
-	font-size: 12px;
-	cursor: pointer;
-	text-transform: uppercase;
-	padding: 10px;
-	font-weight: bold;
-  display: inline-block;
-  margin:5px
 `;
 
 const Hr = styled.hr`
@@ -118,6 +75,20 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const [totalItemInCart, setTotal] = useState(0);
+
+  useEffect(() => {
+    handleTotalItem();
+  },[totalItemInCart]);
+
+  const handleTotalItem = () => {
+    let count = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      count += quanArr[i][1];
+    }
+    setTotal(count);
+  }
+
   return (
     <Container>
       <Announcement />
@@ -126,8 +97,8 @@ const Cart = () => {
       <Wrapper>
         <Bottom>
           <Info>
-            {all.map((item) => (
-            <CartItem item = {item}/>
+            {cartArr.map((item) => (
+              <CartItem item = {item} />
             ))}
             <Hr />
           </Info>
@@ -135,14 +106,14 @@ const Cart = () => {
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{all.length}</SummaryItemPrice>
+            <SummaryItemPrice>{totalItemInCart}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText> Total</SummaryItemText>
+              <SummaryItemText> Total </SummaryItemText>
               <SummaryItemPrice> {0} </SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/checkout">
-            <Button>PROCEED</Button>
+              <Button> PROCEED </Button>
             </Link>
           </Summary>
         </Bottom>
