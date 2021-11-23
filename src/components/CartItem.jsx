@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Banner from "../components/Banner";
-import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { cartArr, quanArr } from "../pages/Home";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
@@ -89,16 +88,72 @@ const AmountButton = styled.button`
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  margin-left: 50px;
+  margin-left: 150px;
+  margin-right: 5px;
 `;
 const SummaryItemText = styled.span``;
+
 const CartItem = ({item}) => {
-    const [count, setCount] = useState(item?1:0);
-    const [total, setTotal] = useState(item.Option[0].Price?item.Option[0].Price:0);
-    const handleCount = (cnt, price) => {
-        setCount(cnt);
-        setTotal(total);
+    const [count, setCount] = useState(0);
+
+    // eslint-disable-next-line
+    const [total, setTotal] = useState(item.Option[0].Price ? item.Option[0].Price : 0);
+    const [cart, updateCart] = useState(cartArr);
+    const [itemCount, setItemCount] = useState(quanArr);
+
+    const handleCount = (count, price, itemID) => {
+      if (count < 1)
+        removeItem(itemID);
+      else{
+        setCount(count);
+        
+        // Modify the (itemID, quantity) array
+        for (var i = 0; i < cartArr.length; i++){
+          if (quanArr[i][0] === itemID){
+            quanArr[i][1] = count;
+            break;
+          }
+        }
+      }
     };
+
+    useEffect(() => {
+      findCount(item['ID']);
+    }, [item])
+
+    const findCount = (itemID) => {
+      for (let i = 0; i < quanArr.length; i++){
+        if (quanArr[i][0] === itemID){
+          setCount(quanArr[i][1]);
+          break;
+        }
+      }
+    }
+
+    const removeItem = (itemID) => {
+      let innerCartArr = cart;
+      let innerQuanArr = itemCount;
+      let index = -1;
+
+      for (var i = 0; i < cartArr.length; i++){
+        if (cartArr[i]['ID'] === itemID){
+          index = i;
+          break;
+        }
+      }
+
+      if (index !== -1){
+        innerCartArr.splice(index, 1);
+        innerQuanArr.splice(index, 1);
+        updateCart(innerCartArr)
+        setItemCount(innerQuanArr);
+      }
+    };
+
+    const numberWithDot = (x)=> {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     return(
         <Product>
             <ProductDetail>
@@ -118,14 +173,26 @@ const CartItem = ({item}) => {
             <PriceDetail>
               <SummaryItemText>
                 <ProductAmountContainer>
-                <AmountButton onClick = {() => handleCount(count-1, item.Option[0].price)}>-</AmountButton>
+                <Link to="/user/cart">
+                  <AmountButton onClick = {() => removeItem(item["ID"])}>Remove</AmountButton>
+                </Link>
+
+                <Link to="/user/cart">
+                  <AmountButton onClick = {() => handleCount(count - 1, item.Option[0].price, item["ID"])}>-</AmountButton>
+                </Link>
+                  
                   <Amount>&nbsp;{count}&nbsp;</Amount>
-                <AmountButton onClick = {() => handleCount(count+1, item.Option[0].price)}>+</AmountButton>
-                  </ProductAmountContainer>
+
+                <Link to="/user/cart">
+                  <AmountButton onClick = {() => handleCount(count + 1, item.Option[0].price, item["ID"])}>+</AmountButton>
+                </Link>
+
+                </ProductAmountContainer>
               </SummaryItemText>
-                  <ProductPrice>{total}VND</ProductPrice>
+                  <ProductPrice>{numberWithDot(item.Option[0].Price.split('.').join('').split('VND').join('')*count) + " VND"}</ProductPrice>
             </PriceDetail>
         </Product>
     )
 }
+
 export default CartItem;

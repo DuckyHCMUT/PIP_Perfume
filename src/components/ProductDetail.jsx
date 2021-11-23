@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
-import { cartArr } from "../pages/Home";
+import { cartArr, quanArr } from "../pages/Home";
 
 const Container = styled.div``;
 
@@ -119,16 +119,31 @@ const ProductDetail = ({item, onUpdateCount}) => {
     };
 
     const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
+
+    // eslint-disable-next-line
     const handlePricebyVolume = (option) => {
-        setprecisePrice(option.Price);
+        setprecisePrice(option["Price"]);
     };
 
-    function addtoCart(thisItem){
-      alert("Added " + count + " of " + thisItem['Name'] + " to cart")
-      cartArr.push(thisItem)
+    function addtoCart(thisItem, thisCount){
+      // If item is not presented in cart yet
+      var found = false;
+
+      for (var i = 0; i < cartArr.length; i++) {
+          if (cartArr[i]['Name'] === thisItem['Name']) {
+              found = true;
+              break;
+          }
+      }
+      if (!found){
+        cartArr.push(thisItem);
+        quanArr.push([thisItem['ID'], thisCount]);
+        alert("Added " + thisItem['Name'] + " to the cart");
+      }
+      else
+        alert(thisItem['Name'] + " is already in the cart");  
     };
     
-
     return (
         <Container>
         <Wrapper>
@@ -139,7 +154,7 @@ const ProductDetail = ({item, onUpdateCount}) => {
             <Brand>{item.Brand}</Brand>
             <Title>{item.Name}</Title>
             <Price>{precisePrice}</Price>
-            <Option options = {item.Option} onChange = {handlePricebyVolume}/>
+            <Option options = {item.Option} onClick = {() => alert("wtf")}/>
             <AddContainer>
                 <AmountContainer>
 
@@ -148,7 +163,7 @@ const ProductDetail = ({item, onUpdateCount}) => {
                 <AmountButton onClick = {() => handleCount(count + 1)}>+</AmountButton>
 
                 </AmountContainer>
-                <Button onClick = {() => addtoCart(item)}>
+                <Button onClick = {() => addtoCart(item, count)}>
                   Add to cart
                 </Button>
             </AddContainer>

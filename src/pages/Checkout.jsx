@@ -3,8 +3,10 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
-import { all } from "../data";
 import { Link } from "react-router-dom";
+import { cartArr, quanArr } from "./Home";
+import { useState, useEffect } from "react";
+import CheckoutItem from "../components/CheckoutItem";
 
 const Container = styled.div``;
 
@@ -29,75 +31,6 @@ const Info = styled.div`
   flex: 3;
 `;
 
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-  border: 0.5px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom:20px;
-  margin-right: 20px;
-`;
-
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 100px;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: -55px;
-  position: relative;
-  margin-left: -30px;
-  margin-right: 250px;
-`;
-
-const Amount = styled.span`
-	border: 0;
-	text-decoration: none;
-	border-radius: 10px;
-	background-color: white;
-	border: 1px solid;
-	font-size: 12px;
-	cursor: pointer;
-	text-transform: uppercase;
-	padding: 10px;
-	font-weight: bold;
-  display: inline-block;
-  margin:5px
-`;
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-  margin-left: 100px;
-`;
-
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -109,7 +42,7 @@ const Summary = styled.span`
   border: 0.5px solid black;
   border-radius: 10px;
   padding: 20px;
-  height: 80vh;
+  height: 90vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -143,27 +76,41 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const AmountButton = styled.button`
-	border: 0;
-	text-decoration: none;
-	border-radius: 10px;
-	background-color: white;
-	border: 1px solid;
-	font-size: 12px;
-	cursor: pointer;
-	text-transform: uppercase;
-	padding: 10px;
-	font-weight: bold;
-  display: inline-block;
-  margin:5px;
-
-  &:hover{
-       background-color: #f8f4f4;
-   }
+const ReturnButton = styled.button`
+  width: 100%;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px;
+  background-color: #e67373;
+  color: #241f1f;
+  font-weight: 900;
+  margin-bottom: 10px;
+  cursor: pointer;
 `;
 
-const Checkout = (item) => {
-  let quantity = 1;
+const Checkout = () => {
+  const [totalItemInCheckOut, setTotal] = useState(0);
+
+  useEffect(() => {
+    handleTotalItem();
+  },[totalItemInCheckOut]);
+
+  const handleTotalItem = () => {
+    let count = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      count += quanArr[i][1];
+    }
+    setTotal(count);
+  }
+
+  const recycleCart = () => {
+    alert('Thank you for ordering!');
+    let arrLength = quanArr.length;
+    quanArr.splice(0, arrLength);
+    cartArr.splice(0, arrLength);
+    // Start the process of destroy everything
+  }
+
   return (
     <Container>
       <Announcement />
@@ -172,33 +119,8 @@ const Checkout = (item) => {
       <Wrapper>
         <Bottom>
           <Info>
-            {all.map((item) => (
-            <Product>
-              <ProductDetail>
-                <Image src={item.Image} />
-                <Details>
-                  <ProductName>
-                    <b>Name:</b> {item.Name}
-                  </ProductName>
-                  <ProductId>
-                    <b>Size:</b> {item.Option[0].Volume}
-                  </ProductId>
-                  <ProductId>
-                    {item.Option[0].Price}
-                  </ProductId>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-              <SummaryItemText>
-                <ProductAmountContainer>
-                  <AmountButton>-</AmountButton>
-                  <Amount>{quantity}</Amount>
-                  <AmountButton>+</AmountButton>
-                </ProductAmountContainer>
-              </SummaryItemText>
-                  <ProductPrice>{item.Option[0].Price}</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cartArr.map((item) => (
+              <CheckoutItem item = {item}/>
             ))}
             <Hr />
           </Info>
@@ -222,22 +144,26 @@ const Checkout = (item) => {
             <SummaryTitle>SUMMARY</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{quantity*24}</SummaryItemPrice>
+            <SummaryItemPrice>{totalItemInCheckOut}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Subtotal:</SummaryItemText>
-            <SummaryItemPrice>48.200.000VND</SummaryItemPrice>
+            <SummaryItemPrice></SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Shipping fees:</SummaryItemText>
-            <SummaryItemPrice>15.000VND</SummaryItemPrice>
+            <SummaryItemPrice></SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total:</SummaryItemText>
-              <SummaryItemPrice>48.215.000VND</SummaryItemPrice>
+              <SummaryItemPrice></SummaryItemPrice>
             </SummaryItem>
-            <Link to = "/" onClick={() => alert('Thank you for ordering!')}>
-            <Button>PLACE ORDER</Button>
+            <Link to = "/" onClick={() => recycleCart()}>
+              <Button>PLACE ORDER</Button>
+            </Link>
+
+            <Link to = "/user/cart">
+              <ReturnButton color="#e67373">RETURN TO CART</ReturnButton>
             </Link>
           </Summary>
         </Bottom>
