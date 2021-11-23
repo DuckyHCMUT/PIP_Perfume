@@ -4,8 +4,7 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { cartArr } from "../pages/Home";
-
+import { cartArr, quanArr } from "../pages/Home";
 
 const Info = styled.div`
   flex: 3;
@@ -92,9 +91,23 @@ const Brand = styled.div`
 
 const ProductCard = ({ item, onChange }) => {
   function addtoCart(thisItem){
-    alert("Added " + thisItem['Name'] + " to cart")
-    cartArr.push(thisItem)
-  }
+    // If item is not presented in cart yet
+    var found = false;
+
+    for (var i = 0; i < cartArr.length; i++) {
+        if (cartArr[i].Name === thisItem['Name']) {
+            found = true;
+            break;
+        }
+    }
+    if (!found){
+      cartArr.push(thisItem);
+      quanArr.push([thisItem["ID"], 1]);
+      alert("Added " + thisItem['Name'] + " to the cart");
+    }
+    else
+      alert(thisItem['Name'] + " is already in the cart");
+  };
 
   return (
     <Container>
