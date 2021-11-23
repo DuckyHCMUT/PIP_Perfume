@@ -8,6 +8,8 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./components/ProductDetail";
 import BlankPage from "./pages/BlankPage";
 import Checkout from "./pages/Checkout";
+import AdminLogin from "./pages/AdminLogin";
+import AdminHome from "./pages/AdminHome";
 
 const rootElement = document.getElementById("root");
 
@@ -21,6 +23,8 @@ ReactDOM.render(
             <Route path="/product" component={ProductDetail} />
             <Route path="/BlankPage" component={BlankPage} />
             <Route path="/user/checkout" component={Checkout} />
+            <Route path="/admin/auth" component={AdminLogin} />
+            <Route path="/admin/dashboard" component={AdminHome} />
         </Switch>
     </BrowserRouter>,
     rootElement
