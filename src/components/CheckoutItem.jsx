@@ -93,6 +93,10 @@ const CheckoutItem = ({item}) => {
     }
   }
 
+  const numberWithDot = (x)=> {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   return (
     <Product>
         <ProductDetail>
@@ -115,7 +119,7 @@ const CheckoutItem = ({item}) => {
             <Amount> Amount: {quantity}</Amount>
         </ProductAmountContainer>
         </SummaryItemText>
-            <ProductPrice>{item.Option[0].Price}</ProductPrice>
+            <ProductPrice>{numberWithDot(item.Option[0].Price.split('.').join('').split('VND').join('')*quantity) + " VND"}</ProductPrice>
         </PriceDetail>
     </Product>
   );

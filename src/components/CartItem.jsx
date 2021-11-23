@@ -88,8 +88,8 @@ const AmountButton = styled.button`
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
-  margin-left: 100px;
-  margin-right: 10px;
+  margin-left: 150px;
+  margin-right: 5px;
 `;
 const SummaryItemText = styled.span``;
 
@@ -150,6 +150,10 @@ const CartItem = ({item}) => {
       }
     };
 
+    const numberWithDot = (x)=> {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     return(
         <Product>
             <ProductDetail>
@@ -185,7 +189,7 @@ const CartItem = ({item}) => {
 
                 </ProductAmountContainer>
               </SummaryItemText>
-                  <ProductPrice>{total}</ProductPrice>
+                  <ProductPrice>{numberWithDot(item.Option[0].Price.split('.').join('').split('VND').join('')*count) + " VND"}</ProductPrice>
             </PriceDetail>
         </Product>
     )
