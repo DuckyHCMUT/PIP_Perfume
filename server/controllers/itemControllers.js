@@ -5,6 +5,10 @@ module.exports.get_items = (req, res) => {
         .sort({ date: -1 })
         .then((items) => res.json(items));
 };
+module.exports.get_item_by_id = (req, res) => {
+    const { item_id } = req.body;
+    Item.find({ ID: `${item_id}` }).then((item) => res.json(item));
+};
 
 module.exports.post_item = (req, res) => {
     const newItem = new Item(req.body);
