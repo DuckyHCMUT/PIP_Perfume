@@ -105,6 +105,8 @@ const Banner = ({onChange}) => {
                 </Center>
 
                 <Right>
+                    {/* <MenuItem>FAVORITE LIST</MenuItem> */}
+
                     <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                     
                     <Link to="/user/login"

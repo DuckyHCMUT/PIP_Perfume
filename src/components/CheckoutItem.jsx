@@ -76,16 +76,17 @@ const SummaryItemText = styled.span`
   margin: 0px 5px 0px 0px;
 `;
 
-const CheckoutItem = ({item}) => {
+const CheckoutItem = ({item, option}) => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    findCount(item['ID']);
+    findCount(option['OptionID']);
     console.log();
   }, [item])
 
   const findCount = (itemID) => {
     for (let i = 0; i < quanArr.length; i++){
+      // console.log("quanArr[i][0]= " + quanArr[i][0] + " and itemID == " + itemID)
       if (quanArr[i][0] === itemID){
         setQuantity(quanArr[i][1]);
         break;
@@ -93,7 +94,7 @@ const CheckoutItem = ({item}) => {
     }
   }
 
-  const numberWithDot = (x)=> {
+  const numberWithDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
@@ -106,10 +107,10 @@ const CheckoutItem = ({item}) => {
             <b>Name:</b> {item.Name}
             </ProductName>
             <ProductId>
-            <b>Size:</b> {item.Option[0].Volume}
+            <b>Size:</b> {option.Volume}
             </ProductId>
             <ProductId>
-            {item.Option[0].Price}
+            {option.Price}
             </ProductId>
         </Details>
         </ProductDetail>
@@ -119,7 +120,7 @@ const CheckoutItem = ({item}) => {
             <Amount> Amount: {quantity}</Amount>
         </ProductAmountContainer>
         </SummaryItemText>
-            <ProductPrice>{numberWithDot(item.Option[0].Price.split('.').join('').split('VND').join('')*quantity) + " VND"}</ProductPrice>
+            <ProductPrice>{numberWithDot(option.Price.split('.').join('').split('VND').join('')*quantity) + " VND"}</ProductPrice>
         </PriceDetail>
     </Product>
   );

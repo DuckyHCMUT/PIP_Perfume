@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { cartArr, quanArr } from "./Home";
 import { useState, useEffect } from "react";
 import CheckoutItem from "../components/CheckoutItem";
+import { InsertEmoticonOutlined } from "@material-ui/icons";
 
 const Container = styled.div``;
 
@@ -103,13 +104,25 @@ const Checkout = () => {
     setTotal(count);
   }
 
+  
   const recycleCart = () => {
     alert('Thank you for ordering!');
+
+    // Start the process of destroy everything
     let arrLength = quanArr.length;
     quanArr.splice(0, arrLength);
     cartArr.splice(0, arrLength);
-    // Start the process of destroy everything
   }
+  
+  const shippingFee = (itemCount) => {
+    let f = 50000;
+    if (itemCount <= 0)
+      f = 0;
+    else if (itemCount > 3)
+      for (let i = 3; i < itemCount; i++)
+        f += 10000;
+    return f;
+  };
 
   return (
     <Container>
@@ -120,7 +133,7 @@ const Checkout = () => {
         <Bottom>
           <Info>
             {cartArr.map((item) => (
-              <CheckoutItem item = {item}/>
+              <CheckoutItem item = {item[0]} option = {item[1]} />
             ))}
             <Hr />
           </Info>
@@ -151,8 +164,8 @@ const Checkout = () => {
             <SummaryItemPrice></SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-            <SummaryItemText>Shipping fees:</SummaryItemText>
-            <SummaryItemPrice></SummaryItemPrice>
+            <SummaryItemText>Shipping fees: </SummaryItemText>
+            <SummaryItemPrice>{shippingFee(totalItemInCheckOut)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total:</SummaryItemText>
@@ -163,7 +176,7 @@ const Checkout = () => {
             </Link>
 
             <Link to = "/user/cart">
-              <ReturnButton color="#e67373">RETURN TO CART</ReturnButton>
+              <ReturnButton>RETURN TO CART</ReturnButton>
             </Link>
           </Summary>
         </Bottom>

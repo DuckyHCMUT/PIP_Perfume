@@ -131,7 +131,7 @@ const CartItem = ({item, option}) => {
     }
 
     const removeItem = (optionID) => {
-      let innerCartArr = cart;
+      let innerCartArr = cart;    
       let innerQuanArr = optionCount;
       let index = -1;
 
@@ -178,13 +178,13 @@ const CartItem = ({item, option}) => {
                 </Link>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count - 1, option.Price, option.OptionID)}>-</AmountButton>
+                  <AmountButton onClick = {() => handleCount(count - 1, option.OptionID)}>-</AmountButton>
                 </Link>
                   
                   <Amount>&nbsp;{count}&nbsp;</Amount>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count + 1, option.Price, option.OptionID)}>+</AmountButton>
+                  <AmountButton onClick = {() => handleCount(count + 1, option.OptionID)}>+</AmountButton>
                 </Link>
 
                 </ProductAmountContainer>

@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "./Home";
+import { cartArr, quanArr, totalPrice } from "./Home";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
@@ -43,7 +43,7 @@ const Summary = styled.div`
   border: 0.5px solid black;
   border-radius: 10px;
   padding: 20px;
-  height: 30vh;
+  height: 39vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -74,19 +74,47 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const UpdateCartButton = styled.button`
+  width: 100%;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px;
+  background-color: #98ebe5;
+  color: black;
+  font-weight: 900;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
 const Cart = () => {
   const [totalItemInCart, setTotal] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(totalPrice);
 
   useEffect(() => {
     handleTotalItem();
-  },[totalItemInCart]);
+    handleTotalPrice();
+  },[totalItemInCart, cartTotalPrice]);
 
-  const handleTotalItem = () => {
+  const handleTotalItem = () =>{
     let count = 0;
     for (let i = 0; i < quanArr.length; i++){
       count += quanArr[i][1];
     }
     setTotal(count);
+  }
+
+  const handleTotalPrice = () => {
+    let price = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
+      //console.log(quanArr[i][1]);
+      //console.log(cartArr[i][1]['Price'].split('.').join('').split('VND').join(''));
+    }
+    setCartTotalPrice(price);
+  }
+
+  const numberWithDot = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   return (
@@ -110,8 +138,13 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText> Total </SummaryItemText>
-              <SummaryItemPrice> {0} </SummaryItemPrice>
+              <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
             </SummaryItem>
+
+            <Link to = "/user/cart">
+              <UpdateCartButton> UPDATE CART </UpdateCartButton>
+            </Link>
+
             <Link to="/user/checkout">
               <Button> PROCEED </Button>
             </Link>
