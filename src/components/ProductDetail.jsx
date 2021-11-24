@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
-import { cartArr, quanArr } from "../pages/Home";
+import { cartArr, quanArr } from "../components/Asset";
 
 const Container = styled.div``;
 

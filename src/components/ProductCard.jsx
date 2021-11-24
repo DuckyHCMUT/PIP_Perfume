@@ -1,10 +1,10 @@
 import {
-  FavoriteBorderOutlined,
+  // FavoriteBorderOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { cartArr, quanArr } from "../pages/Home";
+import { cartArr, quanArr } from "./Asset";
 import { useState } from "react";
 
 const Info = styled.div`
@@ -91,6 +91,7 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
+  // eslint-disable-next-line
   const [option, setOption] = useState(item.Option[0]);
 
   function addtoCart(thisOption, thisCount){

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Product from "./ProductCard";
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { all } from "../data.js"
+// import { all } from "../data.js"
 
 const Container = styled.div`
     padding: 20px;
@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const Products = ({value, option, itemDetail}) => {
   const [filter, setFilter] = useState([]);
-  const [data, setData] = useState(all);
+  const [data, setData] = useState([]);
 
   const checkFilter = (value, option) => {
     // No need to check for searched value
@@ -37,15 +37,14 @@ const Products = ({value, option, itemDetail}) => {
   }
 
   useEffect(() => { 
-    // Currently error !
     // Get items from database
-    // axios.get('/api/items')
-    // .then(response => {
-    //   setData(response.data);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+    axios.get('/api/items')
+    .then(response => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     setFilter(checkFilter(value, option));
   // eslint-disable-next-line

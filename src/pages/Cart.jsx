@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr, totalPrice } from "./Home";
+import { cartArr, quanArr, totalPrice } from "../components/Asset";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
@@ -26,7 +26,6 @@ const Info = styled.div`
   flex: 3;
 `;
 
-
 const TopTexts = styled.span`
   cursor: pointer;
   margin: 0px 0px;
@@ -43,7 +42,7 @@ const Summary = styled.div`
   border: 0.5px solid black;
   border-radius: 10px;
   padding: 20px;
-  height: 39vh;
+  height: 30vh;
 `;
 
 const SummaryTitle = styled.h1`
@@ -59,7 +58,6 @@ const SummaryItem = styled.div`
 `;
 
 const SummaryItemText = styled.span``;
-
 const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
@@ -68,18 +66,6 @@ const Button = styled.button`
   font-size: 20px;
   padding: 10px;
   background-color: pink;
-  color: black;
-  font-weight: 900;
-  margin-bottom: 10px;
-  cursor: pointer;
-`;
-
-const UpdateCartButton = styled.button`
-  width: 100%;
-  border-radius: 10px;
-  font-size: 20px;
-  padding: 10px;
-  background-color: #98ebe5;
   color: black;
   font-weight: 900;
   margin-bottom: 10px;
@@ -107,8 +93,6 @@ const Cart = () => {
     let price = 0;
     for (let i = 0; i < quanArr.length; i++){
       price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
-      //console.log(quanArr[i][1]);
-      //console.log(cartArr[i][1]['Price'].split('.').join('').split('VND').join(''));
     }
     setCartTotalPrice(price);
   }
@@ -126,7 +110,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cartArr.map((item) => (
-              <CartItem item = {item[0]} option = {item[1]} />
+              <CartItem item = {item[0]} option = {item[1]} handleTotalInCart = {handleTotalItem} />
             ))}
             <Hr />
           </Info>
@@ -140,11 +124,6 @@ const Cart = () => {
               <SummaryItemText> Total </SummaryItemText>
               <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
             </SummaryItem>
-
-            <Link to = "/user/cart">
-              <UpdateCartButton> UPDATE CART </UpdateCartButton>
-            </Link>
-
             <Link to="/user/checkout">
               <Button> PROCEED </Button>
             </Link>
