@@ -4,10 +4,9 @@ import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "./Home";
+import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect } from "react";
 import CheckoutItem from "../components/CheckoutItem";
-import { InsertEmoticonOutlined } from "@material-ui/icons";
 
 const Container = styled.div``;
 
@@ -91,10 +90,12 @@ const ReturnButton = styled.button`
 
 const Checkout = () => {
   const [totalItemInCheckOut, setTotal] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
   useEffect(() => {
     handleTotalItem();
-  },[totalItemInCheckOut]);
+    handleTotalPrice();
+  },[totalItemInCheckOut, cartTotalPrice]);
 
   const handleTotalItem = () => {
     let count = 0;
@@ -104,6 +105,13 @@ const Checkout = () => {
     setTotal(count);
   }
 
+  const handleTotalPrice = () => {
+    let price = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
+    }
+    setCartTotalPrice(price);
+  }
   
   const recycleCart = () => {
     alert('Thank you for ordering!');
@@ -123,6 +131,10 @@ const Checkout = () => {
         f += 10000;
     return f;
   };
+
+  const numberWithDot = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
   return (
     <Container>
@@ -161,15 +173,15 @@ const Checkout = () => {
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Subtotal:</SummaryItemText>
-            <SummaryItemPrice></SummaryItemPrice>
+            <SummaryItemPrice>{numberWithDot(cartTotalPrice)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Shipping fees: </SummaryItemText>
-            <SummaryItemPrice>{shippingFee(totalItemInCheckOut)}</SummaryItemPrice>
+            <SummaryItemPrice>{numberWithDot(shippingFee(totalItemInCheckOut))}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total:</SummaryItemText>
-              <SummaryItemPrice></SummaryItemPrice>
+              <SummaryItemPrice>{numberWithDot((cartTotalPrice + shippingFee(totalItemInCheckOut))) + "VND"}</SummaryItemPrice>
             </SummaryItem>
             <Link to = "/" onClick={() => recycleCart()}>
               <Button>PLACE ORDER</Button>
@@ -185,6 +197,5 @@ const Checkout = () => {
     </Container>
   );
 };
-
 
 export default Checkout;

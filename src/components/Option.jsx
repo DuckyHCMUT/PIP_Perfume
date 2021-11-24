@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { NativeSelect, FormControl } from '@material-ui/core';
+import { NativeSelect } from '@material-ui/core';
 
 const FilterContainer = styled.div`
   width: 50%;

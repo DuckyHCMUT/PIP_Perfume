@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useState } from "react";
-import { cartArr, quanArr } from "../pages/Home";
+import { cartArr, quanArr } from "./Asset";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -93,13 +93,23 @@ const ProductPrice = styled.div`
 `;
 const SummaryItemText = styled.span``;
 
-const CartItem = ({item, option}) => {
+const CartItem = ({item, option, handleTotalInCart}) => {
     const [count, setCount] = useState(0);
-
-    // eslint-disable-next-line
-    const [total, setTotal] = useState(option.Price ? option.Price : 0);
     const [cart, setCart] = useState(cartArr);
     const [optionCount, setOptionCount] = useState(quanArr);
+
+    useEffect(() => {
+      findCount(option.OptionID);
+    }, [option])
+
+    const findCount = (optionID) => {
+      for (let i = 0; i < quanArr.length; i++){
+        if (quanArr[i][0] === optionID){
+          setCount(quanArr[i][1]);
+          break;
+        }
+      }
+    }
 
     const handleCount = (count, optionID) => {
       if (count < 1)
@@ -115,20 +125,8 @@ const CartItem = ({item, option}) => {
           }
         }
       }
+      handleTotalInCart();
     };
-
-    useEffect(() => {
-      findCount(option.OptionID);
-    }, [option])
-
-    const findCount = (optionID) => {
-      for (let i = 0; i < quanArr.length; i++){
-        if (quanArr[i][0] === optionID){
-          setCount(quanArr[i][1]);
-          break;
-        }
-      }
-    }
 
     const removeItem = (optionID) => {
       let innerCartArr = cart;    
@@ -148,9 +146,10 @@ const CartItem = ({item, option}) => {
         setCart(innerCartArr)
         setOptionCount(innerQuanArr);
       }
+      handleTotalInCart();
     };
 
-    const numberWithDot = (x)=> {
+    const numberWithDot = (x) => {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
@@ -174,7 +173,7 @@ const CartItem = ({item, option}) => {
               <SummaryItemText>
                 <ProductAmountContainer>
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => removeItem(option.OptionID)}>Remove</AmountButton>
+                  <AmountButton onClick = {() => handleCount(0, option.OptionID)}>Remove</AmountButton>
                 </Link>
 
                 <Link to="/user/cart">

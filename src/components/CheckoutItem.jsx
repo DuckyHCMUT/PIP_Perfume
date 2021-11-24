@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { quanArr } from "../pages/Home";
+import { quanArr } from "../components/Asset";
 import { useState, useEffect } from "react";
 
 const Product = styled.div`
@@ -82,7 +82,7 @@ const CheckoutItem = ({item, option}) => {
   useEffect(() => {
     findCount(option['OptionID']);
     console.log();
-  }, [item])
+  }, [item, option])
 
   const findCount = (itemID) => {
     for (let i = 0; i < quanArr.length; i++){
