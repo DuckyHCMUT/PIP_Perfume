@@ -1,22 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-
-const FilterSizeOption = styled.option``;
+import { NativeSelect } from '@material-ui/core';
 
 const FilterContainer = styled.div`
   width: 50%;
@@ -26,19 +10,12 @@ const FilterContainer = styled.div`
   ${mobile({ width: "100%" })}
 `;
 
-const Option = ({options, onChange}) => {
+const Option = ({options, handleOptionChange}) => {
     return (
     <FilterContainer>
-        <Filter>
-            <FilterTitle>Option</FilterTitle>
-            <FilterSize>
-            {options.map((option) => (
-                <FilterSizeOption>
-                    {option.Volume}
-                </FilterSizeOption>
-            ))}   
-            </FilterSize>
-        </Filter>
+        <NativeSelect defaultValue="" onChange={(e) => handleOptionChange(e.target.value)}>
+        {options.map((c) =>{return <option value={c.OptionID}>{c.Volume}</option>})};
+      </NativeSelect>
     </FilterContainer>
     )
     };

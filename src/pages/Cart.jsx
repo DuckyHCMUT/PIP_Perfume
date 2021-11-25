@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "./Home";
+import { cartArr, quanArr, totalPrice } from "../components/Asset";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
@@ -25,7 +25,6 @@ const Bottom = styled.div`
 const Info = styled.div`
   flex: 3;
 `;
-
 
 const TopTexts = styled.span`
   cursor: pointer;
@@ -59,7 +58,6 @@ const SummaryItem = styled.div`
 `;
 
 const SummaryItemText = styled.span``;
-
 const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
@@ -76,17 +74,31 @@ const Button = styled.button`
 
 const Cart = () => {
   const [totalItemInCart, setTotal] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(totalPrice);
 
   useEffect(() => {
     handleTotalItem();
-  },[totalItemInCart]);
+    handleTotalPrice();
+  },[totalItemInCart, cartTotalPrice]);
 
-  const handleTotalItem = () => {
+  const handleTotalItem = () =>{
     let count = 0;
     for (let i = 0; i < quanArr.length; i++){
       count += quanArr[i][1];
     }
     setTotal(count);
+  }
+
+  const handleTotalPrice = () => {
+    let price = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
+    }
+    setCartTotalPrice(price);
+  }
+
+  const numberWithDot = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   return (
@@ -98,7 +110,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cartArr.map((item) => (
-              <CartItem item = {item} />
+              <CartItem item = {item[0]} option = {item[1]} handleTotalInCart = {handleTotalItem} />
             ))}
             <Hr />
           </Info>
@@ -110,7 +122,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText> Total </SummaryItemText>
-              <SummaryItemPrice> {0} </SummaryItemPrice>
+              <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
             </SummaryItem>
             <Link to="/user/checkout">
               <Button> PROCEED </Button>

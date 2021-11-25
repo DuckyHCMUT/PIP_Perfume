@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
-import { cartArr, quanArr } from "../pages/Home";
+import { cartArr, quanArr } from "../components/Asset";
 
 const Container = styled.div``;
 
@@ -118,30 +118,30 @@ const ProductDetail = ({item, onUpdateCount}) => {
         setCount(count);
     };
 
-    const [precisePrice, setprecisePrice] = useState(item.Option[0].Price);
+    const [option, setOption] = useState(item.Option[0]);
+    const handleOption = (id) => {
+        const optRet = item['Option'].filter((opt) => opt.OptionID === id);
+        setOption(optRet[0]);
+    }
 
-    // eslint-disable-next-line
-    const handlePricebyVolume = (option) => {
-        setprecisePrice(option["Price"]);
-    };
 
-    function addtoCart(thisItem, thisCount){
+    function addtoCart(thisOption, thisCount){
       // If item is not presented in cart yet
       var found = false;
 
       for (var i = 0; i < cartArr.length; i++) {
-          if (cartArr[i]['Name'] === thisItem['Name']) {
+          if (cartArr[i][1].OptionID === thisOption.OptionID) {
               found = true;
               break;
           }
       }
       if (!found){
-        cartArr.push(thisItem);
-        quanArr.push([thisItem['ID'], thisCount]);
-        alert("Added " + thisItem['Name'] + " to the cart");
+        cartArr.push([item, thisOption]);
+        quanArr.push([thisOption['OptionID'], thisCount]);
+        alert("Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart");
       }
       else
-        alert(thisItem['Name'] + " is already in the cart");  
+        alert(item['Name'] + " " + thisOption['Volume'] + " is already in the cart. Please move to cart page to make the adjusment.");  
     };
     
     return (
@@ -153,8 +153,8 @@ const ProductDetail = ({item, onUpdateCount}) => {
             <InfoContainer>
             <Brand>{item.Brand}</Brand>
             <Title>{item.Name}</Title>
-            <Price>{precisePrice}</Price>
-            <Option options = {item.Option} onClick = {() => alert("wtf")}/>
+            <Price>{option['Price']}</Price>
+            <Option options = {item.Option} handleOptionChange = {handleOption}/>
             <AddContainer>
                 <AmountContainer>
 
@@ -163,7 +163,7 @@ const ProductDetail = ({item, onUpdateCount}) => {
                 <AmountButton onClick = {() => handleCount(count + 1)}>+</AmountButton>
 
                 </AmountContainer>
-                <Button onClick = {() => addtoCart(item, count)}>
+                <Button onClick = {() => addtoCart(option, count)}>
                   Add to cart
                 </Button>
             </AddContainer>

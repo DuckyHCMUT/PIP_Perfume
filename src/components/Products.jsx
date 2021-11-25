@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Product from "./ProductCard";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+// import { all } from "../data.js"
 
 const Container = styled.div`
     padding: 20px;

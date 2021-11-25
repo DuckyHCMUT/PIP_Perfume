@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "./Home";
+import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect } from "react";
 import CheckoutItem from "../components/CheckoutItem";
 
@@ -90,10 +90,12 @@ const ReturnButton = styled.button`
 
 const Checkout = () => {
   const [totalItemInCheckOut, setTotal] = useState(0);
+  const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
   useEffect(() => {
     handleTotalItem();
-  },[totalItemInCheckOut]);
+    handleTotalPrice();
+  },[totalItemInCheckOut, cartTotalPrice]);
 
   const handleTotalItem = () => {
     let count = 0;
@@ -103,12 +105,35 @@ const Checkout = () => {
     setTotal(count);
   }
 
+  const handleTotalPrice = () => {
+    let price = 0;
+    for (let i = 0; i < quanArr.length; i++){
+      price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
+    }
+    setCartTotalPrice(price);
+  }
+  
   const recycleCart = () => {
     alert('Thank you for ordering!');
+
+    // Start the process of destroy everything
     let arrLength = quanArr.length;
     quanArr.splice(0, arrLength);
     cartArr.splice(0, arrLength);
-    // Start the process of destroy everything
+  }
+  
+  const shippingFee = (itemCount) => {
+    let f = 50000;
+    if (itemCount <= 0)
+      f = 0;
+    else if (itemCount > 3)
+      for (let i = 3; i < itemCount; i++)
+        f += 10000;
+    return f;
+  };
+
+  const numberWithDot = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   return (
@@ -120,7 +145,7 @@ const Checkout = () => {
         <Bottom>
           <Info>
             {cartArr.map((item) => (
-              <CheckoutItem item = {item}/>
+              <CheckoutItem item = {item[0]} option = {item[1]} />
             ))}
             <Hr />
           </Info>
@@ -148,22 +173,22 @@ const Checkout = () => {
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Subtotal:</SummaryItemText>
-            <SummaryItemPrice></SummaryItemPrice>
+            <SummaryItemPrice>{numberWithDot(cartTotalPrice)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-            <SummaryItemText>Shipping fees:</SummaryItemText>
-            <SummaryItemPrice></SummaryItemPrice>
+            <SummaryItemText>Shipping fees: </SummaryItemText>
+            <SummaryItemPrice>{numberWithDot(shippingFee(totalItemInCheckOut))}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total:</SummaryItemText>
-              <SummaryItemPrice></SummaryItemPrice>
+              <SummaryItemPrice>{numberWithDot((cartTotalPrice + shippingFee(totalItemInCheckOut))) + "VND"}</SummaryItemPrice>
             </SummaryItem>
             <Link to = "/" onClick={() => recycleCart()}>
               <Button>PLACE ORDER</Button>
             </Link>
 
             <Link to = "/user/cart">
-              <ReturnButton color="#e67373">RETURN TO CART</ReturnButton>
+              <ReturnButton>RETURN TO CART</ReturnButton>
             </Link>
           </Summary>
         </Bottom>
@@ -172,6 +197,5 @@ const Checkout = () => {
     </Container>
   );
 };
-
 
 export default Checkout;

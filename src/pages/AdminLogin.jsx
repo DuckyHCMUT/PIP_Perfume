@@ -91,6 +91,7 @@ const AdminLogin = ({ setToken }) => {
         const user = { email, password };
         // Attempt to login
 
+        // eslint-disable-next-line
         const token = await axios
             .post("/api/login", user)
             .then((res) => setToken(res.data.user.id))

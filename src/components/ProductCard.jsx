@@ -1,10 +1,11 @@
 import {
-  FavoriteBorderOutlined,
+  // FavoriteBorderOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { cartArr, quanArr } from "../pages/Home";
+import { cartArr, quanArr } from "./Asset";
+import { useState } from "react";
 
 const Info = styled.div`
   flex: 3;
@@ -90,23 +91,26 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
-  function addtoCart(thisItem){
+  // eslint-disable-next-line
+  const [option, setOption] = useState(item.Option[0]);
+
+  function addtoCart(thisOption, thisCount){
     // If item is not presented in cart yet
     var found = false;
 
     for (var i = 0; i < cartArr.length; i++) {
-        if (cartArr[i].Name === thisItem['Name']) {
+        if (cartArr[i][1].OptionID === thisOption.OptionID) {
             found = true;
             break;
         }
     }
     if (!found){
-      cartArr.push(thisItem);
-      quanArr.push([thisItem["ID"], 1]);
-      alert("Added " + thisItem['Name'] + " to the cart");
+      cartArr.push([item, thisOption]);
+      quanArr.push([thisOption['OptionID'], thisCount]);
+      alert("Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart");
     }
     else
-      alert(thisItem['Name'] + " is already in the cart");
+      alert(item['Name'] + " " + thisOption['Volume'] + " is already in the cart. Please move to cart page to make the adjustment.");  
   };
 
   return (
@@ -125,17 +129,17 @@ const ProductCard = ({ item, onChange }) => {
         </Price>
       </ItemInfo> 
       <Info>
-        <Icon onClick = {() => addtoCart(item)}>
+        <Icon onClick = {() => addtoCart(option, 1)}>
           <ShoppingCartOutlined/>
         </Icon>
 
         <Icon onClick = {() => onChange(item)}>
             <SearchOutlined />
         </Icon>
-        
+{/*         
         <Icon onClick = {() => alert("Added to favorite")}>
           <FavoriteBorderOutlined/>
-        </Icon> 
+        </Icon>  */}
       </Info>     
     </Container>
   );
