@@ -24,6 +24,13 @@ const Right = styled.div`
     cursor: pointer;
     text-align: right;
 `;
+const OrderCard = styled.div`
+    border: 0.5px solid grey 50%;
+    border-radius: 5px;
+    padding: 5px;
+    height: 100px;
+    width: 80%;
+`;
 
 const AdminNewOrder = () => {
     return (
@@ -34,6 +41,7 @@ const AdminNewOrder = () => {
                     <Link>See more</Link>
                 </Right>
             </Wrapper>
+            <OrderCard>order</OrderCard>
         </OrderDisplay>
     );
 };

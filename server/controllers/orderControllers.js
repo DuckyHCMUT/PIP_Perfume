@@ -20,6 +20,15 @@ module.exports.create_order = async (req, res) => {
     const newOrder = new Order(req.body);
     newOrder.save().then((order) => res.json(order));
 };
+module.exports.update_order = (req, res) => {
+    Item.findByIdAndUpdate({ _id: req.params.id }, req.body).then(function (
+        item
+    ) {
+        Item.findOne({ _id: req.params.id }).then(function (item) {
+            res.json(item);
+        });
+    });
+};
 
 /*module.exports.checkout = async (req,res) => {
     try{
