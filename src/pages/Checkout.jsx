@@ -114,12 +114,16 @@ const Checkout = () => {
   }
   
   const recycleCart = () => {
-    alert('Thank you for ordering!');
+    if (cartArr.length > 0){
+      alert('Thank you for ordering!');
 
-    // Start the process of destroy everything
-    let arrLength = quanArr.length;
-    quanArr.splice(0, arrLength);
-    cartArr.splice(0, arrLength);
+      // Start the process of destroy everything
+      let arrLength = quanArr.length;
+      quanArr.splice(0, arrLength);
+      cartArr.splice(0, arrLength);
+    }
+    else
+      alert('There is nothing the cart!');
   }
   
   const shippingFee = (itemCount) => {
@@ -153,7 +157,7 @@ const Checkout = () => {
             <SummaryTitle>SHIPPING INFORMATION</SummaryTitle>
             <SummaryItem>
             <SummaryItemText>Name:</SummaryItemText>
-            <SummaryItemPrice>Hanh Duyen</SummaryItemPrice>
+            <SummaryItemPrice>{localStorage.getItem("currentuser")}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
             <SummaryItemText>Address:</SummaryItemText>

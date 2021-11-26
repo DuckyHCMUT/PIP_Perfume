@@ -74,60 +74,120 @@ const SearchButton = styled.button`
 const Banner = ({onChange}) => {
     const { search } = window.location;
     const query = new URLSearchParams(search).get('perfume'); // Fetched the searched item successfully
+    var loginState = localStorage.getItem("isLogin")
 
-    return (
-        <Container>
-            <Wrapper>
-                <Left>
-                    <Link style={{textDecoration: 'none'} }
-                        to="/BlankPage">
-                        <Logo>BKP.</Logo>
-                    </Link>
-                </Left>
-                <Center> 
-                    <form action="/" method="get">
-                        <SearchContainer>
-                            <label htmlFor="header-search"/>
-                            <input
-                                type="text"
-                                id="header-search"
-                                placeholder="Search perfume"
-                                name="perfume" 
-                                style = {Input}
-                            />
-                            <Right>
-                                <SearchButton type = "submit" onClick = {onChange(!query ? '' : query)}> {/* After pressing this button, the query will already hold the searched value*/}
-                                    Search 
-                                </SearchButton>
-                            </Right>
-                        </SearchContainer>
-                    </form>
-                </Center>
+    const handleLogOut = () => localStorage.setItem("isLogin", false);
 
-                <Right>
-                    {/* <MenuItem>FAVORITE LIST</MenuItem> */}
+    if (loginState === "true") 
+        return (
+            <Container>
+                <Wrapper>
+                    <Left>
+                        <Link style={{textDecoration: 'none'} }
+                            to = "/BlankPage">
+                            <Logo>BKP.</Logo>
+                        </Link>
+                    </Left>
+                    <Center> 
+                        <form action="/" method="get">
+                            <SearchContainer>
+                                <label htmlFor="header-search"/>
+                                <input
+                                    type="text"
+                                    id="header-search"
+                                    placeholder="Search perfume"
+                                    name="perfume" 
+                                    style = {Input}
+                                />
+                                <Right>
+                                    <SearchButton type = "submit" onClick = {onChange(!query ? '' : query)}> {/* After pressing this button, the query will already hold the searched value*/}
+                                        Search 
+                                    </SearchButton>
+                                </Right>
+                            </SearchContainer>
+                        </form>
+                    </Center>
 
-                    <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
-                    
-                    <Link to="/user/login"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                        <MenuItem>LOGIN</MenuItem>
-                    </Link>
+                    <Right>
+                        {/* <MenuItem>FAVORITE LIST</MenuItem> */}
 
-                    <Link to="/user/cart"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                        <MenuItem>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </MenuItem>
-                    </Link>
-                </Right>
-            </Wrapper>
-        </Container>
-    );
+                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        
+                        <MenuItem>WELCOME, {localStorage.getItem("currentuser")}!</MenuItem>
+
+                        <Link
+                            to="/BlankPage"
+                            style={{ color: "inherit", textDecoration: "inherit" }}>
+                            <MenuItem onClick = {() => handleLogOut()}>LOGOUT</MenuItem>
+                        </Link>
+
+                        <Link to="/user/cart"
+                            style={{ color: "inherit", textDecoration: "inherit" }}
+                        >
+                            <MenuItem>
+                                <Badge badgeContent={0} color="primary">
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            </MenuItem>
+                        </Link>
+                    </Right>
+                </Wrapper>
+            </Container>
+        );
+    else
+        return (
+            <Container>
+                <Wrapper>
+                    <Left>
+                        <Link style={{textDecoration: 'none'} }
+                            to="/BlankPage">
+                            <Logo>BKP.</Logo>
+                        </Link>
+                    </Left>
+                    <Center> 
+                        <form action="/" method="get">
+                            <SearchContainer>
+                                <label htmlFor="header-search"/>
+                                <input
+                                    type="text"
+                                    id="header-search"
+                                    placeholder="Search perfume"
+                                    name="perfume" 
+                                    style = {Input}
+                                />
+                                <Right>
+                                    <SearchButton type = "submit" onClick = {onChange(!query ? '' : query)}> {/* After pressing this button, the query will already hold the searched value*/}
+                                        Search 
+                                    </SearchButton>
+                                </Right>
+                            </SearchContainer>
+                        </form>
+                    </Center>
+
+                    <Right>
+                        {/* <MenuItem>FAVORITE LIST</MenuItem> */}
+
+                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        
+                        <Link to = "/user/login"
+                            style={{ color: "inherit", textDecoration: "inherit" }}
+                        >
+                            <MenuItem>LOGIN</MenuItem>
+                        </Link>
+
+                        <Link to = "/user/cart"
+                            style={{ color: "inherit", textDecoration: "inherit" }}
+                        >
+                            <MenuItem>
+                                <Badge badgeContent={0} color="primary">
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            </MenuItem>
+                        </Link>
+                    </Right>
+                </Wrapper>
+            </Container>
+        );
 };
 
 export default Banner;
