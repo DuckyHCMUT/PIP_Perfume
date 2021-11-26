@@ -1,9 +1,10 @@
-import { Link } from "@material-ui/core";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
 import AdminNewUser from "../components/admin-components/AdminNewUser";
 import AdminLogin from "./AdminLogin";
+//const config = require("config");
 
 const Container = styled.div`
     padding: 20px;
@@ -30,9 +31,13 @@ const Title = styled.div`
 
 const AdminHome = () => {
     const [token, setToken] = useState();
+    const [orders, setOrders] = useState();
 
-    //if (!token) return <AdminLogin setToken={setToken} />;
+    //if (token != {config.get("ADMIN_ID")}) return <AdminLogin setToken={setToken} />;
     //else
+    useEffect(() => {
+        axios.get("/api/orders").then((data) => setOrders(data.data));
+    }, []);
     return (
         <Container>
             <StatWrapper>
@@ -47,7 +52,7 @@ const AdminHome = () => {
                 </StatSummary>
             </StatWrapper>
             <StatWrapper>
-                <AdminNewOrder />
+                {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
                 <AdminNewUser />
             </StatWrapper>
         </Container>
