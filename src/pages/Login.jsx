@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { Redirect } from "react-router";
+import { currentUser } from '../components/Asset';
 
 const Container = styled.div`
 	width: 100vw;
@@ -131,43 +135,79 @@ const NormalText = styled.b`
 	display: inline-block;
 `;
 const Login = () => {
-	return (
-		<Container>
-			<Wrapper>
-				<LogoContainer>
-					<Link to="/">
-						<Logo>BKP.</Logo>
-					</Link>
-				</LogoContainer>
-				<Title>SIGN IN</Title>
-				<Form>
-					<InputContainer>
-						<Label>Email address</Label>
-						<Input
-							type="email"
-							placeholder="Enter email"
-							autoFocus
-						/>
-					</InputContainer>
-					<InputContainer>
-						<Label>Password</Label>
-						<Input type="password" placeholder="Enter password" />
-						<ForgotPassword>Forgot password?</ForgotPassword>
-					</InputContainer>
+	const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+	const [token, setToken] = useState();
+	const [userName, setUserName] = useState();
 
-					<Link to="/">
-						<Button>Sign in</Button>
-					</Link>
-					<SignUpForm>
-						<NormalText>Not a member? &nbsp; </NormalText>
-						<Link to="/user/register">
-							<RegisterLink> Sign up now</RegisterLink>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = { email, password };
+        // Attempt to login
+
+		await axios
+            .post("/api/login", user)
+            .then(
+				(res) => {
+					setUserName(res.data.user.name);
+					setToken(res.data.token);
+				}
+			)
+            .catch((err) => console.log(err));
+	};
+
+	if (!token)
+	{
+		return (
+			<Container>
+				<Wrapper>
+					<LogoContainer>
+						<Link to="/">
+							<Logo>BKP.</Logo>
 						</Link>
-					</SignUpForm>
-				</Form>
-			</Wrapper>
-		</Container>
-	);
+					</LogoContainer>
+					<Title>SIGN IN</Title>
+					<Form onSubmit={handleSubmit}>
+						<InputContainer>
+							<Label>Email address</Label>
+							<Input
+								type="email"
+								placeholder="Enter email"
+								onChange={(e) => setEmail(e.target.value)}
+								autoFocus
+							/>
+						</InputContainer>
+						<InputContainer>
+						<Label>Password</Label>
+							<Input
+								type="password"
+								placeholder="Enter password"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<ForgotPassword>Forgot password?</ForgotPassword>
+						</InputContainer>
+
+						<Button>Sign in</Button>
+
+						<SignUpForm>
+							<NormalText>Not a member? &nbsp; </NormalText>
+							<Link to="/user/register">
+								<RegisterLink> Sign up now</RegisterLink>
+							</Link>
+						</SignUpForm>
+					</Form>
+				</Wrapper>
+			</Container>
+		);
+	}
+	else
+	{
+		localStorage.setItem("isLogin", true);
+		localStorage.setItem("currentuser", userName);
+		return(
+			<Redirect to = "/"/>
+		)
+	}
 };
 
 export default Login;

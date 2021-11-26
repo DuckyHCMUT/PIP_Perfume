@@ -1,5 +1,3 @@
-import { Badge } from "@material-ui/core";
-import { ShoppingCartOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
@@ -45,39 +43,60 @@ const MenuItem = styled.div`
 `;
 
 const BannerCart = () => {
-    return (
-        <Container>
-            <Wrapper>
-                <Left>
-                    <Link style={{textDecoration: 'none'} }
-                        to="/BlankPage">
-                        <Logo>BKP.</Logo>
-                    </Link>
-                </Left>
+    var loginState = localStorage.getItem("isLogin")
 
-                <Right>
-                    <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
-                    
-                    <Link to ="/user/login"
-                        style={{ color: "inherit", textDecoration: "inherit"}}
-                    >
-                        <MenuItem>LOGIN</MenuItem>
-                    </Link>
+    const handleLogOut = () => localStorage.setItem("isLogin", false);
 
-                    <Link
-                        to="/user/cart"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                        <MenuItem>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </MenuItem>
-                    </Link>
-                </Right>
-            </Wrapper>
-        </Container>
-    );
+    if (loginState === "true")
+        return (
+            <Container>
+                <Wrapper>
+                    <Left>
+                        <Link style={{textDecoration: 'none'} }
+                            to="/BlankPage">
+                            <Logo>BKP.</Logo>
+                        </Link>
+                    </Left>
+
+                    <Right>
+                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        
+                        <MenuItem>WELCOME, {localStorage.getItem("currentuser")}!</MenuItem>
+
+                        <Link
+                            to="/BlankPage"
+                            style={{ color: "inherit", textDecoration: "inherit" }}>
+                            <MenuItem onClick = {() => handleLogOut()}>LOGOUT</MenuItem>
+                        </Link>
+
+                    </Right>
+                </Wrapper>
+            </Container>
+        );
+    else  
+        return (
+            <Container>
+                <Wrapper>
+                    <Left>
+                        <Link style={{textDecoration: 'none'} }
+                            to="/BlankPage">
+                            <Logo>BKP.</Logo>
+                        </Link>
+                    </Left>
+
+                    <Right>
+                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        
+                        <Link to ="/user/login"
+                            style={{ color: "inherit", textDecoration: "inherit"}}
+                        >
+                            <MenuItem>LOGIN</MenuItem>
+                        </Link>
+
+                    </Right>
+                </Wrapper>
+            </Container>
+        );
 };
 
 export default BannerCart;

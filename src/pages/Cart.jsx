@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr, totalPrice } from "../components/Asset";
+import { cartArr, quanArr } from "../components/Asset";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
@@ -74,7 +74,7 @@ const Button = styled.button`
 
 const Cart = () => {
   const [totalItemInCart, setTotal] = useState(0);
-  const [cartTotalPrice, setCartTotalPrice] = useState(totalPrice);
+  const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
   useEffect(() => {
     handleTotalItem();
@@ -124,7 +124,7 @@ const Cart = () => {
               <SummaryItemText> Total </SummaryItemText>
               <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
             </SummaryItem>
-            <Link to="/user/checkout">
+            <Link to="/user/CheckOut">
               <Button> PROCEED </Button>
             </Link>
           </Summary>
