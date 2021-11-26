@@ -59,7 +59,7 @@ const Right = styled.div`
 const MenuItem = styled.div`
     font-size: 18px;
     cursor: pointer;
-    margin-left: 25px;
+    margin-left: 20px;
     ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
@@ -110,7 +110,6 @@ const Banner = ({onChange}) => {
 
                     <Right>
                         {/* <MenuItem>FAVORITE LIST</MenuItem> */}
-
                         <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                         
                         <MenuItem>WELCOME, {localStorage.getItem("currentuser")}!</MenuItem>
@@ -143,6 +142,7 @@ const Banner = ({onChange}) => {
                             to="/BlankPage">
                             <Logo>BKP.</Logo>
                         </Link>
+
                     </Left>
                     <Center> 
                         <form action="/" method="get">
@@ -166,9 +166,8 @@ const Banner = ({onChange}) => {
 
                     <Right>
                         {/* <MenuItem>FAVORITE LIST</MenuItem> */}
-
                         <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
-                        
+
                         <Link to = "/user/login"
                             style={{ color: "inherit", textDecoration: "inherit" }}
                         >

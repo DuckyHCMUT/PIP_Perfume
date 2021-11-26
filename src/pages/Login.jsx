@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { Redirect } from "react-router";
-import { currentUser } from '../components/Asset';
 
 const Container = styled.div`
 	width: 100vw;
