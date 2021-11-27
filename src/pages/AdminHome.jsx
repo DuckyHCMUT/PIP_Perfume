@@ -3,7 +3,6 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
-import AdminNewUser from "../components/admin-components/AdminNewUser";
 import AdminLogin from "./AdminLogin";
 //const config = require("config");
 
@@ -46,7 +45,6 @@ const AdminHome = () => {
     const [userCount, setUserCount] = useState("0");
     const [totalCount, setTotal] = useState("0");
 
-
     //if (token != {config.get("ADMIN_ID")}) return <AdminLogin setToken={setToken} />;
     //else
     useEffect(() => {
@@ -63,7 +61,6 @@ const AdminHome = () => {
 
             data.data.forEach((object) => {
                 date = moment(object.date_added).format("DD-MM-YYYY");
-                console.log(date, yesterday);
                 if (date >= yesterday) {
                     totalorder += 1;
                     if (object.status === "completed") totalsale += object.bill;
