@@ -1,4 +1,4 @@
-import styled, { isStyledComponent } from "styled-components";
+import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
@@ -8,6 +8,7 @@ import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect } from "react";
 import CheckoutItem from "../components/CheckoutItem";
 import { Redirect } from "react-router";
+import swal from "sweetalert";
 
 const Container = styled.div``;
 
@@ -134,15 +135,29 @@ const Checkout = () => {
   
   const recycleCart = () => {
     if (cartArr.length > 0){
-      alert('Thank you for ordering!');
+      swal({
+        title: "Order success",
+        text: "Thank you for ordering, please patiently wait for our confirmation! You will be redirected to home page in 5 seconds",
+        icon: 'success'
+      })
 
       // Start the process of destroy everything
       let arrLength = quanArr.length;
       quanArr.splice(0, arrLength);
       cartArr.splice(0, arrLength);
+      window.setTimeout(directToHomePage, 5000);
     }
     else
-      alert('There is nothing the cart!');
+      swal({
+        title: "Empty cart!",
+        text: "The cart is empty, please add some item before checkout!",
+        icon: 'warning',
+        dangerMode: true,
+      })
+  }
+
+  function directToHomePage(){
+    window.location.replace('/');
   }
   
   const shippingFee = (itemCount) => {
@@ -219,9 +234,7 @@ const Checkout = () => {
                 <SummaryItemPrice>{numberWithDot((cartTotalPrice + shippingFee(totalItemInCheckOut))) + "VND"}</SummaryItemPrice>
               </SummaryItem>
 
-              <Link to = "/" onClick={() => recycleCart()}>
-                <Button>PLACE ORDER</Button>
-              </Link>
+              <Button onClick={() => recycleCart()}>PLACE ORDER</Button>
 
               <Link to = "/user/cart">
                 <ReturnButton>RETURN TO CART</ReturnButton>
