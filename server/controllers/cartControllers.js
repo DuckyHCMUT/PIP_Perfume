@@ -1,3 +1,4 @@
+const c = require("config");
 const Cart = require("../models/cart.js");
 const Item = require("../models/item.js");
 
@@ -18,7 +19,7 @@ module.exports.get_cart_items = async (req, res) => {
 
 module.exports.add_cart_item = async (req, res) => {
     const userId = req.params.id;
-    const { productId, quantity } = req.body;
+    const { productId, optionId, quantity } = req.body;
 
     try {
         let cart = await Cart.findOne({ userId });
@@ -26,9 +27,16 @@ module.exports.add_cart_item = async (req, res) => {
         if (!item) {
             res.status(404).send("Item not found!");
         }
-        const price = item.price;
-        const name = item.title;
-
+        let price;
+        item.Option.every((option) => {
+            if (option.OptionID == optionId) {
+                price = option.Price;
+                return false;
+            }
+        });
+        price = Number(price.replace(/[^0-9]+/g, ""));
+        const name = item.Name;
+        console.log(price, name, optionId, item, cart);
         if (cart) {
             // if cart exists for the user
             let itemIndex = cart.items.findIndex(
