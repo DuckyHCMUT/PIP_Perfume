@@ -24,6 +24,7 @@ const OrderSchema = new Schema({
         name: String,
         address: String,
         contact: String,
+        required: true,
     },
     bill: {
         type: Number,
@@ -33,7 +34,10 @@ const OrderSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    status: String,
+    status: {
+        type: String,
+        required: true,
+    },
 });
 
 module.exports = Order = mongoose.model("order", OrderSchema);
