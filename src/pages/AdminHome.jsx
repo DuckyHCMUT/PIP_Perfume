@@ -50,13 +50,26 @@ const AdminHome = () => {
     //else
     useEffect(() => {
         var totalsale = 0;
+        var totalorder = 0;
+        var yesterday = new Date();
+        var date;
+        yesterday = moment(yesterday.setDate(yesterday.getDate() - 1)).format(
+            "DD-MM-YYYY"
+        );
+        //
         axios.get("/api/orders").then((data) => {
             setOrders(data.data);
-            setSaleCount(data.data.length);
+
             data.data.forEach((object) => {
-                totalsale += object.bill;
+                date = moment(object.date_added).format("DD-MM-YYYY");
+                console.log(date, yesterday);
+                if (object.date_added >= yesterday) {
+                    totalorder += 1;
+                    if (object.status === "completed") totalsale += object.bill;
+                }
             });
             setTotal(totalsale);
+            setSaleCount(totalorder);
         });
 
         axios.get("/api/usercount").then((data) => setUserCount(data.data));

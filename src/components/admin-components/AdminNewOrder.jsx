@@ -74,10 +74,14 @@ const OrderButtons = styled.div`
     justify-content: right;
     text-align: center;
 `;
-const changeStatusTo = (newStatus, orderId) => {
-    console.log(newStatus);
+const changeStatusToComplete = (orderId) => {
     axios
         .put(`/api/order/${orderId}`, { status: "completed" })
+        .then(console.log("updated"));
+};
+const changeStatusToCancel = (orderId) => {
+    axios
+        .put(`/api/order/${orderId}`, { status: "canceled" })
         .then(console.log("updated"));
 };
 const AdminNewOrder = ({ data }) => {
@@ -116,8 +120,15 @@ const AdminNewOrder = ({ data }) => {
                 </OrderCard>*/}
                 {data.map((order, index) => {
                     const list = order.items;
+                    var mainColor;
+                    if (order.status === "pending") mainColor = "#ffe38d";
+                    else if (order.status === "canceled") mainColor = "#ff938b";
+                    else mainColor = "#dcff8d";
                     return (
-                        <OrderCard key={index}>
+                        <OrderCard
+                            key={index}
+                            style={{ backgroundColor: mainColor }}
+                        >
                             <OrderNumber>
                                 #
                                 {order._id
@@ -152,16 +163,18 @@ const AdminNewOrder = ({ data }) => {
                             <OrderButtons>
                                 <Button
                                     variant="outlined"
+                                    style={{ backgroundColor: "white" }}
                                     onClick={() => {
-                                        changeStatusTo("completed", order._id);
+                                        changeStatusToComplete(order._id);
                                     }}
                                 >
                                     Complete
                                 </Button>
                                 <Button
                                     variant="outlined"
+                                    style={{ backgroundColor: "#f27067" }}
                                     onClick={() => {
-                                        changeStatusTo("canceled", order._id);
+                                        changeStatusToCancel(order._id);
                                     }}
                                 >
                                     Cancel

@@ -20,6 +20,11 @@ const OrderSchema = new Schema({
             price: Number,
         },
     ],
+    shippingInfo: {
+        name: String,
+        address: String,
+        contact: String,
+    },
     bill: {
         type: Number,
         required: true,
