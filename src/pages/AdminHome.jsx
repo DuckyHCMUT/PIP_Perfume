@@ -61,7 +61,6 @@ const AdminHome = () => {
 
             data.data.forEach((object) => {
                 date = moment(object.date_added).format("DD-MM-YYYY");
-                //console.log(date, yesterday);
                 if (date >= yesterday) {
                     totalorder += 1;
                     if (object.status === "completed") totalsale += object.bill;

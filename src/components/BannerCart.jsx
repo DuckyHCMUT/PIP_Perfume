@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 const Container = styled.div`
     height: 100%;
@@ -45,7 +46,20 @@ const MenuItem = styled.div`
 const BannerCart = () => {
     var loginState = localStorage.getItem("isLogin")
 
-    const handleLogOut = () => localStorage.setItem("isLogin", false);
+    const handleLogOut = () => {
+		swal({
+			title: 'Are you sure?',
+			text: 'Do you want to log out?',
+			icon: 'warning',
+			buttons: true,
+			dangerMode: true,
+		}).then((willLogOut) => {
+			if (willLogOut) {
+				localStorage.setItem('isLogin', false);
+				window.location.replace('/');
+			}
+		});
+	};
 
     if (loginState === "true")
         return (

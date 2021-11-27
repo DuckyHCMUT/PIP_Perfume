@@ -8,6 +8,7 @@ import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router";
+import swal from "sweetalert";
 
 const Container = styled.div``;
 
@@ -103,6 +104,19 @@ const Cart = () => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
+  const handleCheckout = () => {
+    // Do not proceed
+    if (cartArr.length <= 0)
+      swal({
+        title: "Empty cart!",
+        text: "The cart is empty, please add some item before proceed!",
+        icon: 'warning',
+        dangerMode: true,
+      })
+    else
+      window.location.replace("/user/Checkout");
+  }
+
   if (loginState === "true")
     return (
       <Container>
@@ -127,9 +141,7 @@ const Cart = () => {
                 <SummaryItemText> Total </SummaryItemText>
                 <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
               </SummaryItem>
-              <Link to="/user/CheckOut">
-                <Button> PROCEED </Button>
-              </Link>
+                <Button onClick = {() => handleCheckout()}> PROCEED </Button>
             </Summary>
           </Bottom>
         </Wrapper>

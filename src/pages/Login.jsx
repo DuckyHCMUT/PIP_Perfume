@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { Redirect } from 'react-router';
-import { currentUser } from '../components/Asset';
 import swal from 'sweetalert';
 
 const Container = styled.div`
