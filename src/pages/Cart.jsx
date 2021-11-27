@@ -7,6 +7,7 @@ import { cartArr, quanArr } from "../components/Asset";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
 import { useState, useEffect } from "react";
+import { Redirect } from "react-router";
 
 const Container = styled.div``;
 
@@ -75,6 +76,7 @@ const Button = styled.button`
 const Cart = () => {
   const [totalItemInCart, setTotal] = useState(0);
   const [cartTotalPrice, setCartTotalPrice] = useState(0);
+  var loginState = localStorage.getItem("isLogin")
 
   useEffect(() => {
     handleTotalItem();
@@ -101,38 +103,43 @@ const Cart = () => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  return (
-    <Container>
-      <Announcement />
-      <BannerCart />
-      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link></TopTexts>
-      <Wrapper>
-        <Bottom>
-          <Info>
-            {cartArr.map((item) => (
-              <CartItem item = {item[0]} option = {item[1]} handleTotalInCart = {handleTotalItem} />
-            ))}
-            <Hr />
-          </Info>
-          <Summary>
-            <SummaryTitle>SUMMARY</SummaryTitle>
-            <SummaryItem>
-            <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{totalItemInCart}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText> Total </SummaryItemText>
-              <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
-            </SummaryItem>
-            <Link to="/user/CheckOut">
-              <Button> PROCEED </Button>
-            </Link>
-          </Summary>
-        </Bottom>
-      </Wrapper>
-      <Footer />
-    </Container>
-  );
+  if (loginState === "true")
+    return (
+      <Container>
+        <Announcement />
+        <BannerCart />
+        <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link></TopTexts>
+        <Wrapper>
+          <Bottom>
+            <Info>
+              {cartArr.map((item) => (
+                <CartItem item = {item[0]} option = {item[1]} handleTotalInCart = {handleTotalItem} />
+              ))}
+              <Hr />
+            </Info>
+            <Summary>
+              <SummaryTitle>SUMMARY</SummaryTitle>
+              <SummaryItem>
+              <SummaryItemText>Items:</SummaryItemText>
+              <SummaryItemPrice>{totalItemInCart}</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem type="total">
+                <SummaryItemText> Total </SummaryItemText>
+                <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
+              </SummaryItem>
+              <Link to="/user/CheckOut">
+                <Button> PROCEED </Button>
+              </Link>
+            </Summary>
+          </Bottom>
+        </Wrapper>
+        <Footer />
+      </Container>
+    );
+  else
+    return (
+      <Redirect to = "/user/login"/>
+    )
 };
 
 export default Cart;

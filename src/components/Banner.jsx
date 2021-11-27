@@ -61,6 +61,7 @@ const MenuItem = styled.div`
 	cursor: pointer;
 	margin-left: 25px;
 	${mobile({ fontSize: '12px', marginLeft: '10px' })}
+
 `;
 
 const SearchButton = styled.button`
