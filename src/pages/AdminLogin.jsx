@@ -94,7 +94,7 @@ const AdminLogin = ({ setToken }) => {
         // eslint-disable-next-line
         const token = await axios
             .post("/api/login", user)
-            .then((res) => setToken(res.data.token))
+            .then((res) => setToken(res.data.user.id))
             .catch((err) => console.log(err));
     };
 

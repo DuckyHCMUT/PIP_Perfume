@@ -10,6 +10,23 @@ module.exports.get_orders = async (req, res) => {
         .sort({ date: -1 })
         .then((orders) => res.json(orders));
 };
+module.exports.get_all_orders = async (req, res) => {
+    const userId = req.params.id;
+    Order.find()
+        .sort({ date: -1 })
+        .then((orders) => res.json(orders));
+};
+module.exports.create_order = async (req, res) => {
+    const newOrder = new Order(req.body);
+    newOrder.save().then((order) => res.json(order));
+};
+module.exports.update_order = (req, res) => {
+    Order.findByIdAndUpdate(req.params.id, req.body).then(function (item) {
+        Order.findById(req.params.id).then(function (item) {
+            res.json(item);
+        });
+    });
+};
 
 /*module.exports.checkout = async (req,res) => {
     try{
