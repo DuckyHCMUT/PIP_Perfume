@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
@@ -28,32 +29,58 @@ const Title = styled.div`
     font-size: 24px;
     font-weight: bold;
 `;
-
+const Stat = styled.div`
+    font-size: 30px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #96d900;
+    text-align: center;
+`;
+const addDot = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
 const AdminHome = () => {
     const [token, setToken] = useState();
     const [orders, setOrders] = useState();
+    const [saleCount, setSaleCount] = useState("0");
+    const [userCount, setUserCount] = useState("0");
+    const [totalCount, setTotal] = useState("0");
 
     //if (token != {config.get("ADMIN_ID")}) return <AdminLogin setToken={setToken} />;
     //else
     useEffect(() => {
-        axios.get("/api/orders").then((data) => setOrders(data.data));
+        var totalsale = 0;
+        axios.get("/api/orders").then((data) => {
+            setOrders(data.data);
+            setSaleCount(data.data.length);
+            data.data.forEach((object) => {
+                totalsale += object.bill;
+            });
+            setTotal(totalsale);
+        });
+
+        axios.get("/api/usercount").then((data) => setUserCount(data.data));
     }, []);
     return (
         <Container>
             <StatWrapper>
                 <StatSummary>
-                    <Title>Sales Today</Title>
+                    <Title>
+                        Orders Today - {moment().format("MMMM Do YYYY")}
+                    </Title>
+                    <Stat>{addDot(saleCount)}</Stat>
                 </StatSummary>
                 <StatSummary>
                     <Title>Total Users</Title>
+                    <Stat>{addDot(userCount)}</Stat>
                 </StatSummary>
                 <StatSummary>
-                    <Title>Total Sales</Title>
+                    <Title>Revenue Today</Title>
+                    <Stat>{addDot(totalCount)}</Stat>
                 </StatSummary>
             </StatWrapper>
             <StatWrapper>
                 {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
-                <AdminNewUser />
             </StatWrapper>
         </Container>
     );

@@ -83,3 +83,7 @@ module.exports.get_user = (req, res) => {
         .select("-password")
         .then((user) => res.json(user));
 };
+
+module.exports.get_user_count = (req, res) => {
+    User.countDocuments().then((count) => res.json(count));
+};

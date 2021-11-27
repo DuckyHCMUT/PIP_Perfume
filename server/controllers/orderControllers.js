@@ -21,10 +21,8 @@ module.exports.create_order = async (req, res) => {
     newOrder.save().then((order) => res.json(order));
 };
 module.exports.update_order = (req, res) => {
-    Item.findByIdAndUpdate({ _id: req.params.id }, req.body).then(function (
-        item
-    ) {
-        Item.findOne({ _id: req.params.id }).then(function (item) {
+    Order.findByIdAndUpdate(req.params.id, req.body).then(function (item) {
+        Order.findById(req.params.id).then(function (item) {
             res.json(item);
         });
     });

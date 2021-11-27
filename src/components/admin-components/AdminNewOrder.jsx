@@ -74,12 +74,13 @@ const OrderButtons = styled.div`
     justify-content: right;
     text-align: center;
 `;
+const changeStatusTo = (newStatus, orderId) => {
+    console.log(newStatus);
+    axios
+        .put(`/api/order/${orderId}`, { status: "completed" })
+        .then(console.log("updated"));
+};
 const AdminNewOrder = ({ data }) => {
-    const [status, setStatus] = useState();
-    const changeStatusTo = (newStatus, orderId) => {
-        axios.post(`/api/order/${orderId}`, { status: { newStatus } });
-    };
-
     //const id = ({ userId } = orders);
     //const user = await axios.get("/api/user", userId).then((user) => user);
     return (
@@ -118,7 +119,10 @@ const AdminNewOrder = ({ data }) => {
                     return (
                         <OrderCard key={index}>
                             <OrderNumber>
-                                #{order._id.substr(order._id.length - 8)}
+                                #
+                                {order._id
+                                    .substr(order._id.length - 8)
+                                    .toUpperCase()}
                             </OrderNumber>
                             <OrderInfo>
                                 {list.map((item) => {
@@ -135,7 +139,12 @@ const AdminNewOrder = ({ data }) => {
                                 <Info>time</Info>
                             </OrderInfo>
                             <OrderInfo>
-                                <Info>{order.bill}</Info>
+                                <Info>
+                                    {order.bill
+                                        .toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                    VND
+                                </Info>
                             </OrderInfo>
                             <OrderInfo>
                                 <Info>{order.status}</Info>
@@ -143,19 +152,17 @@ const AdminNewOrder = ({ data }) => {
                             <OrderButtons>
                                 <Button
                                     variant="outlined"
-                                    onClick={changeStatusTo(
-                                        "completed",
-                                        order._id
-                                    )}
+                                    onClick={() => {
+                                        changeStatusTo("completed", order._id);
+                                    }}
                                 >
                                     Complete
                                 </Button>
                                 <Button
                                     variant="outlined"
-                                    onClick={changeStatusTo(
-                                        "canceled",
-                                        order._id
-                                    )}
+                                    onClick={() => {
+                                        changeStatusTo("canceled", order._id);
+                                    }}
                                 >
                                     Cancel
                                 </Button>
