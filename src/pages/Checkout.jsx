@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { isStyledComponent } from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect } from "react";
 import CheckoutItem from "../components/CheckoutItem";
+import { Redirect } from "react-router";
 
 const Container = styled.div``;
 
@@ -88,9 +89,27 @@ const ReturnButton = styled.button`
   cursor: pointer;
 `;
 
+const InputContainer = styled.div`
+  color: #000000;
+	min-width: 40%;
+	width: 100%;
+`;
+
+const Input = styled.input`
+	width: 100%;
+  text-align: left;
+  margin-right: -10px;
+  justify: right;
+	border: black;
+  border-radius: 2px;
+	font-size: 16px;
+	color: #000000;
+`;
+
 const Checkout = () => {
   const [totalItemInCheckOut, setTotal] = useState(0);
   const [cartTotalPrice, setCartTotalPrice] = useState(0);
+  var loginState = localStorage.getItem("isLogin")
 
   useEffect(() => {
     handleTotalItem();
@@ -114,12 +133,16 @@ const Checkout = () => {
   }
   
   const recycleCart = () => {
-    alert('Thank you for ordering!');
+    if (cartArr.length > 0){
+      alert('Thank you for ordering!');
 
-    // Start the process of destroy everything
-    let arrLength = quanArr.length;
-    quanArr.splice(0, arrLength);
-    cartArr.splice(0, arrLength);
+      // Start the process of destroy everything
+      let arrLength = quanArr.length;
+      quanArr.splice(0, arrLength);
+      cartArr.splice(0, arrLength);
+    }
+    else
+      alert('There is nothing the cart!');
   }
   
   const shippingFee = (itemCount) => {
@@ -135,67 +158,84 @@ const Checkout = () => {
   const numberWithDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
+  if (loginState === "true")
+    return (
+      <Container>
+        <Announcement />
+        <BannerCart />
+        <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> {'>'} <Link to="/user/checkout">Place Order</Link> </TopTexts>
+        <Wrapper>
+          <Bottom>
+            <Info>
+              {cartArr.map((item) => (
+                <CheckoutItem item = {item[0]} option = {item[1]} />
+              ))}
+              <Hr />
+            </Info>
+            <Summary>
+              <SummaryTitle>SHIPPING INFORMATION</SummaryTitle>
 
-  return (
-    <Container>
-      <Announcement />
-      <BannerCart />
-      <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link> {'>'} <Link to="/user/checkout">Place Order</Link> </TopTexts>
-      <Wrapper>
-        <Bottom>
-          <Info>
-            {cartArr.map((item) => (
-              <CheckoutItem item = {item[0]} option = {item[1]} />
-            ))}
-            <Hr />
-          </Info>
-          <Summary>
-            <SummaryTitle>SHIPPING INFORMATION</SummaryTitle>
-            <SummaryItem>
-            <SummaryItemText>Name:</SummaryItemText>
-            <SummaryItemPrice>Hanh Duyen</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-            <SummaryItemText>Address:</SummaryItemText>
-            <SummaryItemPrice>268 Ly Thuong Kiet street, ward 14, district 10, Ho Chi Minh city</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Phone:</SummaryItemText>
-              <SummaryItemPrice>0911233211</SummaryItemPrice>
-            </SummaryItem>
-            <Link to="/user/login">
-            <Button>CHANGE</Button>
-            </Link>
-            <SummaryTitle>SUMMARY</SummaryTitle>
-            <SummaryItem>
-            <SummaryItemText>Items:</SummaryItemText>
-            <SummaryItemPrice>{totalItemInCheckOut}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-            <SummaryItemText>Subtotal:</SummaryItemText>
-            <SummaryItemPrice>{numberWithDot(cartTotalPrice)}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-            <SummaryItemText>Shipping fees: </SummaryItemText>
-            <SummaryItemPrice>{numberWithDot(shippingFee(totalItemInCheckOut))}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total:</SummaryItemText>
-              <SummaryItemPrice>{numberWithDot((cartTotalPrice + shippingFee(totalItemInCheckOut))) + "VND"}</SummaryItemPrice>
-            </SummaryItem>
-            <Link to = "/" onClick={() => recycleCart()}>
-              <Button>PLACE ORDER</Button>
-            </Link>
+              <SummaryItem>
+                <SummaryItemText>Name:</SummaryItemText>
+                <SummaryItemPrice>{localStorage.getItem("currentuser")}</SummaryItemPrice>
+              </SummaryItem>
 
-            <Link to = "/user/cart">
-              <ReturnButton>RETURN TO CART</ReturnButton>
-            </Link>
-          </Summary>
-        </Bottom>
-      </Wrapper>
-      <Footer />
-    </Container>
-  );
+              <SummaryItem>
+                <SummaryItemText>Address:</SummaryItemText>
+                  <InputContainer>
+                    <Input placeholder="Enter address"/> 
+                  </InputContainer>
+              </SummaryItem>
+
+              <SummaryItem>
+                <SummaryItemText>Phone:</SummaryItemText>
+                  <InputContainer>
+                    <Input placeholder="Enter phone"/> 
+                  </InputContainer>
+              </SummaryItem>
+
+              <Link to="/user/login">
+                <Button>CHANGE</Button>
+              </Link>
+
+              <SummaryTitle>SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Items:</SummaryItemText>
+                <SummaryItemPrice>{totalItemInCheckOut}</SummaryItemPrice>
+              </SummaryItem>
+
+              <SummaryItem>
+                <SummaryItemText>Subtotal:</SummaryItemText>
+                <SummaryItemPrice>{numberWithDot(cartTotalPrice)}</SummaryItemPrice>
+              </SummaryItem>
+
+              <SummaryItem>
+                <SummaryItemText>Shipping fees: </SummaryItemText>
+                <SummaryItemPrice>{numberWithDot(shippingFee(totalItemInCheckOut))}</SummaryItemPrice>
+              </SummaryItem>
+
+              <SummaryItem type="total">
+                <SummaryItemText>Total:</SummaryItemText>
+                <SummaryItemPrice>{numberWithDot((cartTotalPrice + shippingFee(totalItemInCheckOut))) + "VND"}</SummaryItemPrice>
+              </SummaryItem>
+
+              <Link to = "/" onClick={() => recycleCart()}>
+                <Button>PLACE ORDER</Button>
+              </Link>
+
+              <Link to = "/user/cart">
+                <ReturnButton>RETURN TO CART</ReturnButton>
+              </Link>
+            </Summary>
+          </Bottom>
+        </Wrapper>
+        <Footer />
+      </Container>
+    );
+  else
+    return (
+      <Redirect to = "/user/login"/>
+    )
 };
 
 export default Checkout;
