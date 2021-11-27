@@ -1,6 +1,6 @@
 import { Button, createTheme, Link } from "@material-ui/core";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 
 const OrderDisplay = styled.div`
@@ -9,7 +9,7 @@ const OrderDisplay = styled.div`
     background: white;
     padding: 15px;
     margin: 15px;
-    height: 700px;
+    height: 100%;
 `;
 
 const Title = styled.div`
@@ -74,15 +74,19 @@ const OrderButtons = styled.div`
     justify-content: right;
     text-align: center;
 `;
-const changeStatusToComplete = (orderId) => {
-    axios
-        .put(`/api/order/${orderId}`, { status: "completed" })
-        .then(console.log("updated"));
+const changeStatusToComplete = (orderId, current) => {
+    if (current === "canceled") alert("Order already canceled!");
+    else
+        axios
+            .put(`/api/order/${orderId}`, { status: "completed" })
+            .then(console.log("updated"));
 };
-const changeStatusToCancel = (orderId) => {
-    axios
-        .put(`/api/order/${orderId}`, { status: "canceled" })
-        .then(console.log("updated"));
+const changeStatusToCancel = (orderId, current) => {
+    if (current === "completed") alert("Order already completed!");
+    else
+        axios
+            .put(`/api/order/${orderId}`, { status: "canceled" })
+            .then(console.log("updated"));
 };
 const AdminNewOrder = ({ data }) => {
     //const id = ({ userId } = orders);
@@ -104,26 +108,24 @@ const AdminNewOrder = ({ data }) => {
                 <Center>Action</Center>
             </HeadingWrapper>
             <OrderWrapper>
-                {/*<OrderCard>
-                    <OrderNumber>1234567</OrderNumber>
-                    <OrderInfo>
-                        <Info>John</Info>
-                        <Info>email</Info>
-                        <Info>time</Info>
-                    </OrderInfo>
-                    <OrderButtons>
-                        <ThemeProvider theme={theme}>
-                            <Button variant="outlined">Complete</Button>
-                            <Button variant="outlined">Cancel</Button>
-                        </ThemeProvider>
-                    </OrderButtons>
-                </OrderCard>*/}
                 {data.map((order, index) => {
                     const list = order.items;
+                    var name,
+                        addr,
+                        tel = "N/A";
+                    try {
+                        name = order.shippingInfo.name;
+                        addr = order.shippingInfo.address;
+                        tel = order.shippingInfo.contact;
+                    } catch (e) {
+                        console.log(e);
+                    }
                     var mainColor;
+                    //
                     if (order.status === "pending") mainColor = "#ffe38d";
                     else if (order.status === "canceled") mainColor = "#ff938b";
                     else mainColor = "#dcff8d";
+                    //
                     return (
                         <OrderCard
                             key={index}
@@ -145,10 +147,11 @@ const AdminNewOrder = ({ data }) => {
                                 })}
                             </OrderInfo>
                             <OrderInfo>
-                                <Info>John</Info>
-                                <Info>email</Info>
-                                <Info>time</Info>
+                                <Info>{name}</Info>
+                                <Info>{addr}</Info>
+                                <Info>{tel}</Info>
                             </OrderInfo>
+                            );
                             <OrderInfo>
                                 <Info>
                                     {order.bill
@@ -165,7 +168,10 @@ const AdminNewOrder = ({ data }) => {
                                     variant="outlined"
                                     style={{ backgroundColor: "white" }}
                                     onClick={() => {
-                                        changeStatusToComplete(order._id);
+                                        changeStatusToComplete(
+                                            order._id,
+                                            order.status
+                                        );
                                     }}
                                 >
                                     Complete
@@ -174,7 +180,10 @@ const AdminNewOrder = ({ data }) => {
                                     variant="outlined"
                                     style={{ backgroundColor: "#f27067" }}
                                     onClick={() => {
-                                        changeStatusToCancel(order._id);
+                                        changeStatusToCancel(
+                                            order._id,
+                                            order.status
+                                        );
                                     }}
                                 >
                                     Cancel
