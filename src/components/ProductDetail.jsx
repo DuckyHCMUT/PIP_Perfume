@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
 import { cartArr, quanArr } from "../components/Asset";
+import swal from 'sweetalert';
 
 const Container = styled.div``;
 
@@ -138,10 +139,19 @@ const ProductDetail = ({item, onUpdateCount}) => {
       if (!found){
         cartArr.push([item, thisOption]);
         quanArr.push([thisOption['OptionID'], thisCount]);
-        alert("Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart");
+        swal({
+          title: 'Added to cart!',
+          text: "Added " + thisCount + " of " + item['Name'] + " " + thisOption['Volume'] + " to the cart",
+          icon: 'success',
+        })
       }
       else
-        alert(item['Name'] + " " + thisOption['Volume'] + " is already in the cart. Please move to cart page to make the adjusment.");  
+        swal({
+          title: 'Item existed in cart!',
+          text: item['Name'] + " " + thisOption['Volume'] + " is already in the cart.",
+          icon: 'warning',
+          dangerMode: true,
+        })
     };
     
     return (

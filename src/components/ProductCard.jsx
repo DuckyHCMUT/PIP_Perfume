@@ -6,6 +6,7 @@ import {
 import styled from "styled-components";
 import { cartArr, quanArr } from "./Asset";
 import { useState } from "react";
+import swal from "sweetalert";
 
 const Info = styled.div`
   flex: 3;
@@ -94,7 +95,7 @@ const ProductCard = ({ item, onChange }) => {
   // eslint-disable-next-line
   const [option, setOption] = useState(item.Option[0]);
 
-  function addtoCart(thisOption, thisCount){
+  const addtoCart = (thisOption, thisCount) => {
     // If item is not presented in cart yet
     var found = false;
 
@@ -107,10 +108,19 @@ const ProductCard = ({ item, onChange }) => {
     if (!found){
       cartArr.push([item, thisOption]);
       quanArr.push([thisOption['OptionID'], thisCount]);
-      alert("Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart");
+      swal({
+        title: 'Added to cart!',
+        text: "Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart",
+        icon: 'success',
+      })
     }
     else
-      alert(item['Name'] + " " + thisOption['Volume'] + " is already in the cart. Please move to cart page to make the adjustment.");  
+      swal({
+        title: 'Item existed in cart!',
+        text: item['Name'] + " " + thisOption['Volume'] + " is already in the cart.",
+        icon: 'warning',
+        dangerMode: true,
+      })
   };
 
   return (
