@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
-
+import { Component } from 'react';
+import { Alert } from 'reactstrap';
+import axios from 'axios';
+import swal from 'sweetalert';
 const Container = styled.div`
 	width: 100vw;
 	height: 100vh;
@@ -17,6 +20,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
 	width: 30%;
 	padding: 3%;
+	margin: 0 3%;
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0);
 	backdrop-filter: blur(35px);
@@ -24,6 +28,14 @@ const Wrapper = styled.div`
 	box-shadow: 0 0 150px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
 	margin-left: 10%;
+	@media (max-width: 950px) {
+		width: 50%;
+		margin: 0 auto;
+	}
+	@media (max-width: 630px) {
+		width: 85%;
+		margin: 0 auto;
+	}
 `;
 
 const Title = styled.h2`
@@ -150,88 +162,175 @@ const LogoContainer = styled.div`
 	margin-bottom: 10%;
 `;
 
-const Register = () => {
-	return (
-		<Container>
-			<Wrapper>
-				<LogoContainer>
-					<Link to="/">
-						<Logo>BKP.</Logo>
-					</Link>
-				</LogoContainer>
-				<Title>CREATE AN ACCOUNT</Title>
-				<Form>
-					<GroupContainer>
+class Register extends Component {
+	state = {
+		modal: false,
+		name: '',
+		gender: '',
+		bday: '',
+		email: '',
+		password: '',
+		confirm_password: '',
+	};
+	register = ({ name, gender, bday, email, password }) => {
+		const body = JSON.stringify({
+			name: name,
+			gender: gender,
+			bday: bday,
+			email: email,
+			password: password,
+		});
+
+		axios
+			.post('/api/register', body, {
+				headers: { 'Content-Type': 'application/json' },
+			})
+			.then(function (response) {
+				swal(
+					'Successfully created!',
+					response.data.msg,
+					'success'
+				).then(() => {
+					window.location.replace('/user/login');
+				});
+			})
+			.catch(function (error) {
+				swal({
+					title: 'Something wrong!',
+					text: error.response.data.msg,
+					icon: 'warning',
+					dangerMode: true,
+				});
+			});
+	};
+
+	onChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
+	onSubmit = (e) => {
+		e.preventDefault();
+		const { name, gender, bday, email, password, confirm_password } =
+			this.state;
+		if (password !== confirm_password) {
+			swal({
+				title: 'Are you sure?',
+				text: 'Password and Confirm Password must match',
+				icon: 'warning',
+				dangerMode: true,
+			});
+		} else {
+			// Crete user object
+			const newUser = { name, gender, bday, email, password };
+			// Attempt to register
+			this.register(newUser);
+		}
+	};
+
+	render() {
+		return (
+			<Container>
+				{this.state.msg ? (
+					<Alert color="danger">{this.state.msg}</Alert>
+				) : null}
+				<Wrapper>
+					<LogoContainer>
+						<Link to="/">
+							<Logo>BKP.</Logo>
+						</Link>
+					</LogoContainer>
+					<Title>CREATE AN ACCOUNT</Title>
+					<Form onSubmit={this.onSubmit}>
 						<InputContainer>
-							<Label>First name</Label>
+							<Label>Full name</Label>
 							<Input
 								type="text"
-								placeholder="Enter first name"
+								name="name"
+								id="name"
+								placeholder="Enter your name"
 								autoFocus
+								onChange={this.onChange}
 							/>
 						</InputContainer>
+						<GroupContainer>
+							<SelectContainer>
+								<Label>Gender</Label>
+								<Select
+									name="gender"
+									id="gender"
+									onChange={this.onChange}>
+									<option value="none" selected disabled>
+										Select gender
+									</option>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+									<option value="other">Other</option>
+								</Select>
+							</SelectContainer>
+							<InputContainer>
+								<Label>Birthday</Label>
+								<Input
+									type="date"
+									placeholder="Your birthday"
+									name="bday"
+									id="bday"
+									onChange={this.onChange}
+								/>
+							</InputContainer>
+						</GroupContainer>
 						<InputContainer>
-							<Label>Last name</Label>
-							<Input type="text" placeholder="Enter last name" />
-						</InputContainer>
-					</GroupContainer>
-					<GroupContainer>
-						<SelectContainer>
-							<Label>Gender</Label>
-							<Select name="gender">
-								<option value="none" selected disabled>
-									Select gender
-								</option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
-								<option value="other">Other</option>
-							</Select>
-						</SelectContainer>
-						<InputContainer>
-							<Label>Birthday</Label>
-							<Input type="date" placeholder="Your birthday" />
-						</InputContainer>
-					</GroupContainer>
-					<InputContainer>
-						<Label>Email address</Label>
-						<Input type="email" placeholder="Enter email" />
-					</InputContainer>
-					<GroupContainer>
-						<InputContainer>
-							<Label>Password</Label>
+							<Label>Email address</Label>
 							<Input
-								type="password"
-								placeholder="Enter password"
+								type="email"
+								placeholder="Enter email"
+								name="email"
+								id="email"
+								onChange={this.onChange}
 							/>
 						</InputContainer>
-						<InputContainer>
-							<Label>Confirm password</Label>
-							<Input
-								type="password"
-								placeholder="Enter password again"
-							/>
-						</InputContainer>
-					</GroupContainer>
-					<Agreement>
-						By creating an account, I consent to the processing of
-						my personal data in accordance with the{' '}
-						<b>PRIVACY POLICY</b>
-					</Agreement>
-					
-					<Link to="/user/login">
-						<Button>CREATE</Button>
-					</Link>
+						<GroupContainer>
+							<InputContainer>
+								<Label>Password</Label>
+								<Input
+									type="password"
+									placeholder="Enter password"
+									name="password"
+									id="password"
+									onChange={this.onChange}
+								/>
+							</InputContainer>
+							<InputContainer>
+								<Label>Confirm password</Label>
+								<Input
+									type="password"
+									placeholder="Enter password again"
+									name="confirm_password"
+									id="confirm_password"
+									onChange={this.onChange}
+								/>
+							</InputContainer>
+						</GroupContainer>
+						<Agreement>
+							By creating an account, I consent to the processing
+							of my personal data in accordance with the{' '}
+							<b>PRIVACY POLICY</b>
+						</Agreement>
 
-					<LoginForm>
-						<NormalText>Already have an account? &nbsp;</NormalText>
-						<Link to="/user/login">
-							<SignInLink> Sign in </SignInLink>
-						</Link>
-					</LoginForm>
-				</Form>
-			</Wrapper>
-		</Container>
-	);
-};
+						<Button>CREATE</Button>
+
+						<LoginForm>
+							<NormalText>
+								Already have an account? &nbsp;
+							</NormalText>
+							<Link to="/user/login">
+								<SignInLink> Sign in </SignInLink>
+							</Link>
+						</LoginForm>
+					</Form>
+				</Wrapper>
+			</Container>
+		);
+	}
+}
 
 export default Register;
