@@ -151,7 +151,6 @@ const AdminNewOrder = ({ data }) => {
                                 <Info>{addr}</Info>
                                 <Info>{tel}</Info>
                             </OrderInfo>
-                            );
                             <OrderInfo>
                                 <Info>
                                     {order.bill
