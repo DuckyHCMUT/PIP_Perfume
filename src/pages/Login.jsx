@@ -3,7 +3,9 @@ import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
-import { Redirect } from "react-router";
+import { Redirect } from 'react-router';
+import { currentUser } from '../components/Asset';
+import swal from 'sweetalert';
 
 const Container = styled.div`
 	width: 100vw;
@@ -25,7 +27,6 @@ const Logo = styled.h1`
 	color: white;
 	text-decoration: none;
 	display: inline-block;
-	${mobile({ fontSize: '24px' })}
 `;
 const LogoContainer = styled.div`
 	display: flex;
@@ -42,6 +43,14 @@ const Wrapper = styled.div`
 	box-shadow: 0 0 150px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
 	margin-left: 15%;
+	@media (max-width: 950px) {
+		width: 40%;
+		margin: 0 auto;
+	}
+	@media (max-width: 630px) {
+		width: 80%;
+		margin: 0 auto;
+	}
 `;
 
 const Title = styled.h2`
@@ -133,30 +142,35 @@ const NormalText = styled.b`
 	font-weight: normal;
 	display: inline-block;
 `;
+
 const Login = () => {
 	const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+	const [password, setPassword] = useState();
 	const [token, setToken] = useState();
 	const [userName, setUserName] = useState();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const user = { email, password };
-        // Attempt to login
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const user = { email, password };
+		// Attempt to login
 
 		await axios
-            .post("/api/login", user)
-            .then(
-				(res) => {
-					setUserName(res.data.user.name);
-					setToken(res.data.token);
-				}
-			)
-            .catch((err) => console.log(err));
+			.post('/api/login', user)
+			.then((res) => {
+				setUserName(res.data.user.name);
+				setToken(res.data.token);
+			})
+			.catch((error) =>
+				swal({
+					title: 'Something wrong!',
+					text: error.response.data.msg,
+					icon: 'warning',
+					dangerMode: true,
+				})
+			);
 	};
 
-	if (!token)
-	{
+	if (!token) {
 		return (
 			<Container>
 				<Wrapper>
@@ -177,7 +191,7 @@ const Login = () => {
 							/>
 						</InputContainer>
 						<InputContainer>
-						<Label>Password</Label>
+							<Label>Password</Label>
 							<Input
 								type="password"
 								placeholder="Enter password"
@@ -198,14 +212,10 @@ const Login = () => {
 				</Wrapper>
 			</Container>
 		);
-	}
-	else
-	{
-		localStorage.setItem("isLogin", true);
-		localStorage.setItem("currentuser", userName);
-		return(
-			<Redirect to = "/"/>
-		)
+	} else {
+		localStorage.setItem('isLogin', true);
+		localStorage.setItem('currentuser', userName);
+		return <Redirect to="/" />;
 	}
 };
 
