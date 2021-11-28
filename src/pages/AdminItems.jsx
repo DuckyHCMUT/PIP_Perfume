@@ -77,29 +77,41 @@ const AdminItems = () => {
     const [Gender, setGender] = useState("Unisex");
     const [Image, setImage] = useState("");
     const [Option, setOption] = useState();
-    const [Volume1, setVolume1] = useState("0");
+    const [Volume1, setVolume1] = useState(["0", "0", "0"]);
     const [Volume2, setVolume2] = useState("0");
     const [Volume3, setVolume3] = useState("0");
-    const [Price1, setPrice1] = useState("0");
+    const [Price1, setPrice1] = useState(["0", "0", "0"]);
     const [Price2, setPrice2] = useState("0");
     const [Price3, setPrice3] = useState("0");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const option1 = { Volume1, Price1 };
-        const option2 = { Volume2, Price2 };
-        const option3 = { Volume3, Price3 };
-        const ID = "50";
+        class option {
+            constructor(OptionID, Volume, Price) {
+                this.OptionID = OptionID;
+                this.Volume = Volume;
+                this.Price = Price;
+            }
+        }
+        const option1 = new option("1000001", Volume1, Price1);
+        console.log("option1: ", option1);
+        const ID = 50;
         var options, Price_range;
         if (Volume2 === "0") {
             options = [option1];
-            Price_range = { Price1 };
+            Price_range = Price1.toString() + "VND";
         } else if (Volume3 === "0") {
+            const option2 = new option("1000002", Volume2, Price2);
+            console.log("option2: ", option2);
             options = [option1, option2];
-            Price_range = `${Price1} - ${Price2}`;
+            Price_range = `${Price1.toString()}VND - ${Price2.toString()}VND`;
         } else {
+            const option2 = new option("1000002", Volume2, Price2);
+            const option3 = new option("1000003", Volume3, Price3);
+            console.log("option2: ", option2);
+            console.log("option3: ", option3);
             options = [option1, option2, option3];
-            Price_range = `${Price1} - ${Price3}`;
+            Price_range = `${Price1.toString()}VND - ${Price3.toString()}VND`;
         }
         setOption(options);
         const item = {
@@ -113,8 +125,8 @@ const AdminItems = () => {
         };
         axios
             .post("/api/items", item)
-            .then((data) => console.log(data))
-            .then(alert("Successfully Added"));
+            .then(() => alert("Successfully Added"))
+            .catch((err) => console.log(err));
     };
 
     return (
