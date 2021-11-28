@@ -75,7 +75,7 @@ const BannerCart = () => {
                     <Right>
                         <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
                         
-                        <MenuItem>WELCOME, {localStorage.getItem("currentuser")}!</MenuItem>
+                        <MenuItem>WELCOME, {localStorage.getItem("currentUserName")}!</MenuItem>
 
                         <Link
                             to="/BlankPage"

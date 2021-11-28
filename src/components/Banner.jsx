@@ -129,8 +129,6 @@ const Banner = ({ onChange }) => {
                     </Center>
 
                     <Right>
-                        {/* <MenuItem>FAVORITE LIST</MenuItem> */}
-
                         <MenuItem
                             onClick={() => {
                                 window.scrollTo(0, document.body.scrollHeight);
@@ -140,7 +138,7 @@ const Banner = ({ onChange }) => {
                         </MenuItem>
 
                         <MenuItem>
-                            WELCOME, {localStorage.getItem("currentuser")}!
+                            WELCOME, {localStorage.getItem("currentUserName")}!
                         </MenuItem>
 
                         <Link
@@ -210,8 +208,6 @@ const Banner = ({ onChange }) => {
                     </Center>
 
                     <Right>
-                        {/* <MenuItem>FAVORITE LIST</MenuItem> */}
-
                         <MenuItem
                             onClick={() => {
                                 window.scrollTo(0, document.body.scrollHeight);
