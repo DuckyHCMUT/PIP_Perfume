@@ -38,8 +38,8 @@ module.exports.add_cart_item = async (req, res) => {
         });
         price = Number(price.replace(/[^0-9]+/g, ""));
         const name = item.Name;
+
         const image = item.Image;
-        console.log(image, price, name, optionId, item, cart);
         if (cart) {
             // if cart exists for the user
             let itemIndex = cart.items.findIndex(
@@ -74,7 +74,7 @@ module.exports.add_cart_item = async (req, res) => {
 
 module.exports.update_cart_item = async (req, res) => {
     const userId = req.params.id;
-    const { productId, qty } = req.body;
+    const { productId, optionId, qty } = req.body;
 
     try {
         let cart = await Cart.findOne({ userId });
