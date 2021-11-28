@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { quanArr } from "../components/Asset";
-import { useState, useEffect } from "react";
 
 const Product = styled.div`
   display: flex;
@@ -76,24 +74,7 @@ const SummaryItemText = styled.span`
   margin: 0px 5px 0px 0px;
 `;
 
-const CheckoutItem = ({item, option}) => {
-  const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    findCount(option['OptionID']);
-    console.log();
-  }, [item, option])
-
-  const findCount = (itemID) => {
-    for (let i = 0; i < quanArr.length; i++){
-      // console.log("quanArr[i][0]= " + quanArr[i][0] + " and itemID == " + itemID)
-      if (quanArr[i][0] === itemID){
-        setQuantity(quanArr[i][1]);
-        break;
-      }
-    }
-  }
-
+const CheckoutItem = ({item}) => {
   const numberWithDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
@@ -101,26 +82,26 @@ const CheckoutItem = ({item, option}) => {
   return (
     <Product>
         <ProductDetail>
-        <Image src={item.Image} />
+        <Image src={item.image} />
         <Details>
             <ProductName>
-            <b>Name:</b> {item.Name}
+            <b>Name:</b> {item.name}
             </ProductName>
             <ProductId>
-            <b>Size:</b> {option.Volume}
+            <b>Size:</b> {item.volume}
             </ProductId>
             <ProductId>
-            {option.Price}
+            {numberWithDot(item.price) + "VND"}
             </ProductId>
         </Details>
         </ProductDetail>
         <PriceDetail>
         <SummaryItemText>
         <ProductAmountContainer>
-            <Amount> Amount: {quantity}</Amount>
+            <Amount> Amount: {item.quantity}</Amount>
         </ProductAmountContainer>
         </SummaryItemText>
-            <ProductPrice>{numberWithDot(option.Price.split('.').join('').split('VND').join('')*quantity) + " VND"}</ProductPrice>
+            <ProductPrice>{numberWithDot(item.price*item.quantity) + "VND"}</ProductPrice>
         </PriceDetail>
     </Product>
   );

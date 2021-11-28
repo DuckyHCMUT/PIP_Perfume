@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
-import AdminLogin from "./AdminLogin";
-//const config = require("config");
+// import AdminLogin from "./AdminLogin";
+// const config = require("config");
 
 const Container = styled.div`
     background-color: #06243b;
@@ -67,7 +67,7 @@ const addDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 const AdminHome = () => {
-    const [token, setToken] = useState();
+    // const [token, setToken] = useState();
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
