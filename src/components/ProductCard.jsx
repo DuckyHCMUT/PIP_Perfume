@@ -1,5 +1,4 @@
 import {
-  // FavoriteBorderOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
@@ -146,10 +145,6 @@ const ProductCard = ({ item, onChange }) => {
         <Icon onClick = {() => onChange(item)}>
             <SearchOutlined />
         </Icon>
-{/*         
-        <Icon onClick = {() => alert("Added to favorite")}>
-          <FavoriteBorderOutlined/>
-        </Icon>  */}
       </Info>     
     </Container>
   );

@@ -146,6 +146,7 @@ const Login = () => {
 	const [password, setPassword] = useState();
 	const [token, setToken] = useState();
 	const [userName, setUserName] = useState();
+	const [userId, setUserId] = useState();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -156,7 +157,12 @@ const Login = () => {
 			.post('/api/login', user)
 			.then((res) => {
 				setUserName(res.data.user.name);
+				setUserId(res.data.user.id);
 				setToken(res.data.token);
+				swal({
+					title: 'Login success!',
+					icon: 'success'
+				});
 			})
 			.catch((error) =>
 				swal({
@@ -212,7 +218,8 @@ const Login = () => {
 		);
 	} else {
 		localStorage.setItem('isLogin', true);
-		localStorage.setItem('currentuser', userName);
+		localStorage.setItem('currentUserName', userName);
+		localStorage.setItem('currentUserId', userId);
 		return <Redirect to="/" />;
 	}
 };

@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useState } from "react";
-import { cartArr, quanArr } from "./Asset";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const Product = styled.div`
   display: flex;
@@ -93,61 +90,7 @@ const ProductPrice = styled.div`
 `;
 const SummaryItemText = styled.span``;
 
-const CartItem = ({item, option, handleTotalInCart}) => {
-    const [count, setCount] = useState(0);
-    const [cart, setCart] = useState(cartArr);
-    const [optionCount, setOptionCount] = useState(quanArr);
-
-    useEffect(() => {
-      findCount(option.OptionID);
-    }, [option])
-
-    const findCount = (optionID) => {
-      for (let i = 0; i < quanArr.length; i++){
-        if (quanArr[i][0] === optionID){
-          setCount(quanArr[i][1]);
-          break;
-        }
-      }
-    }
-
-    const handleCount = (count, optionID) => {
-      if (count < 1)
-        removeItem(optionID);
-      else{
-        setCount(count);
-        
-        // Modify the (itemID, quantity) array
-        for (var i = 0; i < cartArr.length; i++){
-          if (quanArr[i][0] === optionID){
-            quanArr[i][1] = count;
-            break;
-          }
-        }
-      }
-      handleTotalInCart();
-    };
-
-    const removeItem = (optionID) => {
-      let innerCartArr = cart;    
-      let innerQuanArr = optionCount;
-      let index = -1;
-
-      for (var i = 0; i < cartArr.length; i++){
-        if (cartArr[i][1]['OptionID'] === optionID){
-          index = i;
-          break;
-        }
-      }
-
-      if (index !== -1){
-        innerCartArr.splice(index, 1);
-        innerQuanArr.splice(index, 1);
-        setCart(innerCartArr)
-        setOptionCount(innerQuanArr);
-      }
-      handleTotalInCart();
-    };
+const CartItem = ({item}) => {
 
     const numberWithDot = (x) => {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -156,16 +99,16 @@ const CartItem = ({item, option, handleTotalInCart}) => {
     return(
         <Product>
             <ProductDetail>
-                <Image src={item.Image} />
+                <Image src = {item.image}/>
                 <Details>
                   <ProductName>
-                    <b>Name:</b> {item.Name}
+                    <b>Name:</b> {item.name}
                   </ProductName>
                   <ProductId>
-                    <b>Size:</b> {option.Volume}
+                    <b>Size:</b> {item.volume}
                   </ProductId>
                   <ProductId>
-                    {option.Price}
+                    {numberWithDot(item.price) + "VND"}
                   </ProductId>
                 </Details>
             </ProductDetail>
@@ -173,22 +116,22 @@ const CartItem = ({item, option, handleTotalInCart}) => {
               <SummaryItemText>
                 <ProductAmountContainer>
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(0, option.OptionID)}>Remove</AmountButton>
+                  <AmountButton>Remove</AmountButton>
                 </Link>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count - 1, option.OptionID)}>-</AmountButton>
+                  <AmountButton>-</AmountButton>
                 </Link>
                   
-                  <Amount>&nbsp;{count}&nbsp;</Amount>
+                  <Amount>&nbsp;{item.quantity}&nbsp;</Amount>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(count + 1, option.OptionID)}>+</AmountButton>
+                  <AmountButton>+</AmountButton>
                 </Link>
 
                 </ProductAmountContainer>
               </SummaryItemText>
-                  <ProductPrice>{numberWithDot(option.Price.split('.').join('').split('VND').join('')*count) + " VND"}</ProductPrice>
+                  <ProductPrice>{numberWithDot(item.price*item.quantity) + "VND"}</ProductPrice>
             </PriceDetail>
         </Product>
     )
