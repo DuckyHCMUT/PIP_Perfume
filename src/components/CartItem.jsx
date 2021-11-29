@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import swal from "sweetalert";
 
 const Product = styled.div`
   display: flex;
@@ -92,6 +94,50 @@ const SummaryItemText = styled.span``;
 
 const CartItem = ({item}) => {
 
+    const handleCount = (newQuantity, optionId) => {
+      // alert("newQuantity = " + newQuantity);
+      var currentUserId = localStorage.getItem("currentUserId");
+      var getter = "/api/cart/" + currentUserId + "/";
+      
+      // On deduction to 0
+      if (newQuantity <= 0){
+        var toDelete = "/api/cart/" + currentUserId + "/" + item.productId + "/" + optionId + "/";
+        axios.delete(toDelete)
+            .then(
+              swal({
+                title: 'Removed from cart!',
+                text: "Removed " + item.name + " ( " + item.volume + " ) from the cart!",
+                icon: 'success',
+              })
+            )
+            .catch((error) => {
+              swal({
+                title: "Something went wrong!",
+                text: error,
+                icon: 'warning',
+                dangerMode: true,
+              })
+            });
+      }
+      else{
+        const body = JSON.stringify({
+            productId: item.productId,
+            optionId: optionId,
+            qty: newQuantity
+        });
+
+        axios
+            .put(getter, body, {
+                headers: { "Content-Type": "application/json" },
+            })
+            .then(
+            )
+            .catch((error) => {
+              console.log(error);
+            });
+      };
+    }
+
     const numberWithDot = (x) => {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
@@ -108,6 +154,9 @@ const CartItem = ({item}) => {
                     <b>Size:</b> {item.volume}
                   </ProductId>
                   <ProductId>
+                    <b>OptionId:</b> {item.optionId}
+                  </ProductId>
+                  <ProductId>
                     {numberWithDot(item.price) + "VND"}
                   </ProductId>
                 </Details>
@@ -116,17 +165,17 @@ const CartItem = ({item}) => {
               <SummaryItemText>
                 <ProductAmountContainer>
                 <Link to="/user/cart">
-                  <AmountButton>Remove</AmountButton>
+                  <AmountButton onClick = {() => handleCount(0, item.optionId)}>Remove</AmountButton>
                 </Link>
 
                 <Link to="/user/cart">
-                  <AmountButton>-</AmountButton>
+                  <AmountButton onClick = {() => handleCount(item.quantity - 1, item.optionId)}>-</AmountButton>
                 </Link>
                   
                   <Amount>&nbsp;{item.quantity}&nbsp;</Amount>
 
                 <Link to="/user/cart">
-                  <AmountButton>+</AmountButton>
+                  <AmountButton onClick = {() => handleCount(item.quantity + 1, item.optionId)}>+</AmountButton>
                 </Link>
 
                 </ProductAmountContainer>
