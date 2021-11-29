@@ -157,7 +157,7 @@ const Checkout = () => {
     if (currentCart.length > 0){
       swal({
         title: "Order success",
-        text: "Thank you for ordering, please patiently wait for our confirmation! You will be redirected to home page in 5 seconds",
+        text: "Thank you for ordering, please patiently wait for our confirmation!\nYou will be redirected to home page in 5 seconds",
         icon: 'success'
       })
       recycleCart();
@@ -165,39 +165,30 @@ const Checkout = () => {
     else
       swal({
         title: "Empty cart!",
-        text: "The cart is empty, please add some item before checkout!",
+        text: "The cart is empty, please add some item before checkout!\nYou will be redirected to home page in 5 seconds",
         icon: 'warning',
         dangerMode: true,
       })
+      window.setTimeout(directToHomePage, 5000);
   };
 
   const recycleCart = () => {
     let arrLength = currentCart.length;
-    console.log(arrLength);
     let idArray = [];
 
     for (let i = 0; i < arrLength; i++)
       idArray.push(currentCart[i].productId);
-    console.log(idArray);
-    
-    for (let i = 0; i < arrLength; i++){
-      var toDelete = "/api/cart/" + currentUserId + "/" + idArray[i] + "/";
-      //console.log("currentCart[i].productId = " + currentCart[i].productId + " and idArray[i] = " + idArray[i]);
-      console.log(toDelete);
-      
-      axios.delete(toDelete)
-           .then()
-           .catch((err) => {console.log(err.response.data)}); 
-      console.log(currentCart.length);
-    };
-    // //console.log(idArray); // ok
 
-    // if (currentCart.length > 0)
-    //   recycleCart();
-    // else
+    idArray.forEach( (id) => {deleteItem("/api/cart/" + currentUserId + "/" + id + "/")} );
+  }
 
-    //console.log("a");
-    return;
+  function deleteItem(toDelete){
+    axios.delete(toDelete)
+        .then(console.log("Delete success"))
+        .catch((err) => {
+          console.log(err.response.data);
+          deleteItem(toDelete);
+        });  
   }
 
   if (loginState === "true")

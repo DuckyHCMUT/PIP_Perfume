@@ -52,10 +52,12 @@ export const Logo = styled.h1`
     font-size: 22px;
     margin-left: 15px;
 `;
-const Right = styled.div`
-    text-align: right;
-    color: white;
-`;
+
+// const Right = styled.div`
+//     text-align: right;
+//     color: white;
+// `;
+
 const Stat = styled.div`
     font-size: 30px;
     margin-top: 5px;
