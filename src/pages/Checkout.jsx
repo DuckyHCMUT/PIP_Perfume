@@ -175,11 +175,15 @@ const Checkout = () => {
   const recycleCart = () => {
     let arrLength = currentCart.length;
     let idArray = [];
+    let optionArray = [];
+
+    for (let i = 0; i < arrLength; i++){
+      idArray.push(currentCart[i].productId);
+      optionArray.push(currentCart[i].optionId);
+    }
 
     for (let i = 0; i < arrLength; i++)
-      idArray.push(currentCart[i].productId);
-
-    idArray.forEach( (id) => {deleteItem("/api/cart/" + currentUserId + "/" + id + "/")} );
+      deleteItem("/api/cart/" + currentUserId + "/" + idArray[i] + "/" + optionArray[i] + "/");
   }
 
   function deleteItem(toDelete){

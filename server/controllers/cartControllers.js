@@ -35,22 +35,35 @@ module.exports.add_cart_item = async (req, res) => {
                 volume = option.Volume;
                 return false;
             }
+            else
+                return true;
         });
         price = Number(price.replace(/[^0-9]+/g, ""));
         const name = item.Name;
-
         const image = item.Image;
+
         if (cart) {
             // if cart exists for the user
             let itemIndex = cart.items.findIndex(
                 (p) => p.productId == productId
             );
+            
+            let itemOption = cart.items.findIndex(
+                (p) => p.optionId == optionId
+            )
 
             // Check if product exists or not
             if (itemIndex > -1) {
-                let productItem = cart.items[itemIndex];
-                productItem.quantity += quantity;
-                cart.items[itemIndex] = productItem;
+                // Check if the same item option
+                if (itemOption > -1){
+                    let productItem = cart.items[itemOption];
+                    productItem.quantity += quantity;
+                    cart.items[itemOption] = productItem;
+                } 
+                // Same product but different item option
+                else { 
+                    cart.items.push({ image, productId, optionId, name, volume, quantity, price });
+                }
             } else {
                 cart.items.push({ image, productId, optionId, name, volume, quantity, price });
             }
@@ -89,13 +102,21 @@ module.exports.update_cart_item = async (req, res) => {
                 (p) => p.productId == productId
             );
 
+            let itemOption = cart.items.findIndex(
+                (p) => p.optionId == optionId
+            );
+
             // Check if product exists or not
             if (itemIndex == -1)
                 return res.status(404).send("Item not found in cart!");
             else {
-                let productItem = cart.items[itemIndex];
-                productItem.quantity = qty;
-                cart.items[itemIndex] = productItem;
+                if (itemOption == -1)
+                    return res.status(404).send("Item not found in cart!");
+                else{
+                    let productItem = cart.items[itemOption];
+                    productItem.quantity = qty;
+                    cart.items[itemOption] = productItem;
+                }
             }
             cart.bill = cart.items.reduce(
                 (sum, item) => sum + item.price * item.quantity,
@@ -114,13 +135,21 @@ module.exports.update_cart_item = async (req, res) => {
 module.exports.delete_item = async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.itemId;
+    const optionId = req.params.optionId;
+
+    console.log("productId = " + productId);
+    console.log("optionId = " + optionId);
+    
     try {
         let cart = await Cart.findOne({ userId });
         let itemIndex = cart.items.findIndex((p) => p.productId == productId);
+        let itemOption = cart.items.findIndex((p) => p.optionId == optionId);
         if (itemIndex > -1) {
-            let productItem = cart.items[itemIndex];
-            cart.bill -= productItem.quantity * productItem.price;
-            cart.items.splice(itemIndex, 1);
+            if (itemOption > -1){
+                let productItem = cart.items[itemOption];
+                cart.bill -= productItem.quantity * productItem.price;
+                cart.items.splice(itemOption, 1);
+            }
         }
         cart = await cart.save();
         return res.status(201).send(cart);

@@ -93,15 +93,15 @@ const ProductPrice = styled.div`
 const SummaryItemText = styled.span``;
 
 const CartItem = ({item}) => {
-    const handleCount = (newQuantity) => {
+
+    const handleCount = (newQuantity, optionId) => {
       // alert("newQuantity = " + newQuantity);
       var currentUserId = localStorage.getItem("currentUserId");
       var getter = "/api/cart/" + currentUserId + "/";
       
       // On deduction to 0
       if (newQuantity <= 0){
-        var toDelete = "/api/cart/" + currentUserId + "/" + item.productId + "/";
-        // alert(toDelete);
+        var toDelete = "/api/cart/" + currentUserId + "/" + item.productId + "/" + optionId + "/";
         axios.delete(toDelete)
             .then(
               swal({
@@ -122,6 +122,7 @@ const CartItem = ({item}) => {
       else{
         const body = JSON.stringify({
             productId: item.productId,
+            optionId: optionId,
             qty: newQuantity
         });
 
@@ -153,6 +154,9 @@ const CartItem = ({item}) => {
                     <b>Size:</b> {item.volume}
                   </ProductId>
                   <ProductId>
+                    <b>OptionId:</b> {item.optionId}
+                  </ProductId>
+                  <ProductId>
                     {numberWithDot(item.price) + "VND"}
                   </ProductId>
                 </Details>
@@ -161,17 +165,17 @@ const CartItem = ({item}) => {
               <SummaryItemText>
                 <ProductAmountContainer>
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(0)}>Remove</AmountButton>
+                  <AmountButton onClick = {() => handleCount(0, item.optionId)}>Remove</AmountButton>
                 </Link>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(item.quantity - 1)}>-</AmountButton>
+                  <AmountButton onClick = {() => handleCount(item.quantity - 1, item.optionId)}>-</AmountButton>
                 </Link>
                   
                   <Amount>&nbsp;{item.quantity}&nbsp;</Amount>
 
                 <Link to="/user/cart">
-                  <AmountButton onClick = {() => handleCount(item.quantity + 1)}>+</AmountButton>
+                  <AmountButton onClick = {() => handleCount(item.quantity + 1, item.optionId)}>+</AmountButton>
                 </Link>
 
                 </ProductAmountContainer>

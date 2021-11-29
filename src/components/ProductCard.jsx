@@ -91,16 +91,9 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
-  // eslint-disable-next-line
-  const [option] = useState(item.Option[0]);
-
   const addtoCart = () => {
     var currentUserId = localStorage.getItem("currentUserId");
     var getter = "/api/cart/" + currentUserId + "/";
-
-    // console.log("item._id = " + item._id);
-    // console.log("optionId = " + item.Option[0].OptionID);
-    // console.log("quantity = " + "1");
 
     const body = JSON.stringify({
       productId: item._id,
