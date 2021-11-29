@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect, useCallback } from "react";
 import CheckoutItem from "../components/CheckoutItem";
 import { Redirect } from "react-router";
@@ -154,19 +153,14 @@ const Checkout = () => {
     window.location.replace('/');
   }
   
-  const recycleCart = () => {
-    if (cartArr.length > 0){
+  const handleCheckout = () => {
+    if (currentCart.length > 0){
       swal({
         title: "Order success",
         text: "Thank you for ordering, please patiently wait for our confirmation! You will be redirected to home page in 5 seconds",
         icon: 'success'
       })
-
-      // Start the process of destroy everything
-      let arrLength = quanArr.length;
-      quanArr.splice(0, arrLength);
-      cartArr.splice(0, arrLength);
-      window.setTimeout(directToHomePage, 5000);
+      recycleCart();
     }
     else
       swal({
@@ -175,6 +169,35 @@ const Checkout = () => {
         icon: 'warning',
         dangerMode: true,
       })
+  };
+
+  const recycleCart = () => {
+    let arrLength = currentCart.length;
+    console.log(arrLength);
+    let idArray = [];
+
+    for (let i = 0; i < arrLength; i++)
+      idArray.push(currentCart[i].productId);
+    console.log(idArray);
+    
+    for (let i = 0; i < arrLength; i++){
+      var toDelete = "/api/cart/" + currentUserId + "/" + idArray[i] + "/";
+      //console.log("currentCart[i].productId = " + currentCart[i].productId + " and idArray[i] = " + idArray[i]);
+      console.log(toDelete);
+      
+      axios.delete(toDelete)
+           .then()
+           .catch((err) => {console.log(err.response.data)}); 
+      console.log(currentCart.length);
+    };
+    // //console.log(idArray); // ok
+
+    // if (currentCart.length > 0)
+    //   recycleCart();
+    // else
+
+    //console.log("a");
+    return;
   }
 
   if (loginState === "true")
@@ -213,11 +236,12 @@ const Checkout = () => {
                   </InputContainer>
               </SummaryItem>
 
-              <Link to="/user/login">
-                <Button>CHANGE</Button>
-              </Link>
-
-              <SummaryTitle>SUMMARY</SummaryTitle>
+              <SummaryTitle>PAYMENT SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Method: </SummaryItemText>
+                <SummaryItemPrice>Cash </SummaryItemPrice>
+              </SummaryItem>
+              
               <SummaryItem>
                 <SummaryItemText>Items:</SummaryItemText>
                 <SummaryItemPrice>{totalItemInCart}</SummaryItemPrice>
@@ -238,7 +262,7 @@ const Checkout = () => {
                 <SummaryItemPrice>{numberWithDot((totalPriceInCart + shippingFee(totalItemInCart))) + "VND"}</SummaryItemPrice>
               </SummaryItem>
 
-              <Button onClick={() => recycleCart()}>PLACE ORDER</Button>
+              <Button onClick={() => handleCheckout()}>PLACE ORDER</Button>
 
               <Link to = "/user/cart">
                 <ReturnButton>RETURN TO CART</ReturnButton>
