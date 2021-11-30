@@ -7,10 +7,15 @@ const CartSchema = new Schema({
     },
     items: [
         {
+            image: String,
             productId: {
                 type: String,
             },
+            optionId: {
+                type: String,
+            },
             name: String,
+            volume: String,
             quantity: {
                 type: Number,
                 required: true,

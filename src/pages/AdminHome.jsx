@@ -5,9 +5,14 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
+<<<<<<< HEAD
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
 //const config = require("config");
+=======
+// import AdminLogin from "./AdminLogin";
+// const config = require("config");
+>>>>>>> 36c8e0fc28781f284dac7aec11d4dc188c2f0c59
 
 const Container = styled.div`
     background-color: #06243b;
@@ -46,7 +51,11 @@ const addDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 const AdminHome = () => {
+<<<<<<< HEAD
     const [token, setToken] = useState(localStorage.getItem("token"));
+=======
+    // const [token, setToken] = useState();
+>>>>>>> 36c8e0fc28781f284dac7aec11d4dc188c2f0c59
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");

@@ -3,12 +3,12 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "../components/Asset";
 import BannerCart from "../components/BannerCart";
 import CartItem from "../components/CartItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Redirect } from "react-router";
 import swal from "sweetalert";
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -76,29 +76,31 @@ const Button = styled.button`
 
 const Cart = () => {
   const [totalItemInCart, setTotal] = useState(0);
-  const [cartTotalPrice, setCartTotalPrice] = useState(0);
-  var loginState = localStorage.getItem("isLogin")
+  const [currentCart, setCurrentCart] = useState([]);
+  const [totalPriceInCart, setTotalPriceInCart] = useState(0);
+
+  var loginState = localStorage.getItem("isLogin");
+  var currentUserId = localStorage.getItem("currentUserId");
+  var getter = '/api/cart/' + currentUserId + "/";
+
+  const handleTotalItem = useCallback(() => {
+    let count = 0;
+    for (let i = 0; i < currentCart.length; i++)
+      count += currentCart[i].quantity;
+    setTotal(count);
+  }, [currentCart]);
 
   useEffect(() => {
     handleTotalItem();
-    handleTotalPrice();
-  },[totalItemInCart, cartTotalPrice]);
-
-  const handleTotalItem = () =>{
-    let count = 0;
-    for (let i = 0; i < quanArr.length; i++){
-      count += quanArr[i][1];
-    }
-    setTotal(count);
-  }
-
-  const handleTotalPrice = () => {
-    let price = 0;
-    for (let i = 0; i < quanArr.length; i++){
-      price += cartArr[i][1]['Price'].split('.').join('').split('VND').join('')*quanArr[i][1];
-    }
-    setCartTotalPrice(price);
-  }
+    axios.get(getter)
+    .then(response => {
+      setCurrentCart(response.data.items ? response.data.items : []);
+      setTotalPriceInCart(response.data.bill ? response.data.bill : 0);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, [handleTotalItem, getter, totalItemInCart, currentCart, totalPriceInCart]); 
 
   const numberWithDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -106,7 +108,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     // Do not proceed
-    if (cartArr.length <= 0)
+    if (currentCart.length <= 0)
       swal({
         title: "Empty cart!",
         text: "The cart is empty, please add some item before proceed!",
@@ -121,13 +123,13 @@ const Cart = () => {
     return (
       <Container>
         <Announcement />
-        <BannerCart />
+        <BannerCart /> 
         <TopTexts><Link to="/">Home</Link> {'>'} <Link to="/user/cart">Cart</Link></TopTexts>
         <Wrapper>
           <Bottom>
             <Info>
-              {cartArr.map((item) => (
-                <CartItem item = {item[0]} option = {item[1]} handleTotalInCart = {handleTotalItem} />
+              {currentCart.map((item) => (
+                <CartItem item = {item}/>
               ))}
               <Hr />
             </Info>
@@ -139,7 +141,7 @@ const Cart = () => {
               </SummaryItem>
               <SummaryItem type="total">
                 <SummaryItemText> Total </SummaryItemText>
-                <SummaryItemPrice> {numberWithDot(cartTotalPrice) + " VND"} </SummaryItemPrice>
+                <SummaryItemPrice> {numberWithDot(totalPriceInCart) + " VND"} </SummaryItemPrice>
               </SummaryItem>
                 <Button onClick = {() => handleCheckout()}> PROCEED </Button>
             </Summary>
