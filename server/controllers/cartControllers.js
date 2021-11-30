@@ -136,9 +136,6 @@ module.exports.delete_item = async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.itemId;
     const optionId = req.params.optionId;
-
-    console.log("productId = " + productId);
-    console.log("optionId = " + optionId);
     
     try {
         let cart = await Cart.findOne({ userId });
