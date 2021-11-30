@@ -111,6 +111,8 @@ const Checkout = () => {
   const [totalItemInCart, setTotal] = useState(0);
   const [currentCart, setCurrentCart] = useState([]);
   const [totalPriceInCart, setTotalPriceInCart] = useState(0);
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
 
   var loginState = localStorage.getItem("isLogin");
   var currentUserId = localStorage.getItem("currentUserId");
@@ -160,7 +162,7 @@ const Checkout = () => {
         text: "Thank you for ordering, please patiently wait for our confirmation!\nYou will be redirected to home page in 5 seconds",
         icon: 'success'
       })
-      recycleCart();
+      postOrder();
     }
     else
       swal({
@@ -169,7 +171,38 @@ const Checkout = () => {
         icon: 'warning',
         dangerMode: true,
       })
-      window.setTimeout(directToHomePage, 5000);
+    window.setTimeout(directToHomePage, 5000);
+  };
+
+  const postOrder = () => {
+    let checkOutArr = [];
+
+    for (let i = 0; i < currentCart.length; i++)
+      checkOutArr.push({
+        productId: currentCart[i]._id,
+        name: currentCart[i].name,
+        optionId: currentCart[i].optionId,
+        volume: currentCart[i].volume,
+        quantity: currentCart[i].quantity,
+        price: currentCart[i].price
+      });
+
+    axios.post("/api/order/", {
+      userId: currentUserId,
+      items: checkOutArr,
+      shippingInfo: {
+        name: localStorage.getItem("currentUserName"),
+        address: address ? address : "Not given",
+        contact: contact ? contact : "Not given"
+      },
+      status: "pending",
+      bill: totalPriceInCart + shippingFee(totalItemInCart)
+    }).then(
+        () => {recycleCart()}
+      )
+      .catch((err) => {
+        console.log(err.response.data);
+      })
   };
 
   const recycleCart = () => {
@@ -184,7 +217,7 @@ const Checkout = () => {
 
     for (let i = 0; i < arrLength; i++)
       deleteItem("/api/cart/" + currentUserId + "/" + idArray[i] + "/" + optionArray[i] + "/");
-  }
+  };
 
   function deleteItem(toDelete){
     axios.delete(toDelete)
@@ -220,14 +253,22 @@ const Checkout = () => {
               <SummaryItem>
                 <SummaryItemText>Address:</SummaryItemText>
                   <InputContainer>
-                    <Input placeholder="Enter address"/> 
+                    <Input
+                      placeholder="Enter address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}  
+                    /> 
                   </InputContainer>
               </SummaryItem>
 
               <SummaryItem>
                 <SummaryItemText>Phone:</SummaryItemText>
                   <InputContainer>
-                    <Input placeholder="Enter phone"/> 
+                    <Input 
+                      placeholder="Enter phone"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}  
+                    /> 
                   </InputContainer>
               </SummaryItem>
 

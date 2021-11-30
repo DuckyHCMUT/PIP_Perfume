@@ -3,7 +3,6 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
 
