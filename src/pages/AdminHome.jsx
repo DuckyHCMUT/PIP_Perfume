@@ -5,8 +5,16 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
+<<<<<<< HEAD
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
+=======
+
+import AdminLogin from "./AdminLogin";
+import AdminNavbar from "../components/admin-components/AdminNavbar";
+import AdminLogin from "./AdminLogin";
+
+>>>>>>> 70229cd46a8db8f1a0bbfd811f5d28a9b10ba03c
 
 const Container = styled.div`
     background-color: #06243b;
@@ -30,10 +38,27 @@ export const Title = styled.div`
     font-size: 24px;
     font-weight: bold;
 `;
+
 const Right = styled.div`
     text-align: right;
     color: white;
 `;
+
+export const Item = styled.div`
+    flex: 1;
+    font-size: 18px;
+    margin-right: 15px;
+    cursor: pointer;
+    text-align: right;
+`;
+export const Logo = styled.h1`
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    font-size: 22px;
+    margin-left: 15px;
+`;
+
 const Stat = styled.div`
     font-size: 30px;
     margin-top: 5px;
@@ -46,6 +71,10 @@ const addDot = (x) => {
 };
 const AdminHome = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 70229cd46a8db8f1a0bbfd811f5d28a9b10ba03c
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
@@ -78,7 +107,7 @@ const AdminHome = () => {
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
     }, []);
     // if login id is admin AND token is already in storage
-    //if (token === ADMIN_ID && localStorage.getItem("token")) {
+    if (token === ADMIN_ID && localStorage.getItem("token")) {
     return (
         <Container>
             <AdminNavbar />
@@ -103,7 +132,7 @@ const AdminHome = () => {
             </StatWrapper>
         </Container>
     );
-    //} else return <AdminLogin setToken={setToken} />;
+    } else return <AdminLogin setToken={setToken} />;
 };
 
 export default AdminHome;

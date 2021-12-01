@@ -3,8 +3,7 @@ import {
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import styled from "styled-components";
-import { cartArr, quanArr } from "./Asset";
-import { useState } from "react";
+import axios from "axios";
 import swal from "sweetalert";
 
 const Info = styled.div`
@@ -91,35 +90,37 @@ const Brand = styled.div`
 `
 
 const ProductCard = ({ item, onChange }) => {
-  // eslint-disable-next-line
-  const [option, setOption] = useState(item.Option[0]);
+  const addtoCart = () => {
+    var currentUserId = localStorage.getItem("currentUserId");
+    var getter = "/api/cart/" + currentUserId + "/";
 
-  const addtoCart = (thisOption, thisCount) => {
-    // If item is not presented in cart yet
-    var found = false;
-
-    for (var i = 0; i < cartArr.length; i++) {
-        if (cartArr[i][1].OptionID === thisOption.OptionID) {
-            found = true;
-            break;
-        }
-    }
-    if (!found){
-      cartArr.push([item, thisOption]);
-      quanArr.push([thisOption['OptionID'], thisCount]);
-      swal({
-        title: 'Added to cart!',
-        text: "Added " + item['Name'] + " " + thisOption['Volume'] + " to the cart",
-        icon: 'success',
+    const body = JSON.stringify({
+      productId: item._id,
+      optionId: item.Option[0].OptionID,
+      quantity: 1
+    });
+    
+    axios
+			.post(getter, body, {
+        headers: { "Content-Type": "application/json" },
       })
-    }
-    else
-      swal({
-        title: 'Item existed in cart!',
-        text: item['Name'] + " " + thisOption['Volume'] + " is already in the cart.",
-        icon: 'warning',
-        dangerMode: true,
-      })
+			.then(() => {
+        // eslint-disable-next-line
+        let successText = "Added 1 of " + item.Name + " (" + item.Option[0].Volume + ") " + "to the cart";
+				swal({
+          title: 'Added to cart!',
+          text: successText,
+          icon: 'success',
+        })
+			})
+			.catch((error) => {
+        swal({
+					title: 'Something wrong!',
+					text: error,
+					icon: 'warning',
+					dangerMode: true,
+				})
+      });
   };
 
   return (
@@ -138,7 +139,7 @@ const ProductCard = ({ item, onChange }) => {
         </Price>
       </ItemInfo> 
       <Info>
-        <Icon onClick = {() => addtoCart(option, 1)}>
+        <Icon onClick = {() => addtoCart()}>
           <ShoppingCartOutlined/>
         </Icon>
 
