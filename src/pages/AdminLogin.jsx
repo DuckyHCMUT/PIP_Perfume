@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import axios from "axios";
+import swal from "sweetalert";
 
 const Container = styled.div`
     height: 100vh;
@@ -94,8 +95,19 @@ const AdminLogin = ({ setToken }) => {
         // eslint-disable-next-line
         const token = await axios
             .post("/api/login", user)
-            .then((res) => setToken(res.data.user.id))
-            .catch((err) => console.log(err));
+            .then((res) => {
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("isAdminLogin", true);
+                setToken(res.data.user.id);
+            })
+            .catch((error) =>
+                swal({
+                    title: "Something wrong!",
+                    text: error.response.data.msg,
+                    icon: "warning",
+                    dangerMode: true,
+                })
+            );
     };
 
     return (

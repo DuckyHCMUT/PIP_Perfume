@@ -5,8 +5,11 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
-// import AdminLogin from "./AdminLogin";
-// const config = require("config");
+
+import AdminLogin from "./AdminLogin";
+import AdminNavbar from "../components/admin-components/AdminNavbar";
+import AdminLogin from "./AdminLogin";
+
 
 const Container = styled.div`
     background-color: #06243b;
@@ -15,14 +18,6 @@ const Container = styled.div`
 
 export const StatWrapper = styled.div`
     display: flex;
-`;
-export const Navbar = styled.div`
-    display: flex;
-    height: 50px;
-    align-items: center;
-    justify-content: right;
-
-    background: white;
 `;
 const StatSummary = styled.div`
     flex: 1;
@@ -38,6 +33,12 @@ export const Title = styled.div`
     font-size: 24px;
     font-weight: bold;
 `;
+
+const Right = styled.div`
+    text-align: right;
+    color: white;
+`;
+
 export const Item = styled.div`
     flex: 1;
     font-size: 18px;
@@ -53,11 +54,6 @@ export const Logo = styled.h1`
     margin-left: 15px;
 `;
 
-// const Right = styled.div`
-//     text-align: right;
-//     color: white;
-// `;
-
 const Stat = styled.div`
     font-size: 30px;
     margin-top: 5px;
@@ -69,14 +65,14 @@ const addDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 const AdminHome = () => {
-    // const [token, setToken] = useState();
+    const [token, setToken] = useState(localStorage.getItem("token"));
+
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
     const [totalCount, setTotal] = useState("0");
+    const ADMIN_ID = "61966bf1317a482f90ca7cd2";
 
-    //if (token != {config.get("ADMIN_ID")}) return <AdminLogin setToken={setToken} />;
-    //else
     useEffect(() => {
         var totalsale = 0;
         var totalorder = 0;
@@ -102,30 +98,11 @@ const AdminHome = () => {
 
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
     }, []);
-
+    // if login id is admin AND token is already in storage
+    if (token === ADMIN_ID && localStorage.getItem("token")) {
     return (
         <Container>
-            <Navbar>
-                <Title>
-                    <Link style={{ textDecoration: "none" }} to="/">
-                        <Logo>BKP.</Logo>
-                    </Link>
-                </Title>
-                <Title />
-                <StatWrapper>
-                    <Link
-                        style={{ textDecoration: "none" }}
-                        to="/admin/dashboard"
-                    >
-                        <Item>Home</Item>
-                    </Link>
-                    <Link style={{ textDecoration: "none" }} to="/">
-                        <Item>Items</Item>
-                    </Link>
-
-                    <Item>Logout</Item>
-                </StatWrapper>
-            </Navbar>
+            <AdminNavbar />
             <StatWrapper>
                 <StatSummary>
                     <Title>
@@ -147,6 +124,7 @@ const AdminHome = () => {
             </StatWrapper>
         </Container>
     );
+    } else return <AdminLogin setToken={setToken} />;
 };
 
 export default AdminHome;
