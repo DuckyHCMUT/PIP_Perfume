@@ -154,9 +154,6 @@ const CartItem = ({item}) => {
                     <b>Size:</b> {item.volume}
                   </ProductId>
                   <ProductId>
-                    <b>OptionId:</b> {item.optionId}
-                  </ProductId>
-                  <ProductId>
                     {numberWithDot(item.price) + "VND"}
                   </ProductId>
                 </Details>
