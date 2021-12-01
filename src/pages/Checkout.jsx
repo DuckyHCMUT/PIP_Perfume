@@ -138,13 +138,17 @@ const Checkout = () => {
   },[handleTotalItem, getter, totalItemInCart, currentCart, totalPriceInCart]); 
   
   const shippingFee = (itemCount) => {
-    let f = 50000;
+    if (totalPriceInCart >= 20000000)
+      return 0;
+    else{
+      let f = 50000;
     if (itemCount <= 0)
       f = 0;
     else if (itemCount > 3)
       for (let i = 3; i < itemCount; i++)
         f += 10000;
     return f;
+    }
   };
 
   const numberWithDot = (x) => {
@@ -290,7 +294,7 @@ const Checkout = () => {
 
               <SummaryItem>
                 <SummaryItemText>Shipping fees: </SummaryItemText>
-                <SummaryItemPrice>{numberWithDot(shippingFee(totalItemInCart))}</SummaryItemPrice>
+                <SummaryItemPrice>{totalPriceInCart>20000000? "Free shipping" : numberWithDot(shippingFee(totalItemInCart))}</SummaryItemPrice>
               </SummaryItem>
 
               <SummaryItem type="total">
