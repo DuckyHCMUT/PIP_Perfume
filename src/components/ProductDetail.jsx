@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import Option from "./Option";
-import { cartArr, quanArr } from "../components/Asset";
+import axios from 'axios';
 import swal from 'sweetalert';
 
 const Container = styled.div``;
@@ -125,33 +125,41 @@ const ProductDetail = ({item, onUpdateCount}) => {
         setOption(optRet[0]);
     }
 
+    const addtoCart = (option, count) => {
+      var currentUserId = localStorage.getItem("currentUserId");
+      var getter = "/api/cart/" + currentUserId + "/";
+  
+      const body = JSON.stringify({
+        productId: item._id,
+        optionId: option["OptionID"],
+        quantity: count
+      });
+      
+      console.log("item._id = " + item._id);
+      console.log("optionId = " + option["OptionID"]);
+      console.log("quantity = " + count);
 
-    function addtoCart(thisOption, thisCount){
-      // If item is not presented in cart yet
-      var found = false;
-
-      for (var i = 0; i < cartArr.length; i++) {
-          if (cartArr[i][1].OptionID === thisOption.OptionID) {
-              found = true;
-              break;
-          }
-      }
-      if (!found){
-        cartArr.push([item, thisOption]);
-        quanArr.push([thisOption['OptionID'], thisCount]);
-        swal({
-          title: 'Added to cart!',
-          text: "Added " + thisCount + " of " + item['Name'] + " " + thisOption['Volume'] + " to the cart",
-          icon: 'success',
+      axios
+        .post(getter, body, {
+          headers: { "Content-Type": "application/json" },
         })
-      }
-      else
-        swal({
-          title: 'Item existed in cart!',
-          text: item['Name'] + " " + thisOption['Volume'] + " is already in the cart.",
-          icon: 'warning',
-          dangerMode: true,
+        .then(() => {
+          // eslint-disable-next-line
+          let successText = "Added " + count + " of " + item.Name + " (" + option["Volume"] + ") " + "to the cart";
+          swal({
+            title: 'Added to cart!',
+            text: successText,
+            icon: 'success',
+          })
         })
+        .catch((error) => {
+          swal({
+            title: 'Something wrong!',
+            text: error,
+            icon: 'warning',
+            dangerMode: true,
+          })
+        });
     };
     
     return (

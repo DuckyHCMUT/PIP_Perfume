@@ -5,14 +5,11 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
-<<<<<<< HEAD
+
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
-//const config = require("config");
-=======
-// import AdminLogin from "./AdminLogin";
-// const config = require("config");
->>>>>>> 36c8e0fc28781f284dac7aec11d4dc188c2f0c59
+import AdminLogin from "./AdminLogin";
+
 
 const Container = styled.div`
     background-color: #06243b;
@@ -36,10 +33,27 @@ export const Title = styled.div`
     font-size: 24px;
     font-weight: bold;
 `;
+
 const Right = styled.div`
     text-align: right;
     color: white;
 `;
+
+export const Item = styled.div`
+    flex: 1;
+    font-size: 18px;
+    margin-right: 15px;
+    cursor: pointer;
+    text-align: right;
+`;
+export const Logo = styled.h1`
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    font-size: 22px;
+    margin-left: 15px;
+`;
+
 const Stat = styled.div`
     font-size: 30px;
     margin-top: 5px;
@@ -51,11 +65,8 @@ const addDot = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 const AdminHome = () => {
-<<<<<<< HEAD
     const [token, setToken] = useState(localStorage.getItem("token"));
-=======
-    // const [token, setToken] = useState();
->>>>>>> 36c8e0fc28781f284dac7aec11d4dc188c2f0c59
+
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
@@ -88,7 +99,7 @@ const AdminHome = () => {
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
     }, []);
     // if login id is admin AND token is already in storage
-    //if (token === ADMIN_ID && localStorage.getItem("token")) {
+    if (token === ADMIN_ID && localStorage.getItem("token")) {
     return (
         <Container>
             <AdminNavbar />
@@ -113,7 +124,7 @@ const AdminHome = () => {
             </StatWrapper>
         </Container>
     );
-    //} else return <AdminLogin setToken={setToken} />;
+    } else return <AdminLogin setToken={setToken} />;
 };
 
 export default AdminHome;

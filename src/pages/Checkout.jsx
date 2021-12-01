@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import BannerCart from "../components/BannerCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { cartArr, quanArr } from "../components/Asset";
 import { useState, useEffect, useCallback } from "react";
 import CheckoutItem from "../components/CheckoutItem";
 import { Redirect } from "react-router";
@@ -112,6 +111,8 @@ const Checkout = () => {
   const [totalItemInCart, setTotal] = useState(0);
   const [currentCart, setCurrentCart] = useState([]);
   const [totalPriceInCart, setTotalPriceInCart] = useState(0);
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
 
   var loginState = localStorage.getItem("isLogin");
   var currentUserId = localStorage.getItem("currentUserId");
@@ -154,27 +155,77 @@ const Checkout = () => {
     window.location.replace('/');
   }
   
-  const recycleCart = () => {
-    if (cartArr.length > 0){
+  const handleCheckout = () => {
+    if (currentCart.length > 0){
       swal({
         title: "Order success",
-        text: "Thank you for ordering, please patiently wait for our confirmation! You will be redirected to home page in 5 seconds",
+        text: "Thank you for ordering, please patiently wait for our confirmation!\nYou will be redirected to home page in 5 seconds",
         icon: 'success'
       })
-
-      // Start the process of destroy everything
-      let arrLength = quanArr.length;
-      quanArr.splice(0, arrLength);
-      cartArr.splice(0, arrLength);
-      window.setTimeout(directToHomePage, 5000);
+      postOrder();
     }
     else
       swal({
         title: "Empty cart!",
-        text: "The cart is empty, please add some item before checkout!",
+        text: "The cart is empty, please add some item before checkout!\nYou will be redirected to home page in 5 seconds",
         icon: 'warning',
         dangerMode: true,
       })
+    window.setTimeout(directToHomePage, 5000);
+  };
+
+  const postOrder = () => {
+    let checkOutArr = [];
+
+    for (let i = 0; i < currentCart.length; i++)
+      checkOutArr.push({
+        productId: currentCart[i]._id,
+        name: currentCart[i].name,
+        optionId: currentCart[i].optionId,
+        volume: currentCart[i].volume,
+        quantity: currentCart[i].quantity,
+        price: currentCart[i].price
+      });
+
+    axios.post("/api/order/", {
+      userId: currentUserId,
+      items: checkOutArr,
+      shippingInfo: {
+        name: localStorage.getItem("currentUserName"),
+        address: address ? address : "Not given",
+        contact: contact ? contact : "Not given"
+      },
+      status: "pending",
+      bill: totalPriceInCart + shippingFee(totalItemInCart)
+    }).then(
+        () => {recycleCart()}
+      )
+      .catch((err) => {
+        console.log(err.response.data);
+      })
+  };
+
+  const recycleCart = () => {
+    let arrLength = currentCart.length;
+    let idArray = [];
+    let optionArray = [];
+
+    for (let i = 0; i < arrLength; i++){
+      idArray.push(currentCart[i].productId);
+      optionArray.push(currentCart[i].optionId);
+    }
+
+    for (let i = 0; i < arrLength; i++)
+      deleteItem("/api/cart/" + currentUserId + "/" + idArray[i] + "/" + optionArray[i] + "/");
+  };
+
+  function deleteItem(toDelete){
+    axios.delete(toDelete)
+        .then(console.log("Delete success"))
+        .catch((err) => {
+          console.log(err.response.data);
+          deleteItem(toDelete);
+        });  
   }
 
   if (loginState === "true")
@@ -202,22 +253,31 @@ const Checkout = () => {
               <SummaryItem>
                 <SummaryItemText>Address:</SummaryItemText>
                   <InputContainer>
-                    <Input placeholder="Enter address"/> 
+                    <Input
+                      placeholder="Enter address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}  
+                    /> 
                   </InputContainer>
               </SummaryItem>
 
               <SummaryItem>
                 <SummaryItemText>Phone:</SummaryItemText>
                   <InputContainer>
-                    <Input placeholder="Enter phone"/> 
+                    <Input 
+                      placeholder="Enter phone"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}  
+                    /> 
                   </InputContainer>
               </SummaryItem>
 
-              <Link to="/user/login">
-                <Button>CHANGE</Button>
-              </Link>
-
-              <SummaryTitle>SUMMARY</SummaryTitle>
+              <SummaryTitle>PAYMENT SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Method: </SummaryItemText>
+                <SummaryItemPrice>Cash </SummaryItemPrice>
+              </SummaryItem>
+              
               <SummaryItem>
                 <SummaryItemText>Items:</SummaryItemText>
                 <SummaryItemPrice>{totalItemInCart}</SummaryItemPrice>
@@ -238,7 +298,7 @@ const Checkout = () => {
                 <SummaryItemPrice>{numberWithDot((totalPriceInCart + shippingFee(totalItemInCart))) + "VND"}</SummaryItemPrice>
               </SummaryItem>
 
-              <Button onClick={() => recycleCart()}>PLACE ORDER</Button>
+              <Button onClick={() => handleCheckout()}>PLACE ORDER</Button>
 
               <Link to = "/user/cart">
                 <ReturnButton>RETURN TO CART</ReturnButton>
