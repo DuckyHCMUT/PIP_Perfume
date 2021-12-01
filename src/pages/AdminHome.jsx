@@ -1,20 +1,10 @@
-import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-
 import styled from "styled-components";
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
-<<<<<<< HEAD
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
-=======
-
-import AdminLogin from "./AdminLogin";
-import AdminNavbar from "../components/admin-components/AdminNavbar";
-import AdminLogin from "./AdminLogin";
-
->>>>>>> 70229cd46a8db8f1a0bbfd811f5d28a9b10ba03c
 
 const Container = styled.div`
     background-color: #06243b;
@@ -71,10 +61,6 @@ const addDot = (x) => {
 };
 const AdminHome = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
-<<<<<<< HEAD
-=======
-
->>>>>>> 70229cd46a8db8f1a0bbfd811f5d28a9b10ba03c
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
@@ -108,30 +94,34 @@ const AdminHome = () => {
     }, []);
     // if login id is admin AND token is already in storage
     if (token === ADMIN_ID && localStorage.getItem("token")) {
-    return (
-        <Container>
-            <AdminNavbar />
-            <StatWrapper>
-                <StatSummary>
-                    <Title>
-                        Orders Today - {moment().format("MMMM Do YYYY")}
-                    </Title>
-                    <Stat>{addDot(saleCount)}</Stat>
-                </StatSummary>
-                <StatSummary>
-                    <Title>Total Users</Title>
-                    <Stat>{addDot(userCount)}</Stat>
-                </StatSummary>
-                <StatSummary>
-                    <Title>Revenue Today</Title>
-                    <Stat>{addDot(totalCount)}</Stat>
-                </StatSummary>
-            </StatWrapper>
-            <StatWrapper>
-                {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
-            </StatWrapper>
-        </Container>
-    );
+        return (
+            <Container>
+                <AdminNavbar />
+                <StatWrapper>
+                    <StatSummary>
+                        <Title>
+                            Orders Today - {moment().format("MMMM Do YYYY")}
+                        </Title>
+                        <Stat>{addDot(saleCount)}</Stat>
+                    </StatSummary>
+                    <StatSummary>
+                        <Title>Total Users</Title>
+                        <Stat>{addDot(userCount)}</Stat>
+                    </StatSummary>
+                    <StatSummary>
+                        <Title>Revenue Today</Title>
+                        <Stat>{addDot(totalCount)}</Stat>
+                    </StatSummary>
+                </StatWrapper>
+                <StatWrapper>
+                    {orders ? (
+                        <AdminNewOrder data={orders} />
+                    ) : (
+                        <h1>Loading...</h1>
+                    )}
+                </StatWrapper>
+            </Container>
+        );
     } else return <AdminLogin setToken={setToken} />;
 };
 

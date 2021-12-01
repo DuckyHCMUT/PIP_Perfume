@@ -83,31 +83,44 @@ const AdminAddItem = () => {
     const [Price3, setPrice3] = useState("0");
 
     const handleSubmit = async (e) => {
+        const id1 = "1000001";
+        const id2 = "1000002";
+        const id3 = "1000003";
         e.preventDefault();
-        class option {
-            constructor(OptionID, Volume, Price) {
-                this.OptionID = OptionID;
-                this.Volume = Volume;
-                this.Price = Price;
-            }
-        }
-        const option1 = new option("1000001", Volume1, Price1);
+        var testOption1, testOption2, testOption3, OptionID, Volume, Price;
+        //const option1 = new option("1000001", Volume1, Price1);
+        OptionID = id1;
+        Volume = Volume1;
+        Price = Price1;
+        testOption1 = { OptionID, Volume, Price };
         const ID = 50;
         var options, Price_range;
         if (Volume2 === "0") {
-            options = [option1];
+            options = [testOption1];
             Price_range = Price1.toString() + "VND";
+            setOption(options);
         } else if (Volume3 === "0") {
-            const option2 = new option("1000002", Volume2, Price2);
-            options = [option1, option2];
+            OptionID = id2;
+            Volume = Volume2;
+            Price = Price2;
+            testOption2 = { OptionID, Volume, Price };
+            options = [testOption1, testOption2];
             Price_range = `${Price1.toString()}VND - ${Price2.toString()}VND`;
+            setOption(options);
         } else {
-            const option2 = new option("1000002", Volume2, Price2);
-            const option3 = new option("1000003", Volume3, Price3);
-            options = [option1, option2, option3];
+            OptionID = id2;
+            Volume = Volume2;
+            Price = Price2;
+            testOption2 = { OptionID, Volume, Price };
+            OptionID = id3;
+            Volume = Volume3;
+            Price = Price3;
+            testOption3 = { OptionID, Volume, Price };
+            options = [testOption1, testOption2, testOption3];
             Price_range = `${Price1.toString()}VND - ${Price3.toString()}VND`;
+            setOption(options);
         }
-        setOption(options);
+
         const item = {
             Gender,
             ID,
@@ -117,6 +130,7 @@ const AdminAddItem = () => {
             Price_range,
             Option,
         };
+        console.log(item);
         axios
             .post("/api/items", item)
             .then(() => swal("Success", "Item added", "success"))
@@ -201,14 +215,20 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume1(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume1(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                                 required
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text1"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice1(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice1(e.target.value + "VND")
+                                }
                                 required
                             />
                         </Wrapper>
@@ -218,13 +238,19 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume2(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume2(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice2(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice2(e.target.value + "VND")
+                                }
                             />
                         </Wrapper>
                         <Wrapper>
@@ -233,13 +259,19 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume3(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume3(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice3(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice3(e.target.value + "VND")
+                                }
                             />
                         </Wrapper>
                     </InputContainer>

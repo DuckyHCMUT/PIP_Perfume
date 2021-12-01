@@ -74,10 +74,10 @@ const AdminChosenItem = ({ value }) => {
     const [Gender, setGender] = useState(value.Gender);
     const [Image, setImage] = useState(value.Image);
     const [Option, setOption] = useState(value.Option);
-    const [Volume1, setVolume1] = useState(["0", "0", "0"]);
+    const [Volume1, setVolume1] = useState(["0"]);
     const [Volume2, setVolume2] = useState("0");
     const [Volume3, setVolume3] = useState("0");
-    const [Price1, setPrice1] = useState(["0", "0", "0"]);
+    const [Price1, setPrice1] = useState(["0"]);
     const [Price2, setPrice2] = useState("0");
     const [Price3, setPrice3] = useState("0");
     const handleSubmit = async (e) => {
@@ -128,7 +128,7 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Product Name*</Label>
                     <Input
                         type="text"
-                        value={value.Name}
+                        defaultValue={value.Name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
@@ -137,7 +137,7 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Product Brand*</Label>
                     <Input
                         type="text"
-                        value={value.Brand}
+                        defaultValue={value.Brand}
                         onChange={(e) => setBrand(e.target.value)}
                         required
                     />
@@ -186,7 +186,7 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Image URL</Label>
                     <Input
                         type="text"
-                        value={value.Image}
+                        defaultValue={value.Image}
                         onChange={(e) => setImage(e.target.value)}
                     />
                 </InputContainer>
@@ -200,15 +200,29 @@ const AdminChosenItem = ({ value }) => {
                                 <Label>Volume</Label>
                                 <Input
                                     type="text"
-                                    value={option.Volume}
-                                    onChange={(e) => setVolume1(e.target.value)}
+                                    defaultValue={option.Volume}
+                                    onChange={(e) => {
+                                        if (index === 0)
+                                            setVolume1(e.target.value);
+                                        if (index === 1)
+                                            setVolume2(e.target.value);
+                                        if (index === 2)
+                                            setVolume3(e.target.value);
+                                    }}
                                     required
                                 />
                                 <Label>Price</Label>
                                 <Input
                                     type="text1"
-                                    value={option.Price}
-                                    onChange={(e) => setPrice1(e.target.value)}
+                                    defaultValue={option.Price}
+                                    onChange={(e) => {
+                                        if (index === 0)
+                                            setPrice1(e.target.value);
+                                        if (index === 1)
+                                            setPrice2(e.target.value);
+                                        if (index === 2)
+                                            setPrice3(e.target.value);
+                                    }}
                                     required
                                 />
                             </Wrapper>
