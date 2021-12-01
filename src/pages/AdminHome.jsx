@@ -2,6 +2,10 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3bb1228259f6ab8e232975660c78a51bd8b4d83e
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
@@ -29,10 +33,10 @@ export const Title = styled.div`
     font-weight: bold;
 `;
 
-const Right = styled.div`
-    text-align: right;
-    color: white;
-`;
+// const Right = styled.div`
+//     text-align: right;
+//     color: white;
+// `;
 
 export const Item = styled.div`
     flex: 1;
@@ -91,9 +95,13 @@ const AdminHome = () => {
         });
 
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
-    }, []);
+    }, [orders]);
     // if login id is admin AND token is already in storage
+<<<<<<< HEAD
     if (token === ADMIN_ID && localStorage.getItem("token")) {
+=======
+    if (token && localStorage.getItem("isAdminLogin")  === "true" && localStorage.getItem("adminID") === ADMIN_ID) 
+>>>>>>> 3bb1228259f6ab8e232975660c78a51bd8b4d83e
         return (
             <Container>
                 <AdminNavbar />
@@ -114,6 +122,7 @@ const AdminHome = () => {
                     </StatSummary>
                 </StatWrapper>
                 <StatWrapper>
+<<<<<<< HEAD
                     {orders ? (
                         <AdminNewOrder data={orders} />
                     ) : (
@@ -123,6 +132,14 @@ const AdminHome = () => {
             </Container>
         );
     } else return <AdminLogin setToken={setToken} />;
+=======
+                    {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
+                </StatWrapper>
+            </Container>
+    );
+    else 
+        return <AdminLogin setToken={setToken} />;
+>>>>>>> 3bb1228259f6ab8e232975660c78a51bd8b4d83e
 };
 
 export default AdminHome;

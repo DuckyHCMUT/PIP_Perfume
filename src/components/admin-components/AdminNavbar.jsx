@@ -34,26 +34,49 @@ export const Navbar = styled.div`
 `;
 
 const AdminNavbar = () => {
+    const handleAdminLogOut = () => {
+        localStorage.setItem("isAdminLogin", false);
+        localStorage.setItem("adminID", -1);
+    }
     return (
         <Navbar>
             <Title>
-                <Link style={{ textDecoration: "none" }} to="/">
+                <Link 
+                    style = {{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }} to="/">
                     <Logo>BKP.</Logo>
                 </Link>
             </Title>
             <Title />
             <StatWrapper>
-                <Link style={{ textDecoration: "none" }} to="/admin/dashboard">
-                    <Item>Home</Item>
+                <Link 
+                    style = {{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }} 
+                    to="/admin/dashboard">
+                    <Item>Admin page</Item>
                 </Link>
                 <Link
-                    style={{ textDecoration: "none" }}
+                    style = {{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }}
                     to="/admin/dashboard/items/add"
                 >
-                    <Item>Items</Item>
+                    <Item>Modify items</Item>
                 </Link>
 
-                <Item>Logout</Item>
+                <Link 
+                    style = {{
+                                color: "inherit",
+                                textDecoration: "inherit",
+                            }} 
+                    to = "/admin/dashboard">
+                    <Item onClick = {() => handleAdminLogOut()}>Logout</Item>
+                </Link>
             </StatWrapper>
         </Navbar>
     );

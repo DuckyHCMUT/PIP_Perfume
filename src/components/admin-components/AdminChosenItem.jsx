@@ -74,11 +74,23 @@ const AdminChosenItem = ({ value }) => {
     const [Gender, setGender] = useState(value.Gender);
     const [Image, setImage] = useState(value.Image);
     const [Option, setOption] = useState(value.Option);
+<<<<<<< HEAD
     const [Volume1, setVolume1] = useState(["0"]);
+=======
+    const [Volume1, setVolume1] = useState(["0", "0", "0"]);
+    // eslint-disable-next-line
+>>>>>>> 3bb1228259f6ab8e232975660c78a51bd8b4d83e
     const [Volume2, setVolume2] = useState("0");
+    // eslint-disable-next-line
     const [Volume3, setVolume3] = useState("0");
+<<<<<<< HEAD
     const [Price1, setPrice1] = useState(["0"]);
+=======
+    const [Price1, setPrice1] = useState(["0", "0", "0"]);
+    // eslint-disable-next-line
+>>>>>>> 3bb1228259f6ab8e232975660c78a51bd8b4d83e
     const [Price2, setPrice2] = useState("0");
+    // eslint-disable-next-line
     const [Price3, setPrice3] = useState("0");
     const handleSubmit = async (e) => {
         e.preventDefault();
