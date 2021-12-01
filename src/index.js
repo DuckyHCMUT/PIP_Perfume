@@ -9,7 +9,9 @@ import BlankPage from "./pages/BlankPage";
 import Checkout from "./pages/Checkout";
 //import AdminLogin from "./pages/AdminLogin";
 import AdminHome from "./pages/AdminHome";
-import AdminItems from "./pages/AdminItems";
+import AdminAddItemPage from "./pages/AdminAddItemPage";
+import AdminDeleteItemPage from "./pages/AdminDeleteItemPage";
+import AdminUpdateItemPage from "./pages/AdminUpdateItemPage";
 
 const rootElement = document.getElementById("root");
 
@@ -25,7 +27,16 @@ ReactDOM.render(
             <Route path="/user/checkout" component={Checkout} />
             {/* <Route path="/admin/auth" component={AdminLogin} /> */}
             <Route exact path="/admin/dashboard" component={AdminHome} />
-            <Route exact path="/admin/dashboard/items" component={AdminItems} />
+            <Route
+                exact
+                path="/admin/dashboard/items/add"
+                component={AdminAddItemPage}
+            />
+            <Route
+                exact
+                path="/admin/dashboard/items/update"
+                component={AdminUpdateItemPage}
+            />
         </Switch>
     </BrowserRouter>,
     rootElement
