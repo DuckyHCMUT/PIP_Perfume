@@ -75,10 +75,14 @@ const AdminChosenItem = ({ value }) => {
     const [Image, setImage] = useState(value.Image);
     const [Option, setOption] = useState(value.Option);
     const [Volume1, setVolume1] = useState(["0", "0", "0"]);
+    // eslint-disable-next-line
     const [Volume2, setVolume2] = useState("0");
+    // eslint-disable-next-line
     const [Volume3, setVolume3] = useState("0");
     const [Price1, setPrice1] = useState(["0", "0", "0"]);
+    // eslint-disable-next-line
     const [Price2, setPrice2] = useState("0");
+    // eslint-disable-next-line
     const [Price3, setPrice3] = useState("0");
     const handleSubmit = async (e) => {
         e.preventDefault();

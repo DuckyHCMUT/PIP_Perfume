@@ -44,7 +44,7 @@ const AdminFoundItems = ({ value, pickItem }) => {
     const [filter, setFilter] = useState([]);
     const [data, setData] = useState([]);
     const [state, setState] = useState();
-    var itemDetail;
+    // var itemDetail;
     try {
         useEffect(() => {
             axios
@@ -58,7 +58,7 @@ const AdminFoundItems = ({ value, pickItem }) => {
                     );
                 })
                 .catch((error) => console.log(error));
-        }, [value, state]);
+        }, [value, state, data]);
     } catch (err) {
         console.log(err);
     }

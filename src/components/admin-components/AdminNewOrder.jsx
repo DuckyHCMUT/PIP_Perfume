@@ -1,6 +1,6 @@
 import { Button, 
-    //createTheme, 
-    Link } from "@material-ui/core";
+        //createTheme, 
+        } from "@material-ui/core";
 import styled from "styled-components";
 import React from "react";
 import axios from "axios";
@@ -22,11 +22,11 @@ const Title = styled.div`
 const Wrapper = styled.div`
     display: flex;
 `;
-const Right = styled.div`
-    flex: 1;
-    cursor: pointer;
-    text-align: right;
-`;
+// const Right = styled.div`
+//     flex: 1;
+//     cursor: pointer;
+//     text-align: right;
+// `;
 const Center = styled.div`
     flex: 1;
     text-align: center;
@@ -97,9 +97,9 @@ const AdminNewOrder = ({ data }) => {
         <OrderDisplay>
             <Wrapper>
                 <Title>New Orders</Title>
-                <Right>
+                {/* <Right>
                     <Link>See more</Link>
-                </Right>
+                </Right> */}
             </Wrapper>
             <HeadingWrapper>
                 <Heading>Order ID</Heading>
@@ -107,7 +107,7 @@ const AdminNewOrder = ({ data }) => {
                 <Center> Information </Center>
                 <Center> Total </Center>
                 <Center> Status </Center>
-                <Center>Action</Center>
+                <Center> Action</Center>
             </HeadingWrapper>
             <OrderWrapper>
                 {data.map((order, index) => {
@@ -120,7 +120,7 @@ const AdminNewOrder = ({ data }) => {
                         addr = order.shippingInfo.address;
                         tel = order.shippingInfo.contact;
                     } catch (e) {
-                        console.log(e);
+                        console.log(e ? e : "Error occurred");
                     }
                     var mainColor;
                     //
@@ -143,7 +143,7 @@ const AdminNewOrder = ({ data }) => {
                                 {list.map((item) => {
                                     return (
                                         <Info>
-                                            {item.name} x {item.quantity}
+                                            {item.name + " " + (item.volume ? "(" + item.volume + ")" : "")} x {item.quantity}
                                         </Info>
                                     );
                                 })}

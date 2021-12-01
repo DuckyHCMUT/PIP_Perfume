@@ -91,22 +91,34 @@ const AdminLogin = ({ setToken }) => {
         e.preventDefault();
         const user = { email, password };
         // Attempt to login
-
-        // eslint-disable-next-line
-        const token = await axios
+        axios
             .post("/api/login", user)
             .then((res) => {
-                localStorage.setItem("token", res.data.token);
                 localStorage.setItem("isAdminLogin", true);
+                localStorage.setItem("adminID", res.data.user.id === "61966bf1317a482f90ca7cd2" ? res.data.user.id : -1);
+                localStorage.setItem("token", res.data.token);
                 setToken(res.data.user.id);
+                
+                if (res.data.user.id === "61966bf1317a482f90ca7cd2")
+                    swal({
+                        title: "Logged in as Admin!",
+                        icon: "success"
+                    })
+                else
+                    swal({
+                        title: "Incorrect credentials!",
+                        text: "The username or password is incorrect, please try again",
+                        icon: "warning",
+                        dangerMode: true,
+                    })
             })
-            .catch((error) =>
+            .catch((error) => {
                 swal({
                     title: "Something wrong!",
                     text: error.response.data.msg,
                     icon: "warning",
                     dangerMode: true,
-                })
+                })}
             );
     };
 

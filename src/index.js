@@ -10,7 +10,7 @@ import Checkout from "./pages/Checkout";
 //import AdminLogin from "./pages/AdminLogin";
 import AdminHome from "./pages/AdminHome";
 import AdminAddItemPage from "./pages/AdminAddItemPage";
-import AdminDeleteItemPage from "./pages/AdminDeleteItemPage";
+// import AdminDeleteItemPage from "./pages/AdminDeleteItemPage";
 import AdminUpdateItemPage from "./pages/AdminUpdateItemPage";
 
 const rootElement = document.getElementById("root");
