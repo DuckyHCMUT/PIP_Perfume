@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import BannerCart from "../components/BannerCart";
+import Footer from "../components/Footer";
 
 const Container = styled.div``;
 
@@ -24,7 +25,7 @@ const Introduction = styled.div`
     color: white;
 `
 
-const Footer = styled.div`
+const FooterBox = styled.div`
     transform: translateY(-120px);
     width: 100%;
 `
@@ -96,7 +97,7 @@ const AboutUs = () => {
                 <Member>
                     <MemberImg src = {"resource/AboutUs/Viet_1953097.png"} alt = {"VietImg"} />
                     <MemberName>
-                        Tran Quoc Viet
+                        Tran Quoc Viet <br/>
                         Student ID: 1953097
                     </MemberName>
                     Front-end Developer <br/>
@@ -126,7 +127,7 @@ const AboutUs = () => {
                 <Member>
                     <MemberImg src = {"resource/AboutUs/Thanh_1952983.png"} alt = {"ThanhImg"} />
                     <MemberName>
-                        Nguyen Duc Thanh
+                        Nguyen Duc Thanh <br/>
                         Student ID: 1952983
                     </MemberName>
                     Front-end Developer <br/>
@@ -136,18 +137,19 @@ const AboutUs = () => {
                 <Member>
                     <MemberImg src = {"resource/AboutUs/Phong_1952916.png"} alt = {"PhongImg"} />
                     <MemberName>
-                        Ly Kim Phong
+                        Ly Kim Phong <br/>
                         Student ID: 1952916
                     </MemberName>
                     Front-end Developer <br/>
                     Logic Designer      
                 </Member>
-
             </TeamMember>
+            <br/>
 
-            <Footer>
+            <FooterBox>
                 <hr/>
                 <Center>
+                    <br/>
                     <h1>Special thanks to</h1>
                     <Contributor>
                         <ContributorImg src = {"resource/AboutUs/DrQuanThanhTho.jpg"} alt={"DrThanhTho"}/>
@@ -156,10 +158,11 @@ const AboutUs = () => {
                         </ContributorName>
                     </Contributor>
                     <h3>For always guiding and giving us valuable feedback to complete this project.</h3>
+                    <br/>
                 </Center>
-            </Footer>
-            
-
+                <hr/>
+            </FooterBox>
+        <Footer />
         </Container>
     );
 };

@@ -91,36 +91,45 @@ const Brand = styled.div`
 
 const ProductCard = ({ item, onChange }) => {
   const addtoCart = () => {
-    var currentUserId = localStorage.getItem("currentUserId");
-    var getter = "/api/cart/" + currentUserId + "/";
-
-    const body = JSON.stringify({
-      productId: item._id,
-      optionId: item.Option[0].OptionID,
-      quantity: 1
-    });
-    
-    axios
-			.post(getter, body, {
-        headers: { "Content-Type": "application/json" },
+    if (localStorage.getItem("isLogin") !== "true"){
+      swal({
+        title: 'Failed!',
+        text: 'Please proceed to login before shopping!',
+        icon: 'warning',
       })
-			.then(() => {
-        // eslint-disable-next-line
-        let successText = "Added 1 of " + item.Name + " (" + item.Option[0].Volume + ") " + "to the cart";
-				swal({
-          title: 'Added to cart!',
-          text: successText,
-          icon: 'success',
-        })
-			})
-			.catch((error) => {
-        swal({
-					title: 'Something wrong!',
-					text: error,
-					icon: 'warning',
-					dangerMode: true,
-				})
+    }
+    else{
+      var currentUserId = localStorage.getItem("currentUserId");
+      var getter = "/api/cart/" + currentUserId + "/";
+
+      const body = JSON.stringify({
+        productId: item._id,
+        optionId: item.Option[0].OptionID,
+        quantity: 1
       });
+      
+      axios
+        .post(getter, body, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(() => {
+          // eslint-disable-next-line
+          let successText = "Added 1 of " + item.Name + " (" + item.Option[0].Volume + ") " + "to the cart";
+          swal({
+            title: 'Added to cart!',
+            text: successText,
+            icon: 'success',
+          })
+        })
+        .catch((error) => {
+          swal({
+            title: 'Something wrong!',
+            text: error,
+            icon: 'warning',
+            dangerMode: true,
+          })
+        });
+    }
   };
 
   return (
