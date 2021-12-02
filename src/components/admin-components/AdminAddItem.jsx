@@ -74,16 +74,18 @@ const AdminAddItem = () => {
     const [Brand, setBrand] = useState();
     const [Gender, setGender] = useState("Unisex");
     const [Image, setImage] = useState("");
-    const [Option, setOption] = useState();
-    const [Volume1, setVolume1] = useState(["0", "0", "0"]);
+    const [Option, setOption] = useState([]);
+    const [Volume1, setVolume1] = useState(["0"]);
     const [Volume2, setVolume2] = useState("0");
     const [Volume3, setVolume3] = useState("0");
-    const [Price1, setPrice1] = useState(["0", "0", "0"]);
+    const [Price1, setPrice1] = useState(["0"]);
     const [Price2, setPrice2] = useState("0");
     const [Price3, setPrice3] = useState("0");
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        const id1 = "1000001";
+        const id2 = "1000002";
+        const id3 = "1000003";
         class option {
             constructor(OptionID, Volume, Price) {
                 this.OptionID = OptionID;
@@ -91,23 +93,44 @@ const AdminAddItem = () => {
                 this.Price = Price;
             }
         }
-        const option1 = new option("1000001", Volume1, Price1);
+        e.preventDefault();
+        //var testOption1, testOption2, testOption3, OptionID, Volume, Price;
+        const option1 = new option(id1, Volume1, Price1);
+        /*OptionID = id1;
+        Volume = Volume1;
+        Price = Price1;
+        testOption1 = { OptionID, Volume, Price };*/
         const ID = 50;
         var options, Price_range;
         if (Volume2 === "0") {
             options = [option1];
             Price_range = Price1.toString() + "VND";
+            setOption(options);
         } else if (Volume3 === "0") {
-            const option2 = new option("1000002", Volume2, Price2);
+            /*OptionID = id2;
+            Volume = Volume2;
+            Price = Price2;
+            testOption2 = { OptionID, Volume, Price };*/
+            const option2 = new option(id2, Volume2, Price2);
             options = [option1, option2];
             Price_range = `${Price1.toString()}VND - ${Price2.toString()}VND`;
+            setOption(options);
         } else {
-            const option2 = new option("1000002", Volume2, Price2);
-            const option3 = new option("1000003", Volume3, Price3);
+            /*OptionID = id2;
+            Volume = Volume2;
+            Price = Price2;
+            testOption2 = { OptionID, Volume, Price };
+            OptionID = id3;
+            Volume = Volume3;
+            Price = Price3;
+            testOption3 = { OptionID, Volume, Price };*/
+            const option2 = new option(id2, Volume2, Price2);
+            const option3 = new option(id3, Volume3, Price3);
             options = [option1, option2, option3];
             Price_range = `${Price1.toString()}VND - ${Price3.toString()}VND`;
+            setOption(options);
         }
-        setOption(options);
+
         const item = {
             Gender,
             ID,
@@ -117,6 +140,7 @@ const AdminAddItem = () => {
             Price_range,
             Option,
         };
+        console.log(item);
         axios
             .post("/api/items", item)
             .then(() => swal("Success", "Item added", "success"))
@@ -201,14 +225,20 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume1(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume1(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                                 required
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text1"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice1(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice1(e.target.value + "VND")
+                                }
                                 required
                             />
                         </Wrapper>
@@ -218,13 +248,19 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume2(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume2(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice2(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice2(e.target.value + "VND")
+                                }
                             />
                         </Wrapper>
                         <Wrapper>
@@ -233,13 +269,19 @@ const AdminAddItem = () => {
                             <Input
                                 type="text"
                                 placeholder="Volume in ml"
-                                onChange={(e) => setVolume3(e.target.value)}
+                                onChange={(e) =>
+                                    setVolume3(
+                                        "Eau de Parfum " + e.target.value + "ml"
+                                    )
+                                }
                             />
                             <Label>Price</Label>
                             <Input
                                 type="text"
                                 placeholder="Price in VND"
-                                onChange={(e) => setPrice3(e.target.value)}
+                                onChange={(e) =>
+                                    setPrice3(e.target.value + "VND")
+                                }
                             />
                         </Wrapper>
                     </InputContainer>

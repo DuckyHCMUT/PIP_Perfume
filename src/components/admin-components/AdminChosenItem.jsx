@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Title } from "../../pages/AdminHome";
 import axios from "axios";
 import swal from "sweetalert";
@@ -74,17 +74,38 @@ const AdminChosenItem = ({ value }) => {
     const [Gender, setGender] = useState(value.Gender);
     const [Image, setImage] = useState(value.Image);
     const [Option, setOption] = useState(value.Option);
-    const [Volume1, setVolume1] = useState(["0", "0", "0"]);
-    // eslint-disable-next-line
-    const [Volume2, setVolume2] = useState("0");
-    // eslint-disable-next-line
-    const [Volume3, setVolume3] = useState("0");
-    const [Price1, setPrice1] = useState(["0", "0", "0"]);
-    // eslint-disable-next-line
-    const [Price2, setPrice2] = useState("0");
-    // eslint-disable-next-line
-    const [Price3, setPrice3] = useState("0");
-    const handleSubmit = async (e) => {
+    const [Volume1, setVolume1] = useState();
+    const [Volume2, setVolume2] = useState();
+    const [Volume3, setVolume3] = useState();
+    const [Price1, setPrice1] = useState();
+    const [Price2, setPrice2] = useState();
+    const [Price3, setPrice3] = useState();
+    const [Price_range, setPrice_range] = useState();
+
+    var item;
+    var options;
+    const firstUpdate = useRef(true);
+    useEffect(() => {
+        item = {
+            Gender,
+            ID: 50,
+            Brand,
+            Name,
+            Image,
+            Price_range,
+            Option,
+        };
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        console.log(item);
+        axios
+            .put(`/api/items/${value._id}`, item)
+            .then(() => swal("Success", "Item updated", "success"))
+            .catch((err) => console.log(err));
+    }, [Option]);
+    const handleSubmit = (e) => {
         e.preventDefault();
         class option {
             constructor(OptionID, Volume, Price) {
@@ -93,36 +114,39 @@ const AdminChosenItem = ({ value }) => {
                 this.Price = Price;
             }
         }
-        const option1 = new option("1000001", Volume1, Price1);
-        const ID = 50;
-        var options, Price_range;
-        if (Volume2 === "0") {
-            options = [option1];
-            Price_range = Price1.toString() + "VND";
-        } else if (Volume3 === "0") {
-            const option2 = new option("1000002", Volume2, Price2);
-            options = [option1, option2];
-            Price_range = `${Price1.toString()}VND - ${Price2.toString()}VND`;
-        } else {
-            const option2 = new option("1000002", Volume2, Price2);
-            const option3 = new option("1000003", Volume3, Price3);
-            options = [option1, option2, option3];
-            Price_range = `${Price1.toString()}VND - ${Price3.toString()}VND`;
+        try {
+            //console.log(Volume1, Price1, Volume2, Price2, Volume3, Price3);
+            const option1 = new option("1000001", Volume1, Price1);
+
+            const ID = 50;
+
+            if (value.Option.length === 1) {
+                options = [option1];
+                setPrice_range(Price1);
+            } else if (value.Option.length === 2) {
+                const option2 = new option("1000002", Volume2, Price2);
+                options = [option1, option2];
+                setPrice_range(`${Price1} - ${Price2}`);
+            } else {
+                const option2 = new option("1000002", Volume2, Price2);
+                const option3 = new option("1000003", Volume3, Price3);
+                options = [option1, option2, option3];
+                setPrice_range((Price_range = `${Price1} - ${Price3}`));
+            }
+
+            setOption(options);
+            /*const item = {
+                Gender,
+                ID,
+                Brand,
+                Name,
+                Image,
+                Price_range,
+                Option,
+            };*/
+        } catch (err) {
+            console.log(err);
         }
-        setOption(options);
-        const item = {
-            Gender,
-            ID,
-            Brand,
-            Name,
-            Image,
-            Price_range,
-            Option,
-        };
-        axios
-            .put(`/api/items/${value._id}`, item)
-            .then(() => swal("Success", "Item updated", "success"))
-            .catch((err) => console.log(err));
     };
 
     return (
@@ -132,7 +156,7 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Product Name*</Label>
                     <Input
                         type="text"
-                        value={value.Name}
+                        defaultValue={value.Name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
@@ -141,7 +165,7 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Product Brand*</Label>
                     <Input
                         type="text"
-                        value={value.Brand}
+                        defaultValue={value.Brand}
                         onChange={(e) => setBrand(e.target.value)}
                         required
                     />
@@ -190,29 +214,43 @@ const AdminChosenItem = ({ value }) => {
                     <Label>Image URL</Label>
                     <Input
                         type="text"
-                        value={value.Image}
+                        defaultValue={value.Image}
                         onChange={(e) => setImage(e.target.value)}
                     />
                 </InputContainer>
                 <InputContainer style={{ display: "flex" }}>
                     {value.Option.map((option, index) => {
                         return (
-                            <Wrapper>
+                            <Wrapper key={index}>
                                 <Title style={{ fontSize: 18 }}>
                                     Option {(index + 1).toString()}
                                 </Title>
                                 <Label>Volume</Label>
                                 <Input
                                     type="text"
-                                    value={option.Volume}
-                                    onChange={(e) => setVolume1(e.target.value)}
+                                    defaultValue={option.Volume}
+                                    onChange={(e) => {
+                                        if (index === 0)
+                                            setVolume1(e.target.value);
+                                        if (index === 1)
+                                            setVolume2(e.target.value);
+                                        if (index === 2)
+                                            setVolume3(e.target.value);
+                                    }}
                                     required
                                 />
                                 <Label>Price</Label>
                                 <Input
                                     type="text1"
-                                    value={option.Price}
-                                    onChange={(e) => setPrice1(e.target.value)}
+                                    defaultValue={option.Price}
+                                    onChange={(e) => {
+                                        if (index === 0)
+                                            setPrice1(e.target.value);
+                                        if (index === 1)
+                                            setPrice2(e.target.value);
+                                        if (index === 2)
+                                            setPrice3(e.target.value);
+                                    }}
                                     required
                                 />
                             </Wrapper>

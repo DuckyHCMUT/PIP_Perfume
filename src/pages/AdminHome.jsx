@@ -2,7 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 import AdminNewOrder from "../components/admin-components/AdminNewOrder";
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
@@ -62,7 +61,6 @@ const addDot = (x) => {
 };
 const AdminHome = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
-
     const [orders, setOrders] = useState();
     const [saleCount, setSaleCount] = useState("0");
     const [userCount, setUserCount] = useState("0");
@@ -72,18 +70,18 @@ const AdminHome = () => {
     useEffect(() => {
         var totalsale = 0;
         var totalorder = 0;
-        var yesterday = new Date();
+        var today = new Date();
         var date;
-        yesterday = moment(yesterday.setDate(yesterday.getDate() - 1)).format(
-            "DD-MM-YYYY"
-        );
+        today = moment(today).format("DD-MM-YYYY");
         //
         axios.get("/api/orders").then((data) => {
-            setOrders(data.data);
+            setOrders(data.data.reverse());
 
             data.data.forEach((object) => {
                 date = moment(object.date_added).format("DD-MM-YYYY");
-                if (date >= yesterday) {
+
+                if (date == today) {
+                    console.log(date, today);
                     totalorder += 1;
                     if (object.status === "completed") totalsale += object.bill;
                 }
@@ -95,7 +93,11 @@ const AdminHome = () => {
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
     }, [orders]);
     // if login id is admin AND token is already in storage
-    if (token && localStorage.getItem("isAdminLogin")  === "true" && localStorage.getItem("adminID") === ADMIN_ID) 
+    if (
+        token &&
+        localStorage.getItem("isAdminLogin") === "true" &&
+        localStorage.getItem("adminID") === ADMIN_ID
+    )
         return (
             <Container>
                 <AdminNavbar />
@@ -116,12 +118,15 @@ const AdminHome = () => {
                     </StatSummary>
                 </StatWrapper>
                 <StatWrapper>
-                    {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
+                    {orders ? (
+                        <AdminNewOrder data={orders} />
+                    ) : (
+                        <h1>Loading...</h1>
+                    )}
                 </StatWrapper>
             </Container>
-    );
-    else 
-        return <AdminLogin setToken={setToken} />;
+        );
+    else return <AdminLogin setToken={setToken} />;
 };
 
 export default AdminHome;
