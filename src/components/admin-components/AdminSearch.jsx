@@ -1,32 +1,31 @@
 import React from "react";
 import {
-    Menu,
+    //Menu,
     Input,
-    InputContainer,
+    //InputContainer,
     Form,
     Label,
-    Wrapper,
-    FlexWrapper,
-    Button,
+    //Wrapper,
+    //FlexWrapper,
+    //Button,
 } from "./AdminAddItem";
 import styled from "styled-components";
 
 const SearchContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 30px;
-    padding: 4px;
+
 `;
-const SearchButton = styled.button`
-    padding: 0.5px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-`;
+// const SearchButton = styled.button`
+//     padding: 0.5px 8px;
+//     text-align: center;
+//     text-decoration: none;
+//     display: inline-block;
+// `;
 
 const AdminSearch = ({ onChange }) => {
-    const { search } = window.location.href;
-    const query = new URLSearchParams(search).get("perfume"); // Fetched the searched item successfully
+    // const { search } = window.location.href;
+    // const query = new URLSearchParams(search).get("perfume"); // Fetched the searched item successfully
     return (
         <Form method="get">
             <SearchContainer>
@@ -38,14 +37,13 @@ const AdminSearch = ({ onChange }) => {
                     name="item"
                     onChange={(e) => onChange(e.target.value)}
                 />
-                <SearchButton
+                {/* <SearchButton
                     type="submit"
                     //onChange={onChange(!query ? "" : query)}
                 >
                     {" "}
-                    {/* After pressing this button, the query will already hold the searched value*/}
                     Search
-                </SearchButton>
+                </SearchButton> */}
             </SearchContainer>
         </Form>
     );

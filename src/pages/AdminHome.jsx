@@ -1,15 +1,11 @@
-import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-
 import styled from "styled-components";
-import AdminNewOrder from "../components/admin-components/AdminNewOrder";
 
+import AdminNewOrder from "../components/admin-components/AdminNewOrder";
 import AdminLogin from "./AdminLogin";
 import AdminNavbar from "../components/admin-components/AdminNavbar";
-import AdminLogin from "./AdminLogin";
-
 
 const Container = styled.div`
     background-color: #06243b;
@@ -34,10 +30,10 @@ export const Title = styled.div`
     font-weight: bold;
 `;
 
-const Right = styled.div`
-    text-align: right;
-    color: white;
-`;
+// const Right = styled.div`
+//     text-align: right;
+//     color: white;
+// `;
 
 export const Item = styled.div`
     flex: 1;
@@ -97,34 +93,35 @@ const AdminHome = () => {
         });
 
         axios.get("/api/usercount").then((data) => setUserCount(data.data));
-    }, []);
+    }, [orders]);
     // if login id is admin AND token is already in storage
-    if (token === ADMIN_ID && localStorage.getItem("token")) {
-    return (
-        <Container>
-            <AdminNavbar />
-            <StatWrapper>
-                <StatSummary>
-                    <Title>
-                        Orders Today - {moment().format("MMMM Do YYYY")}
-                    </Title>
-                    <Stat>{addDot(saleCount)}</Stat>
-                </StatSummary>
-                <StatSummary>
-                    <Title>Total Users</Title>
-                    <Stat>{addDot(userCount)}</Stat>
-                </StatSummary>
-                <StatSummary>
-                    <Title>Revenue Today</Title>
-                    <Stat>{addDot(totalCount)}</Stat>
-                </StatSummary>
-            </StatWrapper>
-            <StatWrapper>
-                {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
-            </StatWrapper>
-        </Container>
+    if (token && localStorage.getItem("isAdminLogin")  === "true" && localStorage.getItem("adminID") === ADMIN_ID) 
+        return (
+            <Container>
+                <AdminNavbar />
+                <StatWrapper>
+                    <StatSummary>
+                        <Title>
+                            Orders Today - {moment().format("MMMM Do YYYY")}
+                        </Title>
+                        <Stat>{addDot(saleCount)}</Stat>
+                    </StatSummary>
+                    <StatSummary>
+                        <Title>Total Users</Title>
+                        <Stat>{addDot(userCount)}</Stat>
+                    </StatSummary>
+                    <StatSummary>
+                        <Title>Revenue Today</Title>
+                        <Stat>{addDot(totalCount)}</Stat>
+                    </StatSummary>
+                </StatWrapper>
+                <StatWrapper>
+                    {orders ? <AdminNewOrder data={orders} /> : <h1>Loading...</h1>}
+                </StatWrapper>
+            </Container>
     );
-    } else return <AdminLogin setToken={setToken} />;
+    else 
+        return <AdminLogin setToken={setToken} />;
 };
 
 export default AdminHome;
