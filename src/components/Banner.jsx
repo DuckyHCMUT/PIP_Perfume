@@ -129,13 +129,15 @@ const Banner = ({ onChange }) => {
                     </Center>
 
                     <Right>
-                        <MenuItem
-                            onClick={() => {
-                                window.scrollTo(0, document.body.scrollHeight);
-                            }}
-                        >
-                            ABOUT US
-                        </MenuItem>
+                        <Link 
+                            to = "/AboutUs"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit"}}>
+                            <MenuItem>
+                                ABOUT US
+                            </MenuItem>
+                        </Link>
 
                         <MenuItem>
                             WELCOME, {localStorage.getItem("currentUserName")}!
@@ -208,13 +210,15 @@ const Banner = ({ onChange }) => {
                     </Center>
 
                     <Right>
-                        <MenuItem
-                            onClick={() => {
-                                window.scrollTo(0, document.body.scrollHeight);
-                            }}
-                        >
-                            ABOUT US
-                        </MenuItem>
+                        <Link 
+                            to = "/AboutUs"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit"}}>
+                            <MenuItem>
+                                ABOUT US
+                            </MenuItem>
+                        </Link>
 
                         <Link
                             to="/user/login"
