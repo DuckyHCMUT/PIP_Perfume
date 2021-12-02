@@ -73,7 +73,15 @@ const BannerCart = () => {
                     </Left>
 
                     <Right>
-                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        <Link 
+                            to = "/AboutUs"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit"}}>
+                            <MenuItem>
+                                ABOUT US
+                            </MenuItem>
+                        </Link>
                         
                         <MenuItem>WELCOME, {localStorage.getItem("currentUserName")}!</MenuItem>
 
@@ -99,7 +107,15 @@ const BannerCart = () => {
                     </Left>
 
                     <Right>
-                        <MenuItem onClick = {() => {window.scrollTo(0,document.body.scrollHeight);}}>ABOUT US</MenuItem>
+                        <Link 
+                            to = "/AboutUs"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "inherit"}}>
+                            <MenuItem>
+                                ABOUT US
+                            </MenuItem>
+                        </Link>
                         
                         <Link to ="/user/login"
                             style={{ color: "inherit", textDecoration: "inherit"}}
