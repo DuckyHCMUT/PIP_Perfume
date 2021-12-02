@@ -94,44 +94,53 @@ const AboutUs = () => {
 
             <TeamMember>
                 <Member>
-                    <MemberImg src = {"resource/AboutUs/Viet1.png"}/>
+                    <MemberImg src = {"resource/AboutUs/Viet_1953097.png"} alt = {"VietImg"} />
                     <MemberName>
                         Tran Quoc Viet
+                        Student ID: 1953097
                     </MemberName>
-                    Full-stack Developer
+                    Front-end Developer <br/>
+                    Software Tester
                 </Member>
 
                 <Member>
-                    <MemberImg src = {"resource/AboutUs/Viet2.png"}/>
+                    <MemberImg src = {"resource/AboutUs/Cat_1952587.jpg"} alt = {"CatImg"} />
                     <MemberName>
-                        Nguyen Hoang Cat
+                        Nguyen Hoang Cat <br/>
+                        Student ID: 1952587
                     </MemberName>
-                    Back-end Developer
+                    Back-end Developer <br/>
+                    Database Manager
                 </Member>
 
                 <Member>
-                    <MemberImg src = {"resource/AboutUs/Viet3.png"}/>
+                    <MemberImg src = {"resource/AboutUs/Duyen_1952620.jpg"} alt = {"DuyenImg"} />
                     <MemberName>
-                        Dang Vu Hanh Duyen
+                        Dang Vu Hanh Duyen <br/>
+                        Student ID: 1952620
                     </MemberName>
-                    Front-end Developer
+                    Front-end Developer <br/>
+                    Logic Designer
                 </Member>
 
                 <Member>
-                    <MemberImg src = {"resource/AboutUs/Viet4.png"}/>
+                    <MemberImg src = {"resource/AboutUs/Thanh_1952983.png"} alt = {"ThanhImg"} />
                     <MemberName>
                         Nguyen Duc Thanh
+                        Student ID: 1952983
                     </MemberName>
-                    Full-stack Developer
+                    Front-end Developer <br/>
+                    Web Interface Designer
                 </Member>
 
                 <Member>
-                    <MemberImg src = {"resource/AboutUs/Viet5.png"}/>
+                    <MemberImg src = {"resource/AboutUs/Phong_1952916.png"} alt = {"PhongImg"} />
                     <MemberName>
                         Ly Kim Phong
+                        Student ID: 1952916
                     </MemberName>
-                    Front-end Developer              
-                    {" "}
+                    Front-end Developer <br/>
+                    Logic Designer      
                 </Member>
 
             </TeamMember>
@@ -146,7 +155,7 @@ const AboutUs = () => {
                             Professor Quan Thanh Tho
                         </ContributorName>
                     </Contributor>
-                    <h3>For always guiding and assisting us in completing this project.</h3>
+                    <h3>For always guiding and giving us valuable feedback to complete this project.</h3>
                 </Center>
             </Footer>
             
