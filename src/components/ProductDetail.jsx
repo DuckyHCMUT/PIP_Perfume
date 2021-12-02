@@ -112,7 +112,12 @@ const ProductDetail = ({item, onUpdateCount}) => {
     const [count, setCount] = useState(1);
     const handleCount = (count) => {
       if (count < 1){
-        alert("Must greater than 0");
+        swal({
+          title: 'Failed to reduce!',
+          text: 'Amount must be greater than 0!',
+          icon: 'warning',
+          dangerMode: true,
+        })
         setCount(1);
       }
       else
@@ -126,40 +131,49 @@ const ProductDetail = ({item, onUpdateCount}) => {
     }
 
     const addtoCart = (option, count) => {
-      var currentUserId = localStorage.getItem("currentUserId");
-      var getter = "/api/cart/" + currentUserId + "/";
-  
-      const body = JSON.stringify({
-        productId: item._id,
-        optionId: option["OptionID"],
-        quantity: count
-      });
-      
-      console.log("item._id = " + item._id);
-      console.log("optionId = " + option["OptionID"]);
-      console.log("quantity = " + count);
-
-      axios
-        .post(getter, body, {
-          headers: { "Content-Type": "application/json" },
+      if (localStorage.getItem("isLogin") !== "true"){
+        swal({
+          title: 'Failed!',
+          text: 'Please proceed to login before shopping!',
+          icon: 'warning',
         })
-        .then(() => {
-          // eslint-disable-next-line
-          let successText = "Added " + count + " of " + item.Name + " (" + option["Volume"] + ") " + "to the cart";
-          swal({
-            title: 'Added to cart!',
-            text: successText,
-            icon: 'success',
-          })
-        })
-        .catch((error) => {
-          swal({
-            title: 'Something wrong!',
-            text: error,
-            icon: 'warning',
-            dangerMode: true,
-          })
+      }
+      else{
+        var currentUserId = localStorage.getItem("currentUserId");
+        var getter = "/api/cart/" + currentUserId + "/";
+    
+        const body = JSON.stringify({
+          productId: item._id,
+          optionId: option["OptionID"],
+          quantity: count
         });
+        
+        console.log("item._id = " + item._id);
+        console.log("optionId = " + option["OptionID"]);
+        console.log("quantity = " + count);
+
+        axios
+          .post(getter, body, {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then(() => {
+            // eslint-disable-next-line
+            let successText = "Added " + count + " of " + item.Name + " (" + option["Volume"] + ") " + "to the cart";
+            swal({
+              title: 'Added to cart!',
+              text: successText,
+              icon: 'success',
+            })
+          })
+          .catch((error) => {
+            swal({
+              title: 'Something wrong!',
+              text: error,
+              icon: 'warning',
+              dangerMode: true,
+            })
+          });
+      }
     };
     
     return (

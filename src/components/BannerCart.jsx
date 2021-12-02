@@ -56,6 +56,8 @@ const BannerCart = () => {
 		}).then((willLogOut) => {
 			if (willLogOut) {
 				localStorage.setItem('isLogin', false);
+                localStorage.setItem('currentUserName', -1);
+                localStorage.setItem('currentUserId', -1);
 				window.location.replace('/');
 			}
 		});
