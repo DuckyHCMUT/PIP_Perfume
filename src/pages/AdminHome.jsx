@@ -70,18 +70,18 @@ const AdminHome = () => {
     useEffect(() => {
         var totalsale = 0;
         var totalorder = 0;
-        var yesterday = new Date();
+        var today = new Date();
         var date;
-        yesterday = moment(yesterday.setDate(yesterday.getDate() - 1)).format(
-            "DD-MM-YYYY"
-        );
+        today = moment(today).format("DD-MM-YYYY");
         //
         axios.get("/api/orders").then((data) => {
-            setOrders(data.data);
+            setOrders(data.data.reverse());
 
             data.data.forEach((object) => {
                 date = moment(object.date_added).format("DD-MM-YYYY");
-                if (date >= yesterday) {
+
+                if (date == today) {
+                    console.log(date, today);
                     totalorder += 1;
                     if (object.status === "completed") totalsale += object.bill;
                 }

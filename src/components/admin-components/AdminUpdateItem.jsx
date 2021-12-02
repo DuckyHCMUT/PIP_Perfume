@@ -20,7 +20,6 @@ const AdminUpdateItem = () => {
     };
     const handleEdit = (val) => {
         setChosen(val);
-        console.log(val);
     };
 
     return (
