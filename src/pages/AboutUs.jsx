@@ -154,10 +154,10 @@ const AboutUs = () => {
                     <Contributor>
                         <ContributorImg src = {"resource/AboutUs/DrQuanThanhTho.jpg"} alt={"DrThanhTho"}/>
                         <ContributorName>
-                            Professor Quan Thanh Tho
+                            Associate Professor Quan Thanh Tho <br/>
                         </ContributorName>
                     </Contributor>
-                    <h3>For always guiding and giving us valuable feedback to complete this project.</h3>
+                    <h3>For guiding and providing us valuable feedbacks to complete this project.</h3>
                     <br/>
                 </Center>
                 <hr/>
