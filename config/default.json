@@ -1,0 +1,6 @@
+{
+    "dbURI": "mongodb+srv://new-user1:hcmut.edu@unicluster.wis5k.mongodb.net/Shop?retryWrites=true&w=majority",
+    "jwtsecret": "0fOMeEgzRghqTroQhyV-Y9GPNgKQWVJmiE69FlS8s44",
+    "PORT": 3000,
+    "ADMIN_ID": "61966bf1317a482f90ca7cd2"
+}
